@@ -1,0 +1,1453 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tableau de Bord | La Plume - Préparation WAEC French</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 Browser Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style>
+      :root {
+        --bg-primary: #f8fafc;
+        --bg-secondary: #f1f5f9;
+        --bg-card: #ffffff;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --sidebar-bg: #090d16;
+        --sidebar-text: #ffffff;
+        --accent-gold: #d4af37;
+        --accent-gold-hover: #bfa030;
+        --accent-blue: #1e3a8a;
+        --accent-red: #ef4444;
+        --accent-green: #22c55e;
+        --border: #e2e8f0;
+        --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      body.dark-mode {
+        --bg-primary: #0b0f19;
+        --bg-secondary: #111827;
+        --bg-card: #1e293b;
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --sidebar-bg: #05070c; /* Left sidebar is ALWAYS dark navy regardless of mode */
+        --sidebar-text: #ffffff;
+        --border: #334155;
+        --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      }
+
+      .font-display {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+
+      /* Custom utility integrations with variables */
+      .bg-app-primary { background-color: var(--bg-primary); }
+      .bg-app-secondary { background-color: var(--bg-secondary); }
+      .bg-app-card { background-color: var(--bg-card); }
+      .text-app-primary { color: var(--text-primary); }
+      .text-app-secondary { color: var(--text-secondary); }
+      .border-app { border-color: var(--border); }
+      .shadow-app { box-shadow: var(--card-shadow); }
+
+      /* Sidebar is always static dark navy */
+      .sidebar-bg-static {
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+      }
+
+      /* Grid pattern matching landing pages */
+      .grid-pattern {
+        background-size: 30px 30px;
+        background-image: 
+          linear-gradient(to right, var(--border) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+        opacity: 0.15;
+      }
+
+      /* Hide scrollbar for horizonal items but keep functionality */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col">
+
+    <!-- TOPBAR (fixed, full width) -->
+    <header class="fixed top-0 left-0 right-0 h-16 bg-app-card border-b border-app shadow-app z-40 transition-all duration-300">
+      <div class="h-full px-4 md:px-8 flex items-center justify-between">
+        
+        <!-- Left: Logo and name -->
+        <div class="flex items-center gap-3">
+          <!-- Mobile Sidebar Toggle -->
+          <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 hover:bg-app-secondary rounded-lg text-app-secondary transition-colors" id="mobile-menu-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+          
+          <a href="/dashboard.html" class="flex items-center gap-2 group">
+            <div class="bg-[#1e3a8a] p-1.5 rounded-lg text-white group-hover:scale-105 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" x2="2" y1="8" y2="22"/><line x1="17.5" x2="9" y1="15" y2="23.5"/></svg>
+            </div>
+            <span class="font-display font-bold text-lg md:text-xl tracking-tight text-app-primary">
+              La Plume
+            </span>
+          </a>
+          <span class="hidden md:inline-block text-[10px] uppercase tracking-wider font-extrabold font-mono bg-[#d4af37]/20 text-[#d4af37] px-2 py-0.5 rounded-md border border-[#d4af37]/30">
+            Student Cohort 1
+          </span>
+        </div>
+
+        <!-- Center: Search bar on desktop -->
+        <div class="hidden lg:flex items-center flex-1 max-w-md mx-8">
+          <div class="relative w-full">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-app-secondary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </span>
+            <input type="text" placeholder="Rechercher des cours, quiz ou leçons..." 
+                   class="w-full pl-9 pr-4 py-2 text-sm bg-app-secondary text-app-primary border border-app rounded-xl focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all">
+          </div>
+        </div>
+
+        <!-- Right: Actions & User Menu -->
+        <div class="flex items-center gap-3">
+          
+          <!-- Light/Dark Mode Toggle -->
+          <button onclick="toggleDarkMode()" class="p-2.5 hover:bg-app-secondary rounded-xl text-app-primary transition-all duration-300 relative group" title="Basculer le mode">
+            <!-- Sun Icon (visible in dark mode) -->
+            <svg id="sun-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            <!-- Moon Icon (visible in light mode) -->
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          </button>
+
+          <!-- Notification Bell -->
+          <button onclick="showNotificationToast()" class="p-2.5 hover:bg-app-secondary rounded-xl text-app-primary transition-all relative group" title="Notifications">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+          </button>
+
+          <!-- User Profile Dropdown Trigger -->
+          <div class="relative">
+            <button onclick="toggleProfileDropdown()" class="flex items-center gap-2 p-1.5 hover:bg-app-secondary rounded-xl transition-all" id="profileMenuButton">
+              <div class="w-8 h-8 rounded-lg bg-[#d4af37] text-[#0f172a] font-bold flex items-center justify-center font-display text-sm tracking-tight shadow-sm shadow-[#d4af37]/30">
+                JI
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-app-secondary"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            
+            <!-- Dropdown Menu -->
+            <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-56 bg-app-card border border-app rounded-2xl shadow-xl z-50 py-2 animate-fade-in">
+              <div class="px-4 py-3 border-b border-app">
+                <p class="text-xs text-app-secondary font-medium">Connecté en tant que</p>
+                <p class="text-sm font-bold text-app-primary truncate">Johnfavour Igboeche</p>
+                <p class="text-[10px] font-mono text-app-secondary">igboechejohn@gmail.com</p>
+              </div>
+              <a href="#" onclick="showFeatureToast('Profil')" class="flex items-center gap-3 px-4 py-2.5 text-sm text-app-primary hover:bg-app-secondary transition-colors">
+                <svg class="text-app-secondary" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>Mon Profil</span>
+              </a>
+              <a href="#" onclick="showFeatureToast('Progression')" class="flex items-center gap-3 px-4 py-2.5 text-sm text-app-primary hover:bg-app-secondary transition-colors">
+                <svg class="text-app-secondary" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                <span>Mes Statistiques</span>
+              </a>
+              <a href="#" onclick="showFeatureToast('Certificat')" class="flex items-center gap-3 px-4 py-2.5 text-sm text-app-primary hover:bg-app-secondary transition-colors">
+                <svg class="text-app-secondary" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Mon Certificat</span>
+              </a>
+              <hr class="border-app my-1">
+              <a href="/login.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-500/10 transition-colors font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                <span>Se déconnecter</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN GRID CONTAINER -->
+    <div class="flex-grow pt-16 flex relative">
+      
+      <!-- SIDEBAR (fixed left, always dark navy) -->
+      <aside id="sidebar-container" class="fixed top-16 bottom-0 left-0 w-[240px] sidebar-bg-static border-r border-slate-800 z-30 transition-all duration-300 transform -translate-x-full lg:translate-x-0 flex flex-col justify-between overflow-y-auto">
+        
+        <div class="p-5 space-y-6">
+          
+          <!-- Student avatar card -->
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center text-center relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-20 h-20 bg-[#d4af37]/10 rounded-full blur-xl"></div>
+            <!-- Avatar -->
+            <div class="w-14 h-14 rounded-2xl bg-[#d4af37] text-slate-950 font-black text-lg flex items-center justify-center font-display mb-3 shadow-md shadow-[#d4af37]/20 relative z-10">
+              JI
+            </div>
+            <!-- Names -->
+            <h3 class="font-display font-bold text-sm text-white tracking-tight truncate w-full">Johnfavour Igboeche</h3>
+            <p class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mb-2.5">UniPort Student 🎓</p>
+            
+            <!-- Flag -->
+            <div class="inline-flex items-center gap-1.5 bg-white/10 px-2.5 py-1 rounded-full text-xs font-semibold text-slate-200">
+              <span>Nigeria 🇳🇬</span>
+            </div>
+
+            <!-- Cohort Tracker Progress -->
+            <div class="w-full mt-4 pt-4 border-t border-white/5 text-left space-y-1.5">
+              <div class="flex justify-between text-[10px] font-bold tracking-wide uppercase text-slate-400">
+                <span>Cohorte 1</span>
+                <span class="text-[#d4af37]">Jour 12 de 30</span>
+              </div>
+              <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-[#d4af37] w-[40%] rounded-full"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation items (highlighted gold for active) -->
+          <nav class="space-y-1">
+            <a href="#" onclick="switchTab('dashboard', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-[#d4af37] bg-white/10 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+              <span>Tableau de bord</span>
+            </a>
+            
+            <a href="#" onclick="switchTab('cours', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+              <span>Mes Cours</span>
+            </a>
+
+            <a href="#" onclick="switchTab('blitz', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Le Blitz</span>
+            </a>
+
+            <a href="#" onclick="switchTab('exams', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>Examens du Vendredi</span>
+            </a>
+
+            <a href="#" onclick="switchTab('leaderboard', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"/><path d="M12 2a4 4 0 0 1 4 4v5a4 4 0 0 1-4 4 4 4 0 0 1-4-4V6a4 4 0 0 1 4-4Z"/></svg>
+              <span>Classement</span>
+            </a>
+
+            <a href="#" onclick="switchTab('progress', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+              <span>Ma Progression</span>
+            </a>
+
+            <a href="#" onclick="switchTab('journey', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Parcours</span>
+            </a>
+
+            <a href="#" onclick="switchTab('badges', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m12 8-1.5 3H7l2.5 2L8.5 17l3.5-2 3.5 2-1-4 2.5-2h-3.5L12 8z"/></svg>
+              <span>Mes Badges</span>
+            </a>
+
+            <a href="#" onclick="switchTab('certificate', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>Certificat</span>
+            </a>
+
+            <a href="#" onclick="switchTab('settings', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              <span>Paramètres</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Sidebar bottom -->
+        <div class="p-5 border-t border-slate-800 space-y-4">
+          <div class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-widest font-mono">
+            <span>Built in Africa 🌍</span>
+          </div>
+          <a href="/login.html" class="flex items-center justify-center gap-2 w-full py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-xs font-bold uppercase transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+            <span>Se déconnecter</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT FRAME -->
+      <main class="flex-grow lg:pl-[240px] p-4 md:p-8 space-y-6 pb-24 lg:pb-12 transition-all duration-300">
+        
+        <!-- SECTION 1 — WELCOME BANNER (full width card) -->
+        <section id="welcome-banner" class="bg-app-card border border-app rounded-2xl p-6 md:p-8 shadow-app relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all duration-300">
+          <!-- Background Grid Overlay for premium feel -->
+          <div class="absolute inset-0 grid-pattern pointer-events-none"></div>
+
+          <div class="space-y-4 relative z-10 max-w-xl">
+            <h1 class="font-display font-extrabold text-2xl md:text-3xl text-app-primary tracking-tight">
+              Bon matin, Johnfavour! 🪶
+            </h1>
+            <p class="text-app-secondary text-sm leading-relaxed max-w-md">
+              Préparez-vous à l'excellence. Progressez à votre rythme ou continuez directement votre parcours d'apprentissage là où vous vous êtes arrêté.
+            </p>
+            
+            <!-- Horizontal Progress Bar showing 40% filled in gold -->
+            <div class="space-y-2 pt-2">
+              <div class="flex justify-between text-xs font-bold uppercase tracking-wider">
+                <span class="text-app-secondary">Progression du bootcamp</span>
+                <span class="text-gold" id="welcome-percentage">40% Complété (12/30 Jours)</span>
+              </div>
+              <div class="h-3 w-full bg-app-secondary rounded-full overflow-hidden p-0.5 border border-app">
+                <div class="h-full bg-gold rounded-full transition-all duration-1000" style="width: 40%" id="welcome-progress-bar"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side two buttons -->
+          <div class="flex flex-col sm:flex-row gap-3 relative z-10 md:self-end">
+            <button onclick="toggleQuickActions()" id="hide-actions-btn" class="px-5 py-3.5 bg-app-secondary hover:bg-app-secondary/80 text-app-primary font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 border border-app">
+              Masquer les actions
+            </button>
+            <button onclick="scrollToMission()" class="px-6 py-3.5 bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-md shadow-[#1e3a8a]/20 flex items-center justify-center gap-2">
+              <span>Continuer</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- QUICK ACTIONS ROW (horizontally scrollable) -->
+        <section id="quick-actions" class="transition-all duration-300">
+          <p class="text-[10px] font-bold text-app-secondary uppercase tracking-wider mb-2.5">Raccourcis rapides</p>
+          <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar -mx-2 px-2">
+            <button onclick="switchTab('cours')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
+              📚 <span>Mes Cours</span>
+            </button>
+            <button onclick="switchTab('blitz')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
+              ⚡ <span>Le Blitz</span>
+            </button>
+            <button onclick="showFeatureToast('Calendrier')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
+              📅 <span>Calendrier</span>
+            </button>
+            <button onclick="switchTab('leaderboard')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
+              🏆 <span>Classement</span>
+            </button>
+            <button onclick="switchTab('progress')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
+              📈 <span>Progression</span>
+            </button>
+            <button onclick="switchTab('journey')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
+              🗺 <span>Parcours</span>
+            </button>
+            <button onclick="showFeatureToast('Profil')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
+              ✏️ <span>Mon Profil</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- BENTO GRID SECTION -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- CARD 1 — MY LEVEL (medium card) -->
+          <div class="bg-app-card border border-app rounded-2xl p-6 shadow-app flex flex-col justify-between transition-all duration-300 relative overflow-hidden group hover:border-[#d4af37]/50">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-[10px] uppercase tracking-wider font-extrabold text-app-secondary mb-1">Votre Niveau</p>
+                <h3 class="font-display font-extrabold text-xl text-app-primary tracking-tight">Elite Cadet 🚀</h3>
+              </div>
+              <span class="text-xs font-extrabold bg-[#d4af37]/10 text-gold px-2.5 py-1 rounded-md">EXP STATS</span>
+            </div>
+
+            <!-- Circular XP level indicator in center -->
+            <div class="my-6 flex justify-center items-center">
+              <div class="relative w-36 h-36 flex items-center justify-center">
+                <!-- SVG Circle for Gold ring -->
+                <svg class="absolute inset-0 transform -rotate-90 w-full h-full">
+                  <!-- Grey Background ring -->
+                  <circle cx="72" cy="72" r="62" stroke="var(--border)" stroke-width="8" fill="transparent" />
+                  <!-- Gold Progress ring -->
+                  <circle id="xp-circle" cx="72" cy="72" r="62" stroke="var(--accent-gold)" stroke-width="8" fill="transparent" 
+                          stroke-dasharray="390" stroke-dashoffset="39" class="transition-all duration-1000" />
+                </svg>
+                <!-- Trophy inside -->
+                <div class="text-center relative z-10 space-y-0.5">
+                  <span class="text-2xl">🏆</span>
+                  <p class="font-display font-black text-2xl text-app-primary tracking-tight">Niveau 3</p>
+                  <p class="text-[10px] uppercase tracking-wider font-bold text-app-secondary">Niveau Actuel</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs font-semibold text-app-secondary">
+                <span id="xp-text-label">180 / 200 XP</span>
+                <span class="text-gold font-bold" id="xp-left-label">Prochain niveau: 20 XP</span>
+              </div>
+              <div class="h-2 w-full bg-app-secondary rounded-full overflow-hidden">
+                <div class="h-full bg-gold rounded-full transition-all duration-1000" style="width: 90%" id="xp-progress-bar-card"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2 — COHORT STATS (medium card) -->
+          <div class="bg-app-card border border-app rounded-2xl p-6 shadow-app flex flex-col justify-between transition-all duration-300 group hover:border-[#d4af37]/50">
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-[10px] uppercase tracking-wider font-extrabold text-app-secondary">Statistiques Individuelles</p>
+                  <h3 class="font-display font-extrabold text-lg text-app-primary tracking-tight">Stats de la Cohorte</h3>
+                </div>
+                <span class="text-xl">📊</span>
+              </div>
+
+              <!-- Topic Progress bars -->
+              <div class="space-y-3.5">
+                <!-- Grammaire -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between text-xs font-semibold text-app-primary">
+                    <span class="flex items-center gap-1.5">Grammaire <span class="text-[#22c55e]">✓</span></span>
+                    <span class="font-bold">80%</span>
+                  </div>
+                  <div class="h-2 w-full bg-app-secondary rounded-full overflow-hidden">
+                    <div class="h-full bg-gold rounded-full" style="width: 80%"></div>
+                  </div>
+                </div>
+
+                <!-- Compréhension -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between text-xs font-semibold text-app-primary">
+                    <span class="flex items-center gap-1.5">Compréhension <span class="text-[#22c55e]">✓</span></span>
+                    <span class="font-bold">65%</span>
+                  </div>
+                  <div class="h-2 w-full bg-app-secondary rounded-full overflow-hidden">
+                    <div class="h-full bg-gold rounded-full" style="width: 65%"></div>
+                  </div>
+                </div>
+
+                <!-- Rédaction -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between text-xs font-semibold text-app-primary">
+                    <span class="flex items-center gap-1.5">Rédaction <span class="text-app-secondary">○</span></span>
+                    <span class="font-bold">45%</span>
+                  </div>
+                  <div class="h-2 w-full bg-app-secondary rounded-full overflow-hidden">
+                    <div class="h-full bg-[#1e3a8a] rounded-full" style="width: 45%"></div>
+                  </div>
+                </div>
+
+                <!-- Oral -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between text-xs font-semibold text-app-primary">
+                    <span class="flex items-center gap-1.5">Oral <span class="text-app-secondary">○</span></span>
+                    <span class="font-bold" id="oral-progress-value">30%</span>
+                  </div>
+                  <div class="h-2 w-full bg-app-secondary rounded-full overflow-hidden">
+                    <div class="h-full bg-[#1e3a8a] rounded-full transition-all duration-500" style="width: 30%" id="oral-progress-bar"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button onclick="switchTab('cours')" class="text-xs font-bold text-gold hover:text-gold/80 transition-all text-right mt-4 flex items-center justify-end gap-1 uppercase tracking-wider">
+              <span>Continuer</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+          <!-- CARD 3 — CURRENT COHORT (medium card) -->
+          <div class="bg-app-card border border-app rounded-2xl p-6 shadow-app flex flex-col justify-between transition-all duration-300 group hover:border-[#22c55e]/50">
+            <div class="space-y-5">
+              <div class="flex justify-between items-start">
+                <div class="bg-[#22c55e]/10 p-2.5 rounded-xl text-[#22c55e]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+                <span class="px-2.5 py-1 bg-[#22c55e]/15 text-[#22c55e] text-[10px] font-bold uppercase tracking-wider rounded-md animate-pulse">
+                  Active
+                </span>
+              </div>
+
+              <div class="space-y-1">
+                <p class="text-xs font-bold text-app-secondary uppercase tracking-widest font-mono">Cohorte en cours</p>
+                <h4 class="font-display font-extrabold text-xl text-app-primary">🎯 Cohorte 1</h4>
+                <p class="text-xs text-app-secondary leading-relaxed">
+                  L'apprentissage collectif intensif de 30 jours pour viser la note A1 en français au WAEC.
+                </p>
+              </div>
+
+              <!-- Dates list -->
+              <div class="bg-app-secondary rounded-xl p-3.5 space-y-2 text-xs border border-app">
+                <div class="flex justify-between">
+                  <span class="text-app-secondary font-medium">Début :</span>
+                  <span class="font-bold text-app-primary">1 Juillet 2025</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-app-secondary font-medium">Fin :</span>
+                  <span class="font-bold text-app-primary">31 Juillet 2025</span>
+                </div>
+                <div class="flex justify-between pt-1.5 border-t border-app">
+                  <span class="text-app-secondary font-medium">Étudiants inscrits :</span>
+                  <span class="font-bold text-[#1e3a8a] dark:text-[#d4af37]">4,200</span>
+                </div>
+              </div>
+            </div>
+
+            <button onclick="showFeatureToast('Mes cohortes')" class="text-xs font-bold text-app-secondary hover:text-app-primary transition-all text-left mt-4 uppercase tracking-wider flex items-center gap-1">
+              <span>Mes cohortes</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+          <!-- CARD 4 — MY ACTIVITY (tall card) -->
+          <div class="bg-app-card border border-app rounded-2xl p-6 shadow-app flex flex-col justify-between transition-all duration-300 group hover:border-[#22c55e]/50">
+            <div class="space-y-5">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-[10px] uppercase tracking-wider font-extrabold text-app-secondary">Assiduité</p>
+                  <h3 class="font-display font-extrabold text-lg text-app-primary tracking-tight">Mon Activité</h3>
+                </div>
+                <span class="flex items-center gap-1.5 px-2.5 py-1 bg-[#22c55e]/10 text-[#22c55e] text-[10px] font-bold uppercase tracking-wider rounded-full">
+                  <span class="w-1.5 h-1.5 bg-[#22c55e] rounded-full"></span>
+                  <span>Actif</span>
+                </span>
+              </div>
+
+              <!-- Encouraging statement -->
+              <p class="text-xs text-app-secondary">
+                Continuez comme ça ! Vous n'avez manqué aucun jour d'entraînement cette semaine.
+              </p>
+
+              <!-- Streak Counter -->
+              <div class="bg-[#d4af37]/10 border border-[#d4af37]/20 rounded-2xl p-4 flex items-center justify-between">
+                <div class="space-y-0.5">
+                  <span class="text-xs font-semibold text-app-secondary">Série actuelle</span>
+                  <p class="font-display font-extrabold text-base text-app-primary" id="streak-text-card">7 jours d'affilée 🔥</p>
+                </div>
+                <div class="text-3xl">🔥</div>
+              </div>
+
+              <!-- Weekly dots -->
+              <div class="space-y-2">
+                <p class="text-[10px] font-bold text-app-secondary uppercase tracking-wider">Cette semaine</p>
+                <div class="grid grid-cols-7 gap-2 text-center text-xs">
+                  <div class="space-y-1">
+                    <span class="text-[10px] text-app-secondary font-semibold">L</span>
+                    <div class="w-8 h-8 rounded-full bg-[#22c55e] text-white font-bold flex items-center justify-center mx-auto shadow-sm shadow-[#22c55e]/20">✓</div>
+                  </div>
+                  <div class="space-y-1">
+                    <span class="text-[10px] text-app-secondary font-semibold">M</span>
+                    <div class="w-8 h-8 rounded-full bg-[#22c55e] text-white font-bold flex items-center justify-center mx-auto shadow-sm shadow-[#22c55e]/20">✓</div>
+                  </div>
+                  <div class="space-y-1">
+                    <span class="text-[10px] text-app-secondary font-semibold">M</span>
+                    <div class="w-8 h-8 rounded-full bg-[#22c55e] text-white font-bold flex items-center justify-center mx-auto shadow-sm shadow-[#22c55e]/20">✓</div>
+                  </div>
+                  <div class="space-y-1">
+                    <span class="text-[10px] text-app-secondary font-semibold">J</span>
+                    <div class="w-8 h-8 rounded-full bg-[#22c55e] text-white font-bold flex items-center justify-center mx-auto shadow-sm shadow-[#22c55e]/20">✓</div>
+                  </div>
+                  <div class="space-y-1">
+                    <span class="text-[10px] text-app-secondary font-semibold">V</span>
+                    <div class="w-8 h-8 rounded-full bg-[#22c55e] text-white font-bold flex items-center justify-center mx-auto shadow-sm shadow-[#22c55e]/20">✓</div>
+                  </div>
+                  <div class="space-y-1">
+                    <span class="text-[10px] text-app-secondary font-semibold">S</span>
+                    <div class="w-8 h-8 rounded-full bg-gold text-slate-950 font-bold flex items-center justify-center mx-auto shadow-sm shadow-gold/20" id="saturday-dot">✓</div>
+                  </div>
+                  <div class="space-y-1">
+                    <span class="text-[10px] text-app-secondary font-semibold">D</span>
+                    <div class="w-8 h-8 rounded-full bg-app-secondary text-app-secondary border border-app font-medium flex items-center justify-center mx-auto" id="sunday-dot">○</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button onclick="showFeatureToast('Historique')" class="text-xs font-bold text-app-secondary hover:text-app-primary transition-all text-left mt-4 uppercase tracking-wider flex items-center gap-1">
+              <span>Historique</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+          <!-- CARD 5 — LE BLITZ RATIO (medium card) -->
+          <div class="bg-app-card border border-app rounded-2xl p-6 shadow-app flex flex-col justify-between transition-all duration-300 group hover:border-[#d4af37]/50">
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-[10px] uppercase tracking-wider font-extrabold text-app-secondary">Quiz Express</p>
+                  <h3 class="font-display font-extrabold text-lg text-app-primary tracking-tight">Ratio Le Blitz</h3>
+                </div>
+                <span class="text-xl">⚡</span>
+              </div>
+
+              <!-- Accuracy Score large display -->
+              <div class="text-center py-2">
+                <p class="text-4xl font-display font-black text-gold tracking-tight" id="blitz-accuracy-text">73%</p>
+                <p class="text-[10px] uppercase tracking-wider font-extrabold text-app-secondary">de précision générale</p>
+              </div>
+
+              <!-- Two progress bars: Correct vs Incorrect -->
+              <div class="space-y-3 pt-1">
+                <!-- Correct -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs font-semibold">
+                    <span class="text-app-primary flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#22c55e]"></span> Corrects</span>
+                    <span class="text-[#22c55e] font-bold" id="blitz-correct-percent">73% ↑</span>
+                  </div>
+                  <div class="h-2 w-full bg-app-secondary rounded-full overflow-hidden">
+                    <div class="h-full bg-[#22c55e] rounded-full" style="width: 73%" id="blitz-correct-bar"></div>
+                  </div>
+                </div>
+
+                <!-- Incorrect -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs font-semibold">
+                    <span class="text-app-primary flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span> Incorrects</span>
+                    <span class="text-red-500 font-bold" id="blitz-incorrect-percent">27% ↓</span>
+                  </div>
+                  <div class="h-2 w-full bg-app-secondary rounded-full overflow-hidden">
+                    <div class="h-full bg-red-500 rounded-full" style="width: 27%" id="blitz-incorrect-bar"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Statistics labels -->
+              <div class="bg-app-secondary rounded-xl p-3 text-xs text-app-secondary border border-app space-y-1">
+                <div class="flex justify-between">
+                  <span>Meilleur score :</span>
+                  <strong class="text-app-primary">9/11 questions</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span>Questions répondues :</span>
+                  <strong class="text-app-primary" id="blitz-answered-count">148</strong>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-[10px] text-center text-app-secondary italic mt-2">
+              &quot;Continuez à vous améliorer !&quot;
+            </p>
+          </div>
+
+          <!-- CARD 6 — LAST ACTIVITY (medium card) -->
+          <div class="bg-app-card border border-app rounded-2xl p-6 shadow-app flex flex-col justify-between transition-all duration-300 group hover:border-[#1e3a8a]/50">
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-[10px] uppercase tracking-wider font-extrabold text-app-secondary">Historique récent</p>
+                  <h3 class="font-display font-extrabold text-lg text-app-primary tracking-tight">Dernière Activité</h3>
+                </div>
+                <span class="text-xl">🏆</span>
+              </div>
+
+              <!-- Today's gains -->
+              <div class="bg-[#1e3a8a]/5 dark:bg-[#d4af37]/5 border border-app rounded-xl p-3 text-center">
+                <span class="text-sm font-semibold text-app-primary block">Gain du jour</span>
+                <span class="text-xl font-extrabold text-gold tracking-tight" id="today-xp-sum">🏆 +350 XP aujourd'hui</span>
+              </div>
+
+              <!-- List of completed topics with green checks -->
+              <div class="space-y-2.5 pt-1">
+                <!-- Topic 1 -->
+                <div class="flex items-center justify-between text-xs p-2 hover:bg-app-secondary rounded-lg transition-colors border border-transparent hover:border-app">
+                  <div class="flex items-center gap-2">
+                    <span class="text-[#22c55e] text-sm">✓</span>
+                    <span class="text-app-primary font-semibold">Le Passé Composé</span>
+                  </div>
+                  <span class="font-bold text-[#22c55e]">+120 XP</span>
+                </div>
+
+                <!-- Topic 2 -->
+                <div class="flex items-center justify-between text-xs p-2 hover:bg-app-secondary rounded-lg transition-colors border border-transparent hover:border-app">
+                  <div class="flex items-center gap-2">
+                    <span class="text-[#22c55e] text-sm">✓</span>
+                    <span class="text-app-primary font-semibold">Vocabulaire WAEC</span>
+                  </div>
+                  <span class="font-bold text-[#22c55e]">+80 XP</span>
+                </div>
+
+                <!-- Topic 3 -->
+                <div class="flex items-center justify-between text-xs p-2 hover:bg-app-secondary rounded-lg transition-colors border border-transparent hover:border-app">
+                  <div class="flex items-center gap-2">
+                    <span class="text-[#22c55e] text-sm">✓</span>
+                    <span class="text-app-primary font-semibold">Compréhension écrite</span>
+                  </div>
+                  <span class="font-bold text-[#22c55e]">+150 XP</span>
+                </div>
+              </div>
+            </div>
+
+            <button onclick="showFeatureToast('Historique Complet')" class="text-xs font-bold text-gold hover:text-gold/80 transition-all text-right mt-4 uppercase tracking-wider flex items-center justify-end gap-1">
+              <span>Voir l'historique</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+          <!-- CARD 7 — TODAY'S MISSION / WHAT'S UP (Full width card) -->
+          <div id="mission-card-section" class="md:col-span-2 lg:col-span-3 bg-app-card border-2 border-[#1e3a8a] rounded-3xl p-6 md:p-8 shadow-md shadow-[#1e3a8a]/5 relative overflow-hidden transition-all duration-300">
+            <!-- Background pattern inside critical card -->
+            <div class="absolute inset-0 grid-pattern opacity-10 pointer-events-none"></div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10" id="mission-pending-state">
+              <!-- Left: rocket SVG illustration -->
+              <div class="flex items-center gap-5">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#1e3a8a]/10 border border-[#1e3a8a]/20 rounded-2xl flex items-center justify-center text-4xl animate-pulse">
+                  🚀
+                </div>
+                <div class="space-y-1.5">
+                  <span class="px-2.5 py-1 bg-red-500/10 text-red-500 text-[10px] font-extrabold uppercase tracking-widest rounded-md border border-red-500/20">
+                    Mission Recommandée
+                  </span>
+                  <h3 class="font-display font-black text-xl md:text-2xl text-app-primary tracking-tight">Prêt pour aujourd'hui ?</h3>
+                  <p class="text-sm font-bold text-[#1e3a8a] dark:text-[#d4af37]" id="mission-topic">Le Passé Composé vs L'Imparfait</p>
+                  <p class="text-xs text-app-secondary max-w-md leading-relaxed">
+                    Maîtrisez la différence entre les deux temps les plus confondus de l'épreuve de rédaction du WAEC pour maximiser votre score.
+                  </p>
+                  
+                  <!-- Pills tags -->
+                  <div class="flex flex-wrap gap-1.5 pt-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider bg-app-secondary border border-app text-app-primary px-2.5 py-1 rounded-md">⏳ ~25 minutes</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider bg-app-secondary border border-app text-app-primary px-2.5 py-1 rounded-md">🎯 WAEC Standard</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider bg-gold/20 border border-gold/30 text-gold px-2.5 py-1 rounded-md">⭐ +150 XP</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Big button: CONTINUER -->
+              <div class="w-full md:w-auto">
+                <button onclick="completeTodaysMission()" class="w-full md:w-auto px-8 py-4 bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all duration-300 shadow-lg shadow-[#1e3a8a]/20 transform hover:scale-[1.02] flex items-center justify-center gap-2">
+                  <span>Continuer la leçon</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- All caught up alternate state (hidden by default) -->
+            <div class="hidden flex-col md:flex-row items-center justify-between gap-6 relative z-10" id="mission-completed-state">
+              <div class="flex items-center gap-5">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-[#22c55e]/10 border border-[#22c55e]/20 rounded-2xl flex items-center justify-center text-4xl">
+                  🎉
+                </div>
+                <div class="space-y-1.5">
+                  <span class="px-2.5 py-1 bg-[#22c55e]/10 text-[#22c55e] text-[10px] font-extrabold uppercase tracking-widest rounded-md border border-[#22c55e]/20">
+                    RÉUSSI - TOUT EST FAIT
+                  </span>
+                  <h3 class="font-display font-black text-xl md:text-2xl text-app-primary tracking-tight">Tout est fait ! Lancez votre prochaine activité !</h3>
+                  <p class="text-xs text-[#22c55e] font-semibold">✓ Leçon d'aujourd'hui complétée avec succès (+150 XP accordé !)</p>
+                  <p class="text-xs text-app-secondary max-w-md leading-relaxed">
+                    Félicitations, vous êtes en avance sur votre programme de la Cohorte 1. Préparez l'examen de vendredi ou explorez d'autres leçons.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Button to trigger next actions or reset -->
+              <div class="flex gap-2 w-full md:w-auto">
+                <button onclick="resetTodaysMission()" class="text-xs text-app-secondary hover:text-app-primary underline px-2 py-1 font-semibold transition-colors">
+                  Réinitialiser
+                </button>
+                <button onclick="switchTab('cours')" class="px-6 py-3.5 bg-gold hover:bg-gold/90 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-md shadow-gold/10">
+                  Explorer mes cours →
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 8 — UPCOMING EVENTS (medium card) -->
+          <div class="bg-app-card border border-app rounded-2xl p-6 shadow-app flex flex-col justify-between transition-all duration-300 group hover:border-[#1e3a8a]/50">
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <h3 class="font-display font-extrabold text-lg text-app-primary tracking-tight">À Venir</h3>
+                <button onclick="showFeatureToast('Calendrier')" class="text-xs font-bold text-gold hover:underline uppercase tracking-wider">Voir tout</button>
+              </div>
+
+              <!-- Upcoming events items -->
+              <div class="space-y-3">
+                <!-- Item 1 -->
+                <div class="flex items-center justify-between p-3 bg-app-secondary border border-app rounded-xl">
+                  <div class="flex items-center gap-3">
+                    <span class="text-lg">⚡</span>
+                    <div class="space-y-0.5">
+                      <p class="text-xs font-bold text-app-primary">Le Blitz Quotidien</p>
+                      <p class="text-[10px] text-app-secondary">Grammaire rapide</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-bold text-gold bg-gold/10 border border-gold/20 px-2 py-0.5 rounded-md">Aujourd'hui · 16h00</span>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="flex items-center justify-between p-3 bg-app-secondary border border-app rounded-xl">
+                  <div class="flex items-center gap-3">
+                    <span class="text-lg">🔒</span>
+                    <div class="space-y-0.5">
+                      <p class="text-xs font-bold text-app-primary">Examen du Vendredi</p>
+                      <p class="text-[10px] text-app-secondary">Évaluation collective</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-bold text-app-secondary bg-app-secondary border border-app px-2 py-0.5 rounded-md">Dans 3 jours</span>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="flex items-center justify-between p-3 bg-app-secondary border border-app rounded-xl">
+                  <div class="flex items-center gap-3">
+                    <span class="text-lg">📚</span>
+                    <div class="space-y-0.5">
+                      <p class="text-xs font-bold text-app-primary">Jour 13 — Leçon</p>
+                      <p class="text-[10px] text-app-secondary">Vocabulaire thématique</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-bold text-app-secondary bg-app-secondary border border-app px-2 py-0.5 rounded-md">Demain</span>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="flex items-center justify-between p-3 bg-app-secondary border border-app rounded-xl">
+                  <div class="flex items-center gap-3">
+                    <span class="text-lg">🏆</span>
+                    <div class="space-y-0.5">
+                      <p class="text-xs font-bold text-app-primary">Mise à jour classement</p>
+                      <p class="text-[10px] text-app-secondary">Attribution des badges</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-bold text-app-secondary bg-app-secondary border border-app px-2 py-0.5 rounded-md">Dimanche</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-[10px] text-app-secondary italic mt-3 text-center">
+              Activez les notifications pour ne rien rater.
+            </p>
+          </div>
+
+          <!-- CARD 9 — COMMUNITY / COHORT (medium card) -->
+          <div class="bg-app-card border border-app rounded-2xl p-6 shadow-app flex flex-col justify-between transition-all duration-300 group hover:border-[#d4af37]/50">
+            <div class="space-y-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-[10px] uppercase tracking-wider font-extrabold text-app-secondary">Esprit d'équipe</p>
+                  <h3 class="font-display font-extrabold text-lg text-app-primary tracking-tight">Aussi dans ta cohorte</h3>
+                </div>
+                <span class="text-2xl animate-pulse">🤝</span>
+              </div>
+
+              <!-- Custom SVG Help Illustration -->
+              <div class="flex justify-center py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60" class="w-24 h-16 text-[#1e3a8a] dark:text-[#d4af37]" fill="currentColor">
+                  <path d="M30 40a10 10 0 1 1 20 0H30zm40 0a10 10 0 1 1 20 0H70zm-20-5a8 8 0 1 1 16 0H50z" opacity="0.3"/>
+                  <circle cx="40" cy="22" r="8" fill="var(--accent-gold)"/>
+                  <circle cx="60" cy="18" r="7" fill="currentColor"/>
+                  <circle cx="80" cy="22" r="6" fill="var(--accent-gold)"/>
+                </svg>
+              </div>
+
+              <div class="space-y-1 text-center">
+                <h4 class="font-bold text-xs text-app-primary">Tu te sens seul(e) ?</h4>
+                <p class="text-xs text-app-secondary leading-relaxed">
+                  Progresser avec les 4,200 autres étudiants de la cohorte vous fait avancer plus vite et renforce votre oral. Entraidez-vous !
+                </p>
+              </div>
+            </div>
+
+            <div class="space-y-3 mt-4">
+              <button onclick="switchTab('leaderboard')" class="w-full py-2.5 bg-app-secondary hover:bg-app-secondary/80 text-app-primary border border-app font-bold text-xs uppercase tracking-wider rounded-xl transition-all">
+                Voir le classement →
+              </button>
+              <div class="text-center text-[10px] text-app-secondary font-bold">
+                ⚡ 4,200 étudiants actifs aujourd'hui
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 10 — SCORE DISTRIBUTION (full width card) -->
+          <div class="md:col-span-2 lg:col-span-3 bg-app-card border border-app rounded-2xl p-6 shadow-app space-y-6 transition-all duration-300">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <h3 class="font-display font-extrabold text-lg text-app-primary tracking-tight">Distribution des scores par XP</h3>
+                <p class="text-xs text-app-secondary">Où tu te situes par rapport à l'ensemble de la Cohorte 1</p>
+              </div>
+              
+              <!-- Filter dropdown -->
+              <div class="relative">
+                <select class="px-3.5 py-1.5 text-xs font-semibold bg-app-secondary text-app-primary border border-app rounded-xl focus:outline-none cursor-pointer">
+                  <option>Tous les étudiants</option>
+                  <option>Étudiants du Nigeria 🇳🇬</option>
+                  <option>Étudiants du Ghana 🇬🇭</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Histogram Chart using inline SVG for high-contrast presentation -->
+            <div class="space-y-2">
+              <div class="relative w-full h-48 bg-app-secondary/30 rounded-2xl border border-app p-4 flex flex-col justify-between">
+                
+                <!-- Y-Axis labels (floating) -->
+                <div class="absolute left-3 top-4 bottom-8 flex flex-col justify-between text-[10px] font-mono text-app-secondary">
+                  <span>800</span>
+                  <span>400</span>
+                  <span>100</span>
+                  <span>0</span>
+                </div>
+
+                <!-- Histogram bars -->
+                <div class="flex-grow pl-8 pr-2 flex items-end gap-1.5 md:gap-3.5 h-full relative border-b border-app pb-1">
+                  
+                  <!-- Bar 1 (0-200 XP) -->
+                  <div class="flex-1 flex flex-col justify-end h-full group relative">
+                    <div class="bg-slate-300 dark:bg-slate-600 w-full rounded-t-sm transition-all duration-500 hover:opacity-85" style="height: 15%"></div>
+                    <span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">120 étudiants</span>
+                  </div>
+
+                  <!-- Bar 2 (201-400 XP) -->
+                  <div class="flex-1 flex flex-col justify-end h-full group relative">
+                    <div class="bg-slate-300 dark:bg-slate-600 w-full rounded-t-sm transition-all duration-500 hover:opacity-85" style="height: 35%"></div>
+                    <span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">280 étudiants</span>
+                  </div>
+
+                  <!-- Bar 3 (401-600 XP) -->
+                  <div class="flex-1 flex flex-col justify-end h-full group relative">
+                    <div class="bg-slate-300 dark:bg-slate-600 w-full rounded-t-sm transition-all duration-500 hover:opacity-85" style="height: 55%"></div>
+                    <span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">440 étudiants</span>
+                  </div>
+
+                  <!-- Bar 4 (601-800 XP) -->
+                  <div class="flex-1 flex flex-col justify-end h-full group relative">
+                    <!-- Highlighted user position bar (gold) -->
+                    <div class="bg-gold w-full rounded-t-sm transition-all duration-500 relative shadow-sm shadow-gold/30 hover:opacity-90" style="height: 85%" id="histogram-user-bar">
+                      <!-- Flag indicator text above bar -->
+                      <div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[9px] font-extrabold text-gold uppercase tracking-wider whitespace-nowrap bg-gold/10 px-1.5 py-0.5 rounded border border-gold/20 flex items-center gap-1 z-10 animate-bounce">
+                        <span>← Vous êtes ici</span>
+                      </div>
+                    </div>
+                    <span class="absolute -top-12 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20 font-bold">Vous: 680 XP</span>
+                  </div>
+
+                  <!-- Bar 5 (801-1000 XP) -->
+                  <div class="flex-1 flex flex-col justify-end h-full group relative">
+                    <div class="bg-slate-300 dark:bg-slate-600 w-full rounded-t-sm transition-all duration-500 hover:opacity-85" style="height: 48%"></div>
+                    <span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">390 étudiants</span>
+                  </div>
+
+                  <!-- Bar 6 (1001-1500 XP) -->
+                  <div class="flex-1 flex flex-col justify-end h-full group relative">
+                    <div class="bg-slate-300 dark:bg-slate-600 w-full rounded-t-sm transition-all duration-500 hover:opacity-85" style="height: 22%"></div>
+                    <span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">180 étudiants</span>
+                  </div>
+
+                  <!-- Bar 7 (1501-2000+ XP) -->
+                  <div class="flex-1 flex flex-col justify-end h-full group relative">
+                    <div class="bg-slate-300 dark:bg-slate-600 w-full rounded-t-sm transition-all duration-500 hover:opacity-85" style="height: 8%"></div>
+                    <span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">65 étudiants</span>
+                  </div>
+
+                </div>
+
+                <!-- X-Axis labels -->
+                <div class="flex justify-between pl-8 text-[9px] font-bold text-app-secondary uppercase tracking-wider font-mono">
+                  <span>0 - 200 XP</span>
+                  <span>201 - 400</span>
+                  <span>401 - 600</span>
+                  <span class="text-gold">601 - 800</span>
+                  <span>801 - 1k</span>
+                  <span>1k - 1.5k</span>
+                  <span>1.5k+</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 11 — XP PROGRESSION (full width line chart) -->
+          <div class="md:col-span-2 lg:col-span-3 bg-app-card border border-app rounded-2xl p-6 shadow-app space-y-6 transition-all duration-300">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <h3 class="font-display font-extrabold text-lg text-app-primary tracking-tight">Progression XP</h3>
+                <p class="text-xs text-app-secondary">Votre croissance XP accumulée comparée à la moyenne de la cohorte</p>
+              </div>
+
+              <!-- Dropdown & Legend container -->
+              <div class="flex flex-wrap items-center gap-4">
+                <!-- Legend -->
+                <div class="flex gap-3 text-xs font-semibold">
+                  <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-gold inline-block"></span> Vous</span>
+                  <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-slate-400 inline-block"></span> Moyenne de la cohorte</span>
+                </div>
+
+                <select class="px-3.5 py-1.5 text-xs font-semibold bg-app-secondary text-app-primary border border-app rounded-xl focus:outline-none cursor-pointer">
+                  <option>Depuis le début de la cohorte</option>
+                  <option>7 derniers jours</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Crisp SVG Line Chart -->
+            <div class="relative w-full h-56 bg-app-secondary/30 rounded-2xl border border-app p-4 flex flex-col justify-between">
+              
+              <!-- Left Y axis labels -->
+              <div class="absolute left-3 top-4 bottom-8 flex flex-col justify-between text-[9px] font-mono text-app-secondary">
+                <span>1000 XP</span>
+                <span>750 XP</span>
+                <span>500 XP</span>
+                <span>250 XP</span>
+                <span>0 XP</span>
+              </div>
+
+              <!-- Inline Responsive SVG Canvas for Lines -->
+              <div class="flex-grow pl-12 pr-4 h-full relative">
+                <svg viewBox="0 0 500 130" class="w-full h-full overflow-visible">
+                  <!-- Grid horizontal lines -->
+                  <line x1="0" y1="0" x2="500" y2="0" stroke="var(--border)" stroke-width="1" stroke-dasharray="4" />
+                  <line x1="0" y1="32.5" x2="500" y2="32.5" stroke="var(--border)" stroke-width="1" stroke-dasharray="4" />
+                  <line x1="0" y1="65" x2="500" y2="65" stroke="var(--border)" stroke-width="1" stroke-dasharray="4" />
+                  <line x1="0" y1="97.5" x2="500" y2="97.5" stroke="var(--border)" stroke-width="1" stroke-dasharray="4" />
+                  <line x1="0" y1="130" x2="500" y2="130" stroke="var(--border)" stroke-width="1" />
+
+                  <!-- Cohort Average line (grey) -->
+                  <path d="M 0 130 L 83 115 L 166 100 L 249 90 L 332 75 L 415 62 L 500 55" fill="none" stroke="#94a3b8" stroke-width="2.5" />
+                  <!-- Data circles on cohort average -->
+                  <circle cx="249" cy="90" r="3" fill="#94a3b8" />
+                  <circle cx="500" cy="55" r="3.5" fill="#94a3b8" />
+
+                  <!-- Your Progress line (gold) -->
+                  <path id="xp-line-user" d="M 0 130 L 83 110 L 166 95 L 249 70 L 332 50 L 415 35 L 500 12" fill="none" stroke="var(--accent-gold)" stroke-width="4.5" class="transition-all duration-1000" />
+                  
+                  <!-- Data circles on your progress -->
+                  <circle cx="249" cy="70" r="4.5" fill="var(--accent-gold)" stroke="var(--bg-card)" stroke-width="1.5" />
+                  <circle cx="500" cy="12" r="5" fill="var(--accent-gold)" stroke="var(--bg-card)" stroke-width="2" class="animate-pulse" id="xp-line-dot-latest" />
+                </svg>
+              </div>
+
+              <!-- Bottom X axis label dates -->
+              <div class="flex justify-between pl-12 text-[9px] font-bold text-app-secondary uppercase tracking-wider font-mono">
+                <span>Jour 1</span>
+                <span>Jour 3</span>
+                <span>Jour 5</span>
+                <span>Jour 7</span>
+                <span>Jour 9</span>
+                <span>Jour 11</span>
+                <span class="text-gold">Aujourd'hui (Jour 12)</span>
+              </div>
+            </div>
+
+            <!-- Bottom recap stats -->
+            <div class="flex justify-between items-center bg-app-secondary rounded-xl p-4 border border-app">
+              <span class="text-xs text-app-secondary font-medium">Accumulation d'XP :</span>
+              <span class="text-sm font-black text-gold" id="total-xp-counter-recap">Total: 680 XP</span>
+            </div>
+          </div>
+
+          <!-- CARD 12 — RECENT BADGES (medium card with active empty-state toggling) -->
+          <div class="bg-app-card border border-app rounded-2xl p-6 shadow-app flex flex-col justify-between transition-all duration-300 group hover:border-[#d4af37]/50 relative">
+            <div class="space-y-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-display font-extrabold text-lg text-app-primary tracking-tight">Mes Badges Récents 🏅</h3>
+                  <p class="text-xs text-app-secondary">Gagnez des titres pour vos victoires</p>
+                </div>
+                
+                <!-- Toggle Button to test empty state vs populated -->
+                <button onclick="toggleBadgesState()" class="p-1 px-2.5 bg-app-secondary hover:bg-[#d4af37]/10 border border-app text-app-secondary hover:text-gold text-[9px] font-extrabold uppercase tracking-wider rounded-md transition-colors" title="Simuler l'absence de données">
+                  Simuler Vide
+                </button>
+              </div>
+
+              <!-- STATE A: Populated badges state -->
+              <div id="badges-populated-state" class="space-y-3.5 pt-1">
+                <!-- Badge 1 -->
+                <div class="flex items-center gap-3.5 p-2 bg-app-secondary/50 border border-app rounded-xl">
+                  <div class="w-11 h-11 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-xl shadow-inner shadow-gold/5">
+                    ⚡
+                  </div>
+                  <div class="space-y-0.5">
+                    <p class="text-xs font-extrabold text-app-primary">Maître du Blitz</p>
+                    <p class="text-[10px] text-app-secondary font-medium">Obtenu il y a 2 jours</p>
+                  </div>
+                </div>
+
+                <!-- Badge 2 -->
+                <div class="flex items-center gap-3.5 p-2 bg-app-secondary/50 border border-app rounded-xl">
+                  <div class="w-11 h-11 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-xl shadow-inner shadow-gold/5">
+                    🔥
+                  </div>
+                  <div class="space-y-0.5">
+                    <p class="text-xs font-extrabold text-app-primary">Série de 7 jours</p>
+                    <p class="text-[10px] text-app-secondary font-semibold text-gold">Obtenu aujourd'hui !</p>
+                  </div>
+                </div>
+
+                <!-- Badge 3 -->
+                <div class="flex items-center gap-3.5 p-2 bg-app-secondary/50 border border-app rounded-xl">
+                  <div class="w-11 h-11 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-xl shadow-inner shadow-gold/5">
+                    📚
+                  </div>
+                  <div class="space-y-0.5">
+                    <p class="text-xs font-extrabold text-app-primary">Grammaire Pro</p>
+                    <p class="text-[10px] text-app-secondary font-medium">Obtenu il y a 5 jours</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STATE B: Beautiful Empty State (hidden by default) -->
+              <div id="badges-empty-state" class="hidden flex-col items-center text-center py-6 px-4 space-y-4 animate-fade-in">
+                <!-- Custom Feather quill illustration -->
+                <div class="w-16 h-16 bg-app-secondary border border-app rounded-2xl flex items-center justify-center text-3xl shadow-inner animate-bounce">
+                  🪶
+                </div>
+                <div class="space-y-1">
+                  <h4 class="font-bold text-xs text-app-primary">Aucun badge récent</h4>
+                  <p class="text-xs text-app-secondary leading-relaxed">
+                    Complétez des leçons pour gagner vos premiers badges ! 🪶
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <button onclick="switchTab('badges')" class="text-xs font-bold text-gold hover:text-gold/80 transition-all text-right mt-4 uppercase tracking-wider flex items-center justify-end gap-1">
+              <span>Voir mes badges</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+          <!-- CARD 13 — STUDY PARTNERS (medium card) -->
+          <div class="bg-app-card border border-app rounded-2xl p-6 shadow-app flex flex-col justify-between transition-all duration-300 group hover:border-[#1e3a8a]/50">
+            <div class="space-y-4">
+              <div>
+                <h3 class="font-display font-extrabold text-lg text-app-primary tracking-tight">Partenaires d'étude</h3>
+                <p class="text-xs text-app-secondary">Étudiants avec qui vous interagissez</p>
+              </div>
+
+              <!-- Partners List -->
+              <div class="space-y-2.5">
+                <!-- Partner 1 -->
+                <div class="flex items-center justify-between p-2.5 bg-app-secondary/50 border border-app rounded-xl hover:bg-app-secondary transition-colors">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-extrabold flex items-center justify-center text-xs font-mono shadow-sm">
+                      PO
+                    </div>
+                    <div>
+                      <p class="text-xs font-bold text-app-primary">pogbonna</p>
+                      <p class="text-[10px] text-app-secondary">Nigeria 🇳🇬</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-bold text-[#22c55e] bg-[#22c55e]/15 px-2.5 py-1 rounded-md border border-[#22c55e]/20">
+                    +5 XP interactions
+                  </span>
+                </div>
+
+                <!-- Partner 2 -->
+                <div class="flex items-center justify-between p-2.5 bg-app-secondary/50 border border-app rounded-xl hover:bg-app-secondary transition-colors">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-teal-600 text-white font-extrabold flex items-center justify-center text-xs font-mono shadow-sm">
+                      AA
+                    </div>
+                    <div>
+                      <p class="text-xs font-bold text-app-primary">amaafriyie</p>
+                      <p class="text-[10px] text-app-secondary">Ghana 🇬🇭</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-bold text-[#22c55e] bg-[#22c55e]/15 px-2.5 py-1 rounded-md border border-[#22c55e]/20">
+                    +1 XP interactions
+                  </span>
+                </div>
+              </div>
+
+              <!-- Motivating requirement -->
+              <p class="text-[10px] text-app-secondary leading-normal">
+                💡 <strong>Exigence du vendredi:</strong> Travailler avec 6 étudiants différents pour débloquer l'Oral Booster hebdomadaire.
+              </p>
+            </div>
+
+            <button onclick="switchTab('leaderboard')" class="text-xs font-bold text-app-secondary hover:text-app-primary transition-all text-left mt-4 uppercase tracking-wider flex items-center gap-1">
+              <span>Voir le classement</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </section>
+
+      </main>
+    </div>
+
+    <!-- BOTTOM NAVIGATION (mobile only) -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-app-card border-t border-app shadow-xl z-40 flex items-center justify-around transition-all duration-300">
+      
+      <!-- Home tab -->
+      <button onclick="switchTabMobile('dashboard', this)" class="flex flex-col items-center justify-center gap-0.5 text-[#d4af37] font-bold">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Accueil</span>
+      </button>
+
+      <!-- Cours tab -->
+      <button onclick="switchTabMobile('cours', this)" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Cours</span>
+      </button>
+
+      <!-- Blitz tab -->
+      <button onclick="switchTabMobile('blitz', this)" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Blitz</span>
+      </button>
+
+      <!-- Rangs tab -->
+      <button onclick="switchTabMobile('leaderboard', this)" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m12 8-1.5 3H7l2.5 2L8.5 17l3.5-2 3.5 2-1-4 2.5-2h-3.5L12 8z"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Rangs</span>
+      </button>
+
+      <!-- Profil tab -->
+      <button onclick="showFeatureToast('Profil')" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Profil</span>
+      </button>
+    </nav>
+
+    <!-- FLOATING INTERACTIVE TOAST SYSTEM -->
+    <div id="toast" class="fixed top-20 right-6 bg-slate-900 border border-slate-800 text-white text-xs font-bold rounded-2xl px-5 py-3.5 shadow-2xl z-50 transform translate-x-80 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3">
+      <span class="text-lg" id="toast-icon">💡</span>
+      <span id="toast-message">Message par défaut !</span>
+    </div>
+
+    <!-- MOBILE SIDEBAR BACKDROP OVERLAY -->
+    <div id="mobile-sidebar-backdrop" onclick="toggleMobileSidebar()" class="hidden fixed inset-0 bg-slate-950/40 z-20 transition-opacity duration-300"></div>
+
+    <!-- JAVASCRIPT LOGIC SYSTEM -->
+    <script>
+      // DOM Elements
+      const body = document.body;
+      const sunIcon = document.getElementById('sun-icon');
+      const moonIcon = document.getElementById('moon-icon');
+      const toast = document.getElementById('toast');
+      const toastIcon = document.getElementById('toast-icon');
+      const toastMessage = document.getElementById('toast-message');
+      const profileDropdown = document.getElementById('profileDropdown');
+
+      // Initialization: Restore Dark mode from localStorage
+      window.addEventListener('DOMContentLoaded', () => {
+        const savedMode = localStorage.getItem('laplume-darkmode');
+        if (savedMode === 'true') {
+          body.classList.add('dark-mode');
+          sunIcon.classList.remove('hidden');
+          moonIcon.classList.add('hidden');
+        } else {
+          body.classList.remove('dark-mode');
+          sunIcon.classList.add('hidden');
+          moonIcon.classList.remove('hidden');
+        }
+      });
+
+      // Dark Mode Toggling function
+      function toggleDarkMode() {
+        const isDark = body.classList.toggle('dark-mode');
+        localStorage.setItem('laplume-darkmode', isDark);
+        
+        if (isDark) {
+          sunIcon.classList.remove('hidden');
+          moonIcon.classList.add('hidden');
+          triggerNotification('🌙 Mode sombre activé !', '✨');
+        } else {
+          sunIcon.classList.add('hidden');
+          moonIcon.classList.remove('hidden');
+          triggerNotification('☀️ Mode clair activé !', '✨');
+        }
+      }
+
+      // Profile dropdown toggle
+      function toggleProfileDropdown() {
+        profileDropdown.classList.toggle('hidden');
+      }
+
+      // Close profile dropdown when clicking outside
+      window.addEventListener('click', (e) => {
+        const trigger = document.getElementById('profileMenuButton');
+        if (trigger && !trigger.contains(e.target) && !profileDropdown.contains(e.target)) {
+          profileDropdown.classList.add('hidden');
+        }
+      });
+
+      // Notification click simulation
+      function showNotificationToast() {
+        triggerNotification('Vous avez 3 notifications en attente de lecture', '🔔');
+      }
+
+      // Quick Actions Toggle hiding/showing row
+      function toggleQuickActions() {
+        const row = document.getElementById('quick-actions');
+        const btn = document.getElementById('hide-actions-btn');
+        if (row.classList.contains('hidden')) {
+          row.classList.remove('hidden');
+          btn.innerText = 'Masquer les actions';
+        } else {
+          row.classList.add('hidden');
+          btn.innerText = 'Afficher les actions';
+        }
+      }
+
+      // Switch Sidebar Nav Tabs (highlights with gold accent)
+      function switchTab(tabName, element) {
+        // Remove active class from all nav items
+        const navItems = document.querySelectorAll('.sidebar-nav-item');
+        navItems.forEach(item => {
+          item.className = 'sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200';
+        });
+
+        // Set clicked item as active
+        if (element) {
+          element.className = 'sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-[#d4af37] bg-white/10 transition-all duration-200';
+        }
+
+        // Notify user of tab change simulation
+        const capitalize = s => s.charAt(0).toUpperCase() + s.slice(1);
+        triggerNotification(`Onglet "${capitalize(tabName)}" ouvert (Simulation)`, '🗺️');
+      }
+
+      // Switch Bottom Nav Tabs for mobile view
+      function switchTabMobile(tabName, element) {
+        const buttons = element.parentNode.querySelectorAll('button');
+        buttons.forEach(btn => {
+          btn.className = 'flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium';
+        });
+        element.className = 'flex flex-col items-center justify-center gap-0.5 text-[#d4af37] font-bold';
+        
+        const capitalize = s => s.charAt(0).toUpperCase() + s.slice(1);
+        triggerNotification(`Onglet "${capitalize(tabName)}" ouvert`, '📱');
+      }
+
+      // Feature specific triggers
+      function showFeatureToast(featureName) {
+        triggerNotification(`Fonctionnalité "${featureName}" bientôt disponible !`, '🚀');
+      }
+
+      // Toast notification helper
+      let toastTimeout;
+      function triggerNotification(message, icon = '💡') {
+        clearTimeout(toastTimeout);
+        toastIcon.innerText = icon;
+        toastMessage.innerText = message;
+        
+        toast.className = 'fixed top-20 right-6 bg-slate-900 border border-slate-800 text-white text-xs font-bold rounded-2xl px-5 py-3.5 shadow-2xl z-50 transform translate-x-0 opacity-100 transition-all duration-300 pointer-events-auto flex items-center gap-3';
+        
+        toastTimeout = setTimeout(() => {
+          toast.className = 'fixed top-20 right-6 bg-slate-900 border border-slate-800 text-white text-xs font-bold rounded-2xl px-5 py-3.5 shadow-2xl z-50 transform translate-x-80 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3';
+        }, 3500);
+      }
+
+      // Scroll to recommended mission block
+      function scrollToMission() {
+        const missionCard = document.getElementById('mission-card-section');
+        missionCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // subtle highlight animation
+        missionCard.classList.add('scale-[1.01]', 'border-gold');
+        setTimeout(() => {
+          missionCard.classList.remove('scale-[1.01]', 'border-gold');
+        }, 1500);
+      }
+
+      // Complete Today's Mission (updates XP, displays success, adds XP to stats!)
+      function completeTodaysMission() {
+        // Toggle card states
+        document.getElementById('mission-pending-state').classList.add('hidden');
+        document.getElementById('mission-completed-state').classList.remove('hidden');
+        
+        // Reward student by updating XP calculations
+        document.getElementById('xp-text-label').innerText = '200 / 200 XP';
+        document.getElementById('xp-left-label').innerText = 'NIVEAU SUIVANT DÉBLOQUÉ ! 🎉';
+        document.getElementById('xp-progress-bar-card').style.width = '100%';
+        document.getElementById('xp-circle').setAttribute('stroke-dashoffset', '0');
+        
+        // Welcome banner progress increases
+        document.getElementById('welcome-progress-bar').style.width = '44%';
+        document.getElementById('welcome-percentage').innerText = '44% Complété (13/30 Jours)';
+        
+        // Increment streak & stats
+        document.getElementById('streak-text-card').innerText = '8 jours d\'affilée 🔥';
+        document.getElementById('saturday-dot').className = 'w-8 h-8 rounded-full bg-[#22c55e] text-white font-bold flex items-center justify-center mx-auto shadow-sm shadow-[#22c55e]/20';
+        document.getElementById('sunday-dot').className = 'w-8 h-8 rounded-full bg-gold text-slate-950 font-bold flex items-center justify-center mx-auto shadow-sm shadow-gold/20';
+        document.getElementById('sunday-dot').innerText = '✓';
+        
+        // Update charts to mock progression increase
+        document.getElementById('total-xp-counter-recap').innerText = 'Total: 830 XP';
+        document.getElementById('today-xp-sum').innerText = '🏆 +500 XP aujourd\'hui';
+        document.getElementById('histogram-user-bar').style.height = '95%';
+        document.getElementById('oral-progress-bar').style.width = '45%';
+        document.getElementById('oral-progress-value').innerText = '45%';
+
+        // Draw new dotted position or line update
+        const line = document.getElementById('xp-line-user');
+        if (line) {
+          line.setAttribute('d', 'M 0 130 L 83 110 L 166 95 L 249 70 L 332 50 L 415 35 L 500 5');
+          const latestDot = document.getElementById('xp-line-dot-latest');
+          if (latestDot) latestDot.setAttribute('cy', '5');
+        }
+
+        // Trigger success sound-like visual
+        triggerNotification('Félicitations ! +150 XP reçus ! Nouveau niveau atteint ! 🏆', '🎉');
+      }
+
+      // Reset mission back to pending state
+      function resetTodaysMission() {
+        document.getElementById('mission-pending-state').classList.remove('hidden');
+        document.getElementById('mission-completed-state').classList.add('hidden');
+        
+        // Restore initial values
+        document.getElementById('xp-text-label').innerText = '180 / 200 XP';
+        document.getElementById('xp-left-label').innerText = 'Prochain niveau: 20 XP';
+        document.getElementById('xp-progress-bar-card').style.width = '90%';
+        document.getElementById('xp-circle').setAttribute('stroke-dashoffset', '39');
+        document.getElementById('welcome-progress-bar').style.width = '40%';
+        document.getElementById('welcome-percentage').innerText = '40% Complété (12/30 Jours)';
+        document.getElementById('streak-text-card').innerText = '7 jours d\'affilée 🔥';
+        document.getElementById('saturday-dot').className = 'w-8 h-8 rounded-full bg-[#22c55e] text-white font-bold flex items-center justify-center mx-auto shadow-sm shadow-[#22c55e]/20';
+        document.getElementById('sunday-dot').className = 'w-8 h-8 rounded-full bg-app-secondary text-app-secondary border border-app font-medium flex items-center justify-center mx-auto';
+        document.getElementById('sunday-dot').innerText = '○';
+        document.getElementById('total-xp-counter-recap').innerText = 'Total: 680 XP';
+        document.getElementById('today-xp-sum').innerText = '🏆 +350 XP aujourd\'hui';
+        document.getElementById('histogram-user-bar').style.height = '85%';
+        document.getElementById('oral-progress-bar').style.width = '30%';
+        document.getElementById('oral-progress-value').innerText = '30%';
+
+        const line = document.getElementById('xp-line-user');
+        if (line) {
+          line.setAttribute('d', 'M 0 130 L 83 110 L 166 95 L 249 70 L 332 50 L 415 35 L 500 12');
+          const latestDot = document.getElementById('xp-line-dot-latest');
+          if (latestDot) latestDot.setAttribute('cy', '12');
+        }
+
+        triggerNotification('Mission réinitialisée !', '⚙️');
+      }
+
+      // Toggles Card 12 between populated badge items and custom empty state
+      function toggleBadgesState() {
+        const populated = document.getElementById('badges-populated-state');
+        const empty = document.getElementById('badges-empty-state');
+        const isNowEmpty = populated.classList.toggle('hidden');
+        empty.classList.toggle('hidden');
+
+        if (isNowEmpty) {
+          triggerNotification('Mode vide activé pour les badges 🪶', '📝');
+        } else {
+          triggerNotification('Badges restaurés ! 🏅', '🏅');
+        }
+      }
+
+      // Mobile Menu drawer toggling
+      function toggleMobileSidebar() {
+        const sidebar = document.getElementById('sidebar-container');
+        const backdrop = document.getElementById('mobile-sidebar-backdrop');
+        const isOpen = sidebar.classList.contains('translate-x-0');
+
+        if (isOpen) {
+          sidebar.classList.remove('translate-x-0');
+          sidebar.classList.add('-translate-x-full');
+          backdrop.classList.add('hidden');
+        } else {
+          sidebar.classList.remove('-translate-x-full');
+          sidebar.classList.add('translate-x-0');
+          backdrop.classList.remove('hidden');
+        }
+      }
+    </script>
+  </body>
+</html>
