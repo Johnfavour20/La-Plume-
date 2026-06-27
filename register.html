@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register | La Plume - Africa's #1 French WAEC Prep</title>
+    <!-- Google Fonts Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 Browser Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style>
+      :root {
+        /* Professional Polish Theme Colors mapping to exact variables */
+        --color-bg: #f8fafc;
+        --color-card: #ffffff;
+        --color-primary: #1e3a8a;
+        --color-primary-hover: #1e40af;
+        --color-text-primary: #0f172a;
+        --color-text-muted: #475569;
+        --color-accent-red: #dc2626;
+        --color-border: #e2e8f0;
+        --color-grid-line: #e2e8f0;
+        --color-gold: #d4af37;
+        --color-gold-glow: rgba(212, 175, 55, 0.25);
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--color-bg);
+        color: var(--color-text-primary);
+      }
+
+      .font-display {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+
+      /* Grid Background Pattern */
+      .grid-pattern {
+        background-size: 40px 40px;
+        background-image: 
+          linear-gradient(to right, var(--color-grid-line) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--color-grid-line) 1px, transparent 1px);
+      }
+
+      /* Curved Lines/01edu-style decoration for the dark side-panel */
+      .curved-lines-bg {
+        background-color: #0f172a;
+        background-image: radial-gradient(circle at 100% 150%, #1e3a8a 24%, #0f172a 24%),
+                          radial-gradient(circle at 0% -50%, #3b82f6 15%, transparent 15%),
+                          radial-gradient(circle at 50% 50%, #1e3a8a 10%, transparent 10%);
+        background-size: 100% 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .curved-lines-bg::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0.08;
+        background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #ffffff 40px),
+                          repeating-linear-gradient(#ffffff, #ffffff);
+      }
+
+      /* Custom glass header matching the main landing page navbar */
+      .glass-nav {
+        backdrop-filter: blur(8px);
+        background: rgba(255, 255, 255, 0.85);
+        border-bottom: 1px solid var(--color-border);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col justify-between">
+    
+    <!-- TOP ANNOUNCEMENT BANNER -->
+    <div class="bg-[#1e3a8a]/10 border-b border-[#1e3a8a]/20 py-2.5 px-4 text-center z-50">
+      <div class="max-w-7xl mx-auto flex items-center justify-center gap-2 text-xs md:text-sm font-medium text-[#1e3a8a]">
+        <span>🪶</span>
+        <span>Cohort 1 is now open. Limited spots available. Register today.</span>
+      </div>
+    </div>
+
+    <!-- IDENTICAL NAVBAR -->
+    <nav class="glass-nav sticky top-0 w-full py-4 px-6 md:px-12 z-40">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <!-- Logo Left -->
+        <a href="/" class="flex items-center gap-2 group">
+          <div class="bg-[#1e3a8a] p-2 rounded-lg text-white group-hover:scale-105 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" x2="2" y1="8" y2="22"/><line x1="17.5" x2="9" y1="15" y2="23.5"/></svg>
+          </div>
+          <span class="font-display font-bold text-xl md:text-2xl tracking-tight text-[#0f172a]">
+            La Plume
+          </span>
+        </a>
+
+        <!-- Navigation Links Center -->
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-[#475569]">
+          <a href="/#home" class="hover:text-[#0f172a] transition-colors">Home</a>
+          <a href="/#how-it-works" class="hover:text-[#0f172a] transition-colors">How It Works</a>
+          <a href="/#features" class="hover:text-[#0f172a] transition-colors">Features</a>
+          <a href="/#pricing" class="hover:text-[#0f172a] transition-colors">Pricing</a>
+          <a href="/#faq" class="hover:text-[#0f172a] transition-colors">FAQ</a>
+        </div>
+
+        <!-- Sign In Button Right (Outlined) -->
+        <div>
+          <a href="/login.html" class="inline-block border-2 border-[#1e3a8a] text-[#1e3a8a] hover:bg-[#1e3a8a]/5 font-bold px-5 py-2 rounded-lg transition-all duration-300 text-sm">
+            Sign In
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN HERO SPLIT SCREEN LAYOUT -->
+    <main class="flex-grow grid grid-cols-1 lg:grid-cols-12 lg:h-[calc(100vh-112px)] relative">
+      
+      <!-- LEFT FORM SIDE: 7 columns on desktop -->
+      <section class="lg:col-span-7 flex flex-col justify-between p-6 md:p-12 lg:py-8 lg:px-16 grid-pattern relative z-10 lg:h-full lg:overflow-y-auto">
+        <!-- Spacer top -->
+        <div class="hidden lg:block"></div>
+
+        <div class="w-full max-w-[485px] mx-auto bg-white border border-[#e2e8f0] rounded-2xl p-6 md:p-10 shadow-xl shadow-slate-100/80 relative my-6">
+          
+          <!-- Cohort Badge Pill at Top -->
+          <div class="flex justify-center mb-6">
+            <div class="inline-flex items-center gap-2.5 bg-[#1e3a8a]/5 border border-[#1e3a8a]/15 px-4 py-2 rounded-full text-xs font-semibold text-[#1e3a8a]">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4af37] opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-[#d4af37]"></span>
+              </span>
+              <span>Registering for Cohort 1 — Begins in 29 days</span>
+            </div>
+          </div>
+
+          <!-- Header -->
+          <div class="text-center mb-8">
+            <h1 class="font-display font-extrabold text-3xl md:text-4xl text-[#0f172a] tracking-tight mb-2">
+              Commençons.
+            </h1>
+            <p class="text-sm text-[#475569]">
+              Create your account and secure your spot in Cohort 1.
+            </p>
+          </div>
+
+          <!-- Registration Form -->
+          <form id="registrationForm" class="space-y-5" novalidate>
+            <!-- 1. Full Name -->
+            <div>
+              <label for="fullName" class="block text-xs font-bold uppercase tracking-wider text-[#0f172a] mb-1.5">Full Name</label>
+              <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name" 
+                     class="w-full px-4 py-3 bg-slate-50 border border-[#e2e8f0] rounded-xl text-sm focus:outline-none focus:border-[#1e3a8a] focus:bg-white transition-all" />
+              <p id="fullNameError" class="hidden text-xs text-[#dc2626] font-medium mt-1">Please enter your full name.</p>
+            </div>
+
+            <!-- 2. Email Address -->
+            <div>
+              <label for="email" class="block text-xs font-bold uppercase tracking-wider text-[#0f172a] mb-1.5">Email Address</label>
+              <input type="email" id="email" name="email" required placeholder="Enter your email address" 
+                     class="w-full px-4 py-3 bg-slate-50 border border-[#e2e8f0] rounded-xl text-sm focus:outline-none focus:border-[#1e3a8a] focus:bg-white transition-all" />
+              <p id="emailError" class="hidden text-xs text-[#dc2626] font-medium mt-1">Please enter a valid email address.</p>
+            </div>
+
+            <!-- 3. Phone Number -->
+            <div>
+              <label for="phone" class="block text-xs font-bold uppercase tracking-wider text-[#0f172a] mb-1.5">Phone Number</label>
+              <input type="tel" id="phone" name="phone" required placeholder="+234 800 000 0000" 
+                     class="w-full px-4 py-3 bg-slate-50 border border-[#e2e8f0] rounded-xl text-sm focus:outline-none focus:border-[#1e3a8a] focus:bg-white transition-all" />
+              <span class="block text-[11px] text-[#475569] mt-1 font-medium">We'll send cohort reminders via WhatsApp</span>
+              <p id="phoneError" class="hidden text-xs text-[#dc2626] font-medium mt-1">Please enter your phone number.</p>
+            </div>
+
+            <!-- 4. Country Dropdown -->
+            <div>
+              <label for="country" class="block text-xs font-bold uppercase tracking-wider text-[#0f172a] mb-1.5">Country</label>
+              <select id="country" name="country" required 
+                      class="w-full px-4 py-3 bg-slate-50 border border-[#e2e8f0] rounded-xl text-sm focus:outline-none focus:border-[#1e3a8a] focus:bg-white transition-all">
+                <option value="NG">🇳🇬 Nigeria</option>
+                <option value="GH">🇬🇭 Ghana</option>
+                <option value="SL">🇸🇱 Sierra Leone</option>
+                <option value="GM">🇬🇲 Gambia</option>
+                <option value="LR">🇱🇷 Liberia</option>
+                <option value="Other">Other African Country</option>
+              </select>
+            </div>
+
+            <!-- 5. School Name -->
+            <div>
+              <label for="school" class="block text-xs font-bold uppercase tracking-wider text-[#0f172a] mb-1.5">School Name</label>
+              <input type="text" id="school" name="school" required placeholder="Enter your school name" 
+                     class="w-full px-4 py-3 bg-slate-50 border border-[#e2e8f0] rounded-xl text-sm focus:outline-none focus:border-[#1e3a8a] focus:bg-white transition-all" />
+              <span class="block text-[11px] text-[#475569] mt-1 font-medium">Your school will appear on the national leaderboard</span>
+              <p id="schoolError" class="hidden text-xs text-[#dc2626] font-medium mt-1">Please enter your school name.</p>
+            </div>
+
+            <!-- 6. Current Class Dropdown -->
+            <div>
+              <label for="currentClass" class="block text-xs font-bold uppercase tracking-wider text-[#0f172a] mb-1.5">Current Class</label>
+              <select id="currentClass" name="currentClass" required 
+                      class="w-full px-4 py-3 bg-slate-50 border border-[#e2e8f0] rounded-xl text-sm focus:outline-none focus:border-[#1e3a8a] focus:bg-white transition-all">
+                <option value="SS1">SS1 (Preparing ahead)</option>
+                <option value="SS2">SS2 (Preparing ahead)</option>
+                <option value="SS3" selected>SS3 (Writing WAEC this year)</option>
+                <option value="Alum">Already wrote WAEC</option>
+                <option value="Uni">University Student</option>
+              </select>
+            </div>
+
+            <!-- 7. Password -->
+            <div>
+              <label for="password" class="block text-xs font-bold uppercase tracking-wider text-[#0f172a] mb-1.5">Password</label>
+              <div class="relative">
+                <input type="password" id="password" name="password" required placeholder="Create a password" 
+                       class="w-full pl-4 pr-12 py-3 bg-slate-50 border border-[#e2e8f0] rounded-xl text-sm focus:outline-none focus:border-[#1e3a8a] focus:bg-white transition-all" />
+                <button type="button" onclick="togglePassword('password', 'eyeIcon1')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#475569] hover:text-[#0f172a]">
+                  <!-- Eye Icon SVG -->
+                  <svg id="eyeIcon1" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+              
+              <!-- Password Strength Indicator -->
+              <div class="mt-2 space-y-1.5">
+                <div class="grid grid-cols-3 gap-1.5 h-1.5 w-full">
+                  <div id="strengthSeg1" class="h-full rounded-full bg-slate-100 transition-all duration-300"></div>
+                  <div id="strengthSeg2" class="h-full rounded-full bg-slate-100 transition-all duration-300"></div>
+                  <div id="strengthSeg3" class="h-full rounded-full bg-slate-100 transition-all duration-300"></div>
+                </div>
+                <div class="flex justify-between items-center text-[10px] font-semibold tracking-wider uppercase">
+                  <span id="strengthText" class="text-slate-400">Strength: Empty</span>
+                </div>
+              </div>
+              <p id="passwordError" class="hidden text-xs text-[#dc2626] font-medium mt-1">Password must be at least 6 characters.</p>
+            </div>
+
+            <!-- 8. Confirm Password -->
+            <div>
+              <label for="confirmPassword" class="block text-xs font-bold uppercase tracking-wider text-[#0f172a] mb-1.5">Confirm Password</label>
+              <div class="relative">
+                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password" 
+                       class="w-full pl-4 pr-12 py-3 bg-slate-50 border border-[#e2e8f0] rounded-xl text-sm focus:outline-none focus:border-[#1e3a8a] focus:bg-white transition-all" />
+                <button type="button" onclick="togglePassword('confirmPassword', 'eyeIcon2')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#475569] hover:text-[#0f172a]">
+                  <svg id="eyeIcon2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+              <p id="confirmPasswordError" class="hidden text-xs text-[#dc2626] font-medium mt-1">Passwords do not match.</p>
+            </div>
+
+            <!-- Terms Checkbox -->
+            <div class="flex items-start gap-2.5 pt-1">
+              <input type="checkbox" id="terms" name="terms" required 
+                     class="w-4 h-4 text-[#1e3a8a] bg-slate-50 border-[#e2e8f0] rounded focus:ring-[#1e3a8a] focus:ring-2 mt-0.5" />
+              <label for="terms" class="text-xs text-[#475569] leading-relaxed">
+                I agree to La Plume's <a href="#" class="underline font-semibold text-[#0f172a] hover:text-[#1e3a8a]">Terms of Service</a> and <a href="#" class="underline font-semibold text-[#0f172a] hover:text-[#1e3a8a]">Privacy Policy</a>
+              </label>
+            </div>
+            <p id="termsError" class="hidden text-xs text-[#dc2626] font-medium mt-1">You must accept our terms to register.</p>
+
+            <!-- Primary CTA Button -->
+            <button type="submit" 
+                    class="w-full py-4 bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-bold rounded-xl transition-all duration-200 transform active:scale-[0.98] cursor-pointer text-center shadow-lg shadow-[#1e3a8a]/10 flex items-center justify-center gap-2">
+              <span>Create My Account</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="flex items-center gap-3 my-6">
+            <div class="flex-grow h-px bg-[#e2e8f0]"></div>
+            <span class="text-xs font-bold uppercase tracking-wider text-[#475569] font-mono">or</span>
+            <div class="flex-grow h-px bg-[#e2e8f0]"></div>
+          </div>
+
+          <!-- Google OAuth Button -->
+          <button onclick="handleGoogleContinue()" 
+                  class="w-full py-3.5 bg-white hover:bg-slate-50 border-2 border-[#e2e8f0] text-[#0f172a] font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-3 cursor-pointer text-sm">
+            <svg class="w-5 h-5" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22-.19-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Continue with Google</span>
+          </button>
+
+          <!-- Sign In Link -->
+          <p class="text-center text-sm text-[#475569] mt-6 font-medium">
+            Already have an account? <a href="/login.html" class="font-bold text-[#1e3a8a] hover:underline">Sign In</a>
+          </p>
+
+        </div>
+
+        <!-- Integrated Footer only visible on desktop -->
+        <div class="hidden lg:flex max-w-[485px] w-full mx-auto items-center justify-between text-xs text-[#475569]/80 border-t border-[#e2e8f0]/60 pt-4 mt-6">
+          <div>&copy; 2025 La Plume Africa.</div>
+          <div class="flex gap-4">
+            <a href="#" class="hover:underline hover:text-[#1e3a8a]">About</a>
+            <a href="#" class="hover:underline hover:text-[#1e3a8a]">Privacy</a>
+            <a href="#" class="hover:underline hover:text-[#1e3a8a]">Terms</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT PANEL SIDE: 5 columns on desktop, hidden on mobile -->
+      <section class="hidden lg:col-span-5 lg:flex flex-col justify-between p-12 curved-lines-bg relative text-white lg:h-full">
+        <!-- Logo Header -->
+        <div class="flex items-center gap-2 relative z-10">
+          <div class="bg-white/10 backdrop-blur-md p-2 rounded-lg text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" x2="2" y1="8" y2="22"/><line x1="17.5" x2="9" y1="15" y2="23.5"/></svg>
+          </div>
+          <span class="font-display font-bold text-xl tracking-tight">La Plume</span>
+        </div>
+
+        <!-- French Quote in Middle -->
+        <div class="space-y-4 max-w-sm relative z-10 my-auto">
+          <p class="text-3xl font-display font-extrabold leading-tight text-white italic">
+            &quot;La plume est plus puissante que l&#39;épée.&quot;
+          </p>
+          <div class="h-1 w-12 bg-[#d4af37]"></div>
+          <p class="text-base text-slate-300 font-medium">
+            &quot;The pen is mightier than the sword.&quot;
+          </p>
+        </div>
+
+        <!-- Mini Leaderboard Preview and Stat -->
+        <div class="space-y-6 relative z-10 mt-auto">
+          <!-- Leaderboard list -->
+          <div class="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-5 space-y-3.5">
+            <h3 class="text-xs uppercase tracking-wider font-extrabold font-mono text-[#d4af37]">National Leaderboard Preview</h3>
+            
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between text-xs bg-white/5 p-2 rounded-lg">
+                <span class="font-bold flex items-center gap-2"><span>1.</span> Chidi Kalu 🇳🇬</span>
+                <span class="font-mono font-bold text-[#d4af37]">1,450 XP</span>
+              </div>
+              <div class="flex items-center justify-between text-xs p-2">
+                <span class="font-medium flex items-center gap-2"><span>2.</span> Ama Afriyie 🇬🇭</span>
+                <span class="font-mono text-slate-300">1,320 XP</span>
+              </div>
+              <div class="flex items-center justify-between text-xs p-2">
+                <span class="font-medium flex items-center gap-2"><span>3.</span> Kwame Boakye 🇬🇭</span>
+                <span class="font-mono text-slate-300">1,280 XP</span>
+              </div>
+              <div class="flex items-center justify-between text-xs p-2">
+                <span class="font-medium flex items-center gap-2"><span>4.</span> Funke Okeke 🇳🇬</span>
+                <span class="font-mono text-slate-300">1,190 XP</span>
+              </div>
+              <div class="flex items-center justify-between text-xs border-t border-white/15 pt-2 mt-2">
+                <span class="font-semibold text-[#d4af37] flex items-center gap-2"><span>5.</span> You 🇳🇬</span>
+                <span class="text-[10px] uppercase font-bold tracking-wider font-mono">Join to compete</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stat bottom text -->
+          <p class="text-xs text-slate-300 font-medium flex items-center gap-2">
+            <span>🌍</span> <span><strong>4,200 students</strong> already registered across 6 African countries</span>
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER BAR -->
+    <footer class="lg:hidden bg-slate-900 text-slate-500 py-6 px-6 md:px-12 border-t border-slate-800 z-10 text-xs">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>&copy; 2025 La Plume Africa. All rights reserved.</div>
+        <div class="flex gap-6 uppercase font-bold tracking-widest text-[10px]">
+          <span>WAEC/WASSCE Ready</span>
+          <span class="text-slate-400">Built in Africa 🌍</span>
+        </div>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-white transition-colors">About</a>
+          <a href="#" class="hover:text-white transition-colors">Privacy</a>
+          <a href="#" class="hover:text-white transition-colors">Terms</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+      // Toggle Password Visibility
+      function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (input.type === 'password') {
+          input.type = 'text';
+          // change to eye-off svg
+          icon.innerHTML = '<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/>';
+        } else {
+          input.type = 'password';
+          // change back to eye svg
+          icon.innerHTML = '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>';
+        }
+      }
+
+      // Password Strength Engine
+      const passwordInput = document.getElementById('password');
+      const seg1 = document.getElementById('strengthSeg1');
+      const seg2 = document.getElementById('strengthSeg2');
+      const seg3 = document.getElementById('strengthSeg3');
+      const strengthText = document.getElementById('strengthText');
+
+      passwordInput.addEventListener('input', function() {
+        const val = passwordInput.value;
+        let score = 0;
+        
+        if (val.length >= 6) score += 1;
+        if (/[A-Z]/.test(val)) score += 1;
+        if (/[0-9]/.test(val)) score += 1;
+        if (/[^A-Za-z0-9]/.test(val)) score += 1;
+
+        // Reset segments to default
+        seg1.className = 'h-full rounded-full bg-slate-100 transition-all duration-300';
+        seg2.className = 'h-full rounded-full bg-slate-100 transition-all duration-300';
+        seg3.className = 'h-full rounded-full bg-slate-100 transition-all duration-300';
+
+        if (val.length === 0) {
+          strengthText.innerText = 'Strength: Empty';
+          strengthText.className = 'text-slate-400 font-semibold';
+        } else if (score <= 1) {
+          seg1.className = 'h-full rounded-full bg-red-500 transition-all duration-300';
+          strengthText.innerText = 'Strength: Weak ⚠️';
+          strengthText.className = 'text-red-500 font-bold';
+        } else if (score === 2 || score === 3) {
+          seg1.className = 'h-full rounded-full bg-amber-500 transition-all duration-300';
+          seg2.className = 'h-full rounded-full bg-amber-500 transition-all duration-300';
+          strengthText.innerText = 'Strength: Medium ⚡';
+          strengthText.className = 'text-amber-500 font-bold';
+        } else {
+          seg1.className = 'h-full rounded-full bg-green-500 transition-all duration-300';
+          seg2.className = 'h-full rounded-full bg-green-500 transition-all duration-300';
+          seg3.className = 'h-full rounded-full bg-green-500 transition-all duration-300';
+          strengthText.innerText = 'Strength: Strong 🎉';
+          strengthText.className = 'text-green-500 font-bold';
+        }
+      });
+
+      // Google Continue mockup handler
+      function handleGoogleContinue() {
+        // Redirect to verification with dummy email
+        window.location.href = '/verify-email.html?email=google.student@laplume.africa';
+      }
+
+      // Form validation & navigation logic
+      const form = document.getElementById('registrationForm');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let isValid = true;
+        
+        // fields definitions
+        const fullName = document.getElementById('fullName');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const school = document.getElementById('school');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const terms = document.getElementById('terms');
+
+        // Reset errors
+        document.querySelectorAll('[id$="Error"]').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('input').forEach(el => el.classList.remove('border-red-500'));
+
+        // Full name
+        if (!fullName.value.trim()) {
+          document.getElementById('fullNameError').classList.remove('hidden');
+          fullName.classList.add('border-red-500');
+          isValid = false;
+        }
+
+        // Email check
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.value.trim())) {
+          document.getElementById('emailError').classList.remove('hidden');
+          email.classList.add('border-red-500');
+          isValid = false;
+        }
+
+        // Phone check
+        if (!phone.value.trim()) {
+          document.getElementById('phoneError').classList.remove('hidden');
+          phone.classList.add('border-red-500');
+          isValid = false;
+        }
+
+        // School check
+        if (!school.value.trim()) {
+          document.getElementById('schoolError').classList.remove('hidden');
+          school.classList.add('border-red-500');
+          isValid = false;
+        }
+
+        // Password length
+        if (password.value.length < 6) {
+          document.getElementById('passwordError').classList.remove('hidden');
+          password.classList.add('border-red-500');
+          isValid = false;
+        }
+
+        // Password match
+        if (password.value !== confirmPassword.value) {
+          document.getElementById('confirmPasswordError').classList.remove('hidden');
+          confirmPassword.classList.add('border-red-500');
+          isValid = false;
+        }
+
+        // Terms checked
+        if (!terms.checked) {
+          document.getElementById('termsError').classList.remove('hidden');
+          isValid = false;
+        }
+
+        // Redirect on successful local validation
+        if (isValid) {
+          window.location.href = '/verify-email.html?email=' + encodeURIComponent(email.value.trim());
+        }
+      });
+    </script>
+  </body>
+</html>

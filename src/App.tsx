@@ -395,13 +395,19 @@ export default function App() {
           </div>
 
           {/* CTA Right */}
-          <div className="hidden md:flex items-center gap-4">
-            <button
-              onClick={() => setRegOpen(true)}
-              className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-bg)] font-bold px-6 py-2.5 rounded-lg transition-all duration-300 transform hover:scale-[1.02] shadow-md shadow-[var(--color-primary)]/10 cursor-pointer text-sm"
+          <div className="hidden md:flex items-center gap-3">
+            <a
+              href="/login.html"
+              className="border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 font-bold px-5 py-2 rounded-lg transition-all duration-300 text-sm"
+            >
+              Sign In
+            </a>
+            <a
+              href="/register.html"
+              className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-bg)] font-bold px-6 py-2.5 rounded-lg transition-all duration-300 transform hover:scale-[1.02] shadow-md shadow-[var(--color-primary)]/10 text-sm"
             >
               Join Cohort 1
-            </button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -458,15 +464,20 @@ export default function App() {
               >
                 FAQ
               </a>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setRegOpen(true);
-                }}
+              <a
+                href="/login.html"
+                onClick={() => setMobileMenuOpen(false)}
+                className="border-2 border-[var(--color-primary)] text-[var(--color-primary)] font-bold px-5 py-2.5 rounded-lg text-center text-sm"
+              >
+                Sign In
+              </a>
+              <a
+                href="/register.html"
+                onClick={() => setMobileMenuOpen(false)}
                 className="bg-[var(--color-primary)] text-[var(--color-bg)] font-bold px-5 py-2.5 rounded-lg text-center text-sm"
               >
                 Join Cohort 1
-              </button>
+              </a>
             </motion.div>
           )}
         </AnimatePresence>
@@ -521,12 +532,12 @@ export default function App() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center gap-4 mb-8 w-full sm:w-auto px-4"
           >
-            <button
-              onClick={() => setRegOpen(true)}
-              className="w-full sm:w-auto px-8 py-4 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-bg)] font-bold text-base md:text-lg rounded-xl shadow-xl shadow-[var(--color-primary)]/10 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer"
+            <a
+              href="/register.html"
+              className="w-full sm:w-auto px-8 py-4 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-bg)] font-bold text-base md:text-lg rounded-xl shadow-xl shadow-[var(--color-primary)]/10 transition-all duration-300 transform hover:scale-[1.02] text-center"
             >
               Join Cohort 1 — Free
-            </button>
+            </a>
             <a
               href="#how-it-works"
               className="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-[var(--color-border)] hover:border-[var(--color-text-primary)] hover:bg-[var(--color-text-primary)]/5 text-[var(--color-text-primary)] font-bold text-base md:text-lg rounded-xl transition-all duration-300 text-center"
@@ -749,12 +760,12 @@ export default function App() {
             🌍 4,200 students already registered
           </p>
 
-          <button
-            onClick={() => setRegOpen(true)}
-            className="px-8 py-4 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-bg)] font-bold text-base rounded-xl shadow-xl shadow-[var(--color-primary)]/10 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer"
+          <a
+            href="/register.html"
+            className="px-8 py-4 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-bg)] font-bold text-base rounded-xl shadow-xl shadow-[var(--color-primary)]/10 transition-all duration-300 transform hover:scale-[1.02] text-center inline-block"
           >
             Secure Your Spot Now
-          </button>
+          </a>
         </div>
       </motion.section>
 
@@ -1276,12 +1287,12 @@ export default function App() {
               </div>
             </div>
 
-            <button
-              onClick={() => setRegOpen(true)}
-              className="w-full py-4 bg-[var(--color-border)] hover:bg-[var(--color-border)]/80 text-[var(--color-text-primary)] font-bold text-sm rounded-xl transition-all duration-300 text-center cursor-pointer"
+            <a
+              href="/register.html"
+              className="w-full py-4 bg-[var(--color-border)] hover:bg-[var(--color-border)]/80 text-[var(--color-text-primary)] font-bold text-sm rounded-xl transition-all duration-300 text-center inline-block"
             >
               Get Started Free
-            </button>
+            </a>
           </div>
 
           {/* PREMIUM CARD */}
@@ -1328,15 +1339,12 @@ export default function App() {
               </div>
             </div>
 
-            <button
-              onClick={() => {
-                setRegOpen(true);
-                setRegFormData((prev) => ({ ...prev, country: "Nigeria 🇳🇬" }));
-              }}
-              className="w-full py-4 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-bg)] font-bold text-sm rounded-xl transition-all duration-300 text-center shadow-lg shadow-[var(--color-primary)]/10 cursor-pointer"
+            <a
+              href="/register.html"
+              className="w-full py-4 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-bg)] font-bold text-sm rounded-xl transition-all duration-300 text-center shadow-lg shadow-[var(--color-primary)]/10 inline-block"
             >
               Join Premium
-            </button>
+            </a>
           </div>
 
         </div>
@@ -1412,12 +1420,12 @@ export default function App() {
             The preparation starts here.
           </p>
 
-          <button
-            onClick={() => setRegOpen(true)}
-            className="px-10 py-5 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-bg)] font-bold text-base md:text-lg rounded-xl shadow-xl shadow-[var(--color-primary)]/10 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer mb-6"
+          <a
+            href="/register.html"
+            className="px-10 py-5 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-bg)] font-bold text-base md:text-lg rounded-xl shadow-xl shadow-[var(--color-primary)]/10 transition-all duration-300 transform hover:scale-[1.02] text-center inline-block mb-6"
           >
             Join Cohort 1 — Register Free
-          </button>
+          </a>
 
           <p className="text-xs font-semibold uppercase tracking-wider font-mono text-[var(--color-text-muted)]">
             🌍 Built in Africa. For Africa.

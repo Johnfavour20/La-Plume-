@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Email | La Plume - Africa's #1 French WAEC Prep</title>
+    <!-- Google Fonts Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 Browser Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style>
+      :root {
+        /* Professional Polish Theme Colors mapping to exact variables */
+        --color-bg: #f8fafc;
+        --color-card: #ffffff;
+        --color-primary: #1e3a8a;
+        --color-primary-hover: #1e40af;
+        --color-text-primary: #0f172a;
+        --color-text-muted: #475569;
+        --color-accent-red: #dc2626;
+        --color-border: #e2e8f0;
+        --color-grid-line: #e2e8f0;
+        --color-gold: #d4af37;
+        --color-gold-glow: rgba(212, 175, 55, 0.25);
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--color-bg);
+        color: var(--color-text-primary);
+      }
+
+      .font-display {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+
+      /* Grid Background Pattern */
+      .grid-pattern {
+        background-size: 40px 40px;
+        background-image: 
+          linear-gradient(to right, var(--color-grid-line) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--color-grid-line) 1px, transparent 1px);
+      }
+
+      /* Curved Lines/01edu-style decoration for the dark side-panel */
+      .curved-lines-bg {
+        background-color: #0f172a;
+        background-image: radial-gradient(circle at 100% 150%, #1e3a8a 24%, #0f172a 24%),
+                          radial-gradient(circle at 0% -50%, #3b82f6 15%, transparent 15%),
+                          radial-gradient(circle at 50% 50%, #1e3a8a 10%, transparent 10%);
+        background-size: 100% 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .curved-lines-bg::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0.08;
+        background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #ffffff 40px),
+                          repeating-linear-gradient(#ffffff, #ffffff);
+      }
+
+      /* Custom glass header matching the main landing page navbar */
+      .glass-nav {
+        backdrop-filter: blur(8px);
+        background: rgba(255, 255, 255, 0.85);
+        border-bottom: 1px solid var(--color-border);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col justify-between">
+    
+    <!-- TOP ANNOUNCEMENT BANNER -->
+    <div class="bg-[#1e3a8a]/10 border-b border-[#1e3a8a]/20 py-2.5 px-4 text-center z-50">
+      <div class="max-w-7xl mx-auto flex items-center justify-center gap-2 text-xs md:text-sm font-medium text-[#1e3a8a]">
+        <span>🪶</span>
+        <span>Cohort 1 is now open. Limited spots available. Register today.</span>
+      </div>
+    </div>
+
+    <!-- IDENTICAL NAVBAR -->
+    <nav class="glass-nav sticky top-0 w-full py-4 px-6 md:px-12 z-40">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <!-- Logo Left -->
+        <a href="/" class="flex items-center gap-2 group">
+          <div class="bg-[#1e3a8a] p-2 rounded-lg text-white group-hover:scale-105 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" x2="2" y1="8" y2="22"/><line x1="17.5" x2="9" y1="15" y2="23.5"/></svg>
+          </div>
+          <span class="font-display font-bold text-xl md:text-2xl tracking-tight text-[#0f172a]">
+            La Plume
+          </span>
+        </a>
+
+        <!-- Navigation Links Center -->
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-[#475569]">
+          <a href="/#home" class="hover:text-[#0f172a] transition-colors">Home</a>
+          <a href="/#how-it-works" class="hover:text-[#0f172a] transition-colors">How It Works</a>
+          <a href="/#features" class="hover:text-[#0f172a] transition-colors">Features</a>
+          <a href="/#pricing" class="hover:text-[#0f172a] transition-colors">Pricing</a>
+          <a href="/#faq" class="hover:text-[#0f172a] transition-colors">FAQ</a>
+        </div>
+
+        <!-- Join Cohort Button Right (Filled) -->
+        <div>
+          <a href="/register.html" class="inline-block bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-bold px-5 py-2.5 rounded-lg transition-all duration-300 text-sm shadow-md shadow-[#1e3a8a]/10">
+            Join Cohort 1
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN HERO SPLIT SCREEN LAYOUT -->
+    <main class="flex-grow grid grid-cols-1 lg:grid-cols-12 lg:h-[calc(100vh-112px)] relative">
+      
+      <!-- LEFT FORM SIDE: 7 columns on desktop -->
+      <section class="lg:col-span-7 flex flex-col justify-between p-6 md:p-12 lg:py-8 lg:px-16 grid-pattern relative z-10 lg:h-full lg:overflow-y-auto">
+        <!-- Spacer top -->
+        <div class="hidden lg:block"></div>
+
+        <div class="w-full max-w-[480px] mx-auto bg-white border border-[#e2e8f0] rounded-2xl p-6 md:p-10 shadow-xl shadow-slate-100/80 relative my-6 text-center animate-fade-in">
+          
+          <!-- Large Verification Icon with Animation -->
+          <div class="mb-6 flex justify-center">
+            <div class="w-20 h-20 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center text-4xl animate-bounce">
+              📬
+            </div>
+          </div>
+
+          <!-- Heading -->
+          <h1 class="font-display font-extrabold text-3xl text-[#0f172a] tracking-tight mb-3">
+            Check your inbox
+          </h1>
+
+          <!-- Subheading with Dynamic Email Insertion -->
+          <p class="text-[#475569] text-sm leading-relaxed mb-8">
+            We sent a verification link to <br />
+            <span id="targetEmail" class="font-bold text-[#0f172a] bg-slate-50 px-2 py-0.5 rounded border border-[#e2e8f0] inline-block mt-1">igboechejohn@gmail.com</span><br />
+            <span class="block mt-2">Click the link in your email to activate your La Plume account.</span>
+          </p>
+
+          <!-- Two Buttons Stacked -->
+          <div class="space-y-3">
+            <!-- Primary button: Open Gmail -->
+            <a href="https://mail.google.com" target="_blank" rel="noopener noreferrer" 
+               class="w-full py-4 bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-bold rounded-xl transition-all duration-200 transform active:scale-[0.98] cursor-pointer text-center shadow-lg shadow-[#1e3a8a]/10 flex items-center justify-center gap-2 text-sm">
+              <span>Open Gmail</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+
+            <!-- Outlined button: Resend verification email -->
+            <button id="resendBtn" onclick="handleResend()" 
+                    class="w-full py-3.5 bg-white hover:bg-slate-50 border-2 border-[#e2e8f0] text-[#0f172a] font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer text-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+              <span>Resend verification email</span>
+            </button>
+          </div>
+
+          <!-- Success Toast indicator for resending -->
+          <div id="toastMessage" class="hidden mt-4 p-3 bg-green-50 border border-green-200 text-green-800 text-xs font-semibold rounded-xl">
+            ✓ Verification email resent successfully! Check your spam folder if it doesn't arrive.
+          </div>
+
+          <!-- Small text below to go back -->
+          <p class="text-xs text-[#475569] mt-6 font-medium">
+            Wrong email? <a href="/register.html" class="font-bold text-[#1e3a8a] hover:underline">Go back</a> and register with the correct address.
+          </p>
+
+          <!-- Help Info Box Card -->
+          <div class="mt-8 bg-slate-50 border border-[#e2e8f0] rounded-xl p-4 text-left flex gap-3">
+            <span class="text-lg select-none">💡</span>
+            <div class="text-xs text-[#475569] leading-relaxed">
+              <strong class="text-[#0f172a]">Can't find the email?</strong> Check your spam or junk folder. The email comes from <a href="mailto:hello@laplume.africa" class="font-semibold text-[#1e3a8a] hover:underline">hello@laplume.africa</a>
+            </div>
+          </div>
+
+          <!-- Shortcut placeholder for developers/reviewers to login -->
+          <div class="mt-6 pt-6 border-t border-slate-100 flex items-center justify-between text-[11px] text-[#475569]">
+            <span>Developer Shortcut:</span>
+            <a href="/login.html" class="font-bold text-[#1e3a8a] hover:underline">Skip to Login &rarr;</a>
+          </div>
+
+        </div>
+
+        <!-- Integrated Footer only visible on desktop -->
+        <div class="hidden lg:flex max-w-[480px] w-full mx-auto items-center justify-between text-xs text-[#475569]/80 border-t border-[#e2e8f0]/60 pt-4 mt-6">
+          <div>&copy; 2025 La Plume Africa.</div>
+          <div class="flex gap-4">
+            <a href="#" class="hover:underline hover:text-[#1e3a8a]">About</a>
+            <a href="#" class="hover:underline hover:text-[#1e3a8a]">Privacy</a>
+            <a href="#" class="hover:underline hover:text-[#1e3a8a]">Terms</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT PANEL SIDE: 5 columns on desktop, hidden on mobile -->
+      <section class="hidden lg:col-span-5 lg:flex flex-col justify-between p-12 curved-lines-bg relative text-white lg:h-full">
+        <!-- Logo Header -->
+        <div class="flex items-center gap-2 relative z-10">
+          <div class="bg-white/10 backdrop-blur-md p-2 rounded-lg text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" x2="2" y1="8" y2="22"/><line x1="17.5" x2="9" y1="15" y2="23.5"/></svg>
+          </div>
+          <span class="font-display font-bold text-xl tracking-tight">La Plume</span>
+        </div>
+
+        <!-- French Quote in Middle -->
+        <div class="space-y-4 max-w-sm relative z-10 my-auto">
+          <p class="text-3xl font-display font-extrabold leading-tight text-white italic">
+            &quot;La patience est amère, mais son fruit est doux.&quot;
+          </p>
+          <div class="h-1 w-12 bg-[#d4af37]"></div>
+          <p class="text-base text-slate-300 font-medium">
+            &quot;Patience is bitter, but its fruit is sweet.&quot;
+          </p>
+        </div>
+
+        <!-- Stats display and social join info -->
+        <div class="space-y-6 relative z-10 mt-auto">
+          <!-- Stat cards container -->
+          <div class="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-5 space-y-4">
+            <h3 class="text-xs uppercase tracking-wider font-extrabold font-mono text-[#d4af37]">La Plume Standards</h3>
+            
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div class="bg-white/5 p-3 rounded-xl border border-white/5">
+                <span class="text-lg block mb-1">🎯</span>
+                <span class="text-slate-300 block text-[10px] uppercase font-semibold">WAEC French</span>
+                <span class="font-bold text-white text-sm">A1 Target curriculum</span>
+              </div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/5">
+                <span class="text-lg block mb-1">🤖</span>
+                <span class="text-slate-300 block text-[10px] uppercase font-semibold">AI Grading</span>
+                <span class="font-bold text-white text-sm">Instant Feedback</span>
+              </div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/5">
+                <span class="text-lg block mb-1">🗣️</span>
+                <span class="text-slate-300 block text-[10px] uppercase font-semibold">Oral Skills</span>
+                <span class="font-bold text-white text-sm">Native Pronunciation</span>
+              </div>
+              <div class="bg-white/5 p-3 rounded-xl border border-white/5">
+                <span class="text-lg block mb-1">📝</span>
+                <span class="text-slate-300 block text-[10px] uppercase font-semibold">Past Papers</span>
+                <span class="font-bold text-white text-sm">15+ Years Solved</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom CTA reminder -->
+          <p class="text-xs text-slate-300 font-medium flex items-center gap-2">
+            <span>🎉</span> <span>Join <strong>4,200+ students</strong> already thriving inside.</span>
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER BAR -->
+    <footer class="lg:hidden bg-slate-900 text-slate-500 py-6 px-6 md:px-12 border-t border-slate-800 z-10 text-xs">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>&copy; 2025 La Plume Africa. All rights reserved.</div>
+        <div class="flex gap-6 uppercase font-bold tracking-widest text-[10px]">
+          <span>WAEC/WASSCE Ready</span>
+          <span class="text-slate-400">Built in Africa 🌍</span>
+        </div>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-white transition-colors">About</a>
+          <a href="#" class="hover:text-white transition-colors">Privacy</a>
+          <a href="#" class="hover:text-white transition-colors">Terms</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+      // Retrieve email from URL query string if present
+      window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const email = params.get('email');
+        if (email) {
+          document.getElementById('targetEmail').innerText = email;
+        }
+      });
+
+      // Handle Resend simulation
+      function handleResend() {
+        const resendBtn = document.getElementById('resendBtn');
+        const toastMessage = document.getElementById('toastMessage');
+        
+        resendBtn.disabled = true;
+        resendBtn.innerHTML = 'Sending...';
+        
+        setTimeout(() => {
+          resendBtn.disabled = false;
+          resendBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg><span>Resend verification email</span>';
+          toastMessage.classList.remove('hidden');
+          
+          // Auto-hide toast after 5 seconds
+          setTimeout(() => {
+            toastMessage.classList.add('hidden');
+          }, 5000);
+        }, 1200);
+      }
+    </script>
+  </body>
+</html>
