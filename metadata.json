@@ -1,0 +1,6 @@
+{
+  "name": "La Plume",
+  "description": "Africa's first French exam preparation bootcamp platform for WAEC/WASSCE students across Anglophone Africa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
