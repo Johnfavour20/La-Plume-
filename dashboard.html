@@ -14,6 +14,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     
     <style>
+      @theme {
+        --color-gold: #d4af37;
+        --color-gold-hover: #bfa030;
+      }
+
       :root {
         --bg-primary: #f8fafc;
         --bg-secondary: #f1f5f9;
@@ -57,11 +62,19 @@
       /* Custom utility integrations with variables */
       .bg-app-primary { background-color: var(--bg-primary); }
       .bg-app-secondary { background-color: var(--bg-secondary); }
-      .bg-app-card { background-color: var(--bg-card); }
+      .bg-app-card { 
+        background-color: var(--bg-card); 
+        border-radius: 0px !important; 
+        box-shadow: none !important;
+      }
       .text-app-primary { color: var(--text-primary); }
       .text-app-secondary { color: var(--text-secondary); }
       .border-app { border-color: var(--border); }
-      .shadow-app { box-shadow: var(--card-shadow); }
+      .shadow-app { box-shadow: none !important; }
+
+      .bg-gold { background-color: var(--accent-gold); }
+      .text-gold { color: var(--accent-gold); }
+      .border-gold { border-color: var(--accent-gold); }
 
       /* Sidebar is always static dark navy */
       .sidebar-bg-static {
@@ -97,7 +110,7 @@
         <!-- Left: Logo and name -->
         <div class="flex items-center gap-3">
           <!-- Mobile Sidebar Toggle -->
-          <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 hover:bg-app-secondary rounded-lg text-app-secondary transition-colors" id="mobile-menu-btn">
+          <button onclick="toggleMobileSidebar()" class="md:hidden p-2 hover:bg-app-secondary rounded-lg text-app-secondary transition-colors" id="mobile-menu-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
           </button>
           
@@ -115,7 +128,7 @@
         </div>
 
         <!-- Center: Search bar on desktop -->
-        <div class="hidden lg:flex items-center flex-1 max-w-md mx-8">
+        <div class="hidden md:flex items-center flex-1 max-w-md mx-8">
           <div class="relative w-full">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-app-secondary">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
@@ -186,7 +199,7 @@
     <div class="flex-grow pt-16 flex relative">
       
       <!-- SIDEBAR (fixed left, always dark navy) -->
-      <aside id="sidebar-container" class="fixed top-16 bottom-0 left-0 w-[240px] sidebar-bg-static border-r border-slate-800 z-30 transition-all duration-300 transform -translate-x-full lg:translate-x-0 flex flex-col justify-between overflow-y-auto">
+      <aside id="sidebar-container" class="fixed top-16 bottom-0 left-0 w-[240px] sidebar-bg-static border-r border-slate-800 z-30 transition-all duration-300 transform -translate-x-full md:translate-x-0 flex flex-col justify-between overflow-y-auto">
         
         <div class="p-5 space-y-6">
           
@@ -285,7 +298,7 @@
       </aside>
 
       <!-- MAIN CONTENT FRAME -->
-      <main class="flex-grow lg:pl-[240px] p-4 md:p-8 space-y-6 pb-24 lg:pb-12 transition-all duration-300">
+      <main class="flex-grow md:pl-[240px] p-4 md:p-8 space-y-6 pb-24 md:pb-12 transition-all duration-300">
         
         <!-- SECTION 1 — WELCOME BANNER (full width card) -->
         <section id="welcome-banner" class="bg-app-card border border-app rounded-2xl p-6 md:p-8 shadow-app relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all duration-300">
@@ -434,22 +447,22 @@
                 <!-- Rédaction -->
                 <div class="space-y-1.5">
                   <div class="flex justify-between text-xs font-semibold text-app-primary">
-                    <span class="flex items-center gap-1.5">Rédaction <span class="text-app-secondary">○</span></span>
+                    <span class="flex items-center gap-1.5">Rédaction <span class="text-orange-500 font-bold">○</span></span>
                     <span class="font-bold">45%</span>
                   </div>
                   <div class="h-2 w-full bg-app-secondary rounded-full overflow-hidden">
-                    <div class="h-full bg-[#1e3a8a] rounded-full" style="width: 45%"></div>
+                    <div class="h-full bg-orange-500 rounded-full" style="width: 45%"></div>
                   </div>
                 </div>
 
                 <!-- Oral -->
                 <div class="space-y-1.5">
                   <div class="flex justify-between text-xs font-semibold text-app-primary">
-                    <span class="flex items-center gap-1.5">Oral <span class="text-app-secondary">○</span></span>
+                    <span class="flex items-center gap-1.5">Oral <span class="text-orange-500 font-bold">○</span></span>
                     <span class="font-bold" id="oral-progress-value">30%</span>
                   </div>
                   <div class="h-2 w-full bg-app-secondary rounded-full overflow-hidden">
-                    <div class="h-full bg-[#1e3a8a] rounded-full transition-all duration-500" style="width: 30%" id="oral-progress-bar"></div>
+                    <div class="h-full bg-orange-500 rounded-full transition-all duration-500" style="width: 30%" id="oral-progress-bar"></div>
                   </div>
                 </div>
               </div>
@@ -1046,10 +1059,7 @@
                   <p class="text-xs text-app-secondary">Gagnez des titres pour vos victoires</p>
                 </div>
                 
-                <!-- Toggle Button to test empty state vs populated -->
-                <button onclick="toggleBadgesState()" class="p-1 px-2.5 bg-app-secondary hover:bg-[#d4af37]/10 border border-app text-app-secondary hover:text-gold text-[9px] font-extrabold uppercase tracking-wider rounded-md transition-colors" title="Simuler l'absence de données">
-                  Simuler Vide
-                </button>
+
               </div>
 
               <!-- STATE A: Populated badges state -->
@@ -1171,7 +1181,7 @@
     </div>
 
     <!-- BOTTOM NAVIGATION (mobile only) -->
-    <nav class="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-app-card border-t border-app shadow-xl z-40 flex items-center justify-around transition-all duration-300">
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-app-card border-t border-app shadow-xl z-40 flex items-center justify-around transition-all duration-300">
       
       <!-- Home tab -->
       <button onclick="switchTabMobile('dashboard', this)" class="flex flex-col items-center justify-center gap-0.5 text-[#d4af37] font-bold">
