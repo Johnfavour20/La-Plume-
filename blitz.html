@@ -1,0 +1,1271 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Le Blitz | La Plume - Préparation WAEC French</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 Browser Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style>
+      @theme {
+        --color-gold: #d4af37;
+        --color-gold-hover: #bfa030;
+      }
+
+      :root {
+        /* ALWAYS Dark theme in the Arena */
+        --bg-primary: #05070c; /* Deep black-navy */
+        --bg-secondary: #0a0e1a; /* Darker navy */
+        --bg-card: #111625; /* Slate dark card */
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --accent-gold: #d4af37;
+        --accent-gold-hover: #bfa030;
+        --accent-red: #ef4444;
+        --accent-green: #10b981;
+        --border: #1e293b;
+        --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .font-display {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+
+      /* Custom utility integrations with variables */
+      .bg-app-primary { background-color: var(--bg-primary); }
+      .bg-app-secondary { background-color: var(--bg-secondary); }
+      .bg-app-card { background-color: var(--bg-card); }
+      .text-app-primary { color: var(--text-primary); }
+      .text-app-secondary { color: var(--text-secondary); }
+      .border-app { border-color: var(--border); }
+
+      .bg-gold { background-color: var(--accent-gold); }
+      .text-gold { color: var(--accent-gold); }
+      .border-gold { border-color: var(--accent-gold); }
+
+      /* Sidebar & Left Panel static dark navy background */
+      .sidebar-bg-static {
+        background-color: #05070c;
+        color: #ffffff;
+      }
+
+      /* Grid pattern matching landing pages */
+      .grid-pattern {
+        background-size: 30px 30px;
+        background-image: 
+          linear-gradient(to right, rgba(30, 41, 59, 0.4) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(30, 41, 59, 0.4) 1px, transparent 1px);
+        opacity: 0.6;
+      }
+
+      /* Scrollbar removal */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Circular Progress ring transitions */
+      .progress-ring__circle {
+        transition: stroke-dashoffset 0.3s linear;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+      }
+
+      /* Pulsing animations for active items */
+      @keyframes active-pulse {
+        0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+        50% { transform: scale(1.15); box-shadow: 0 0 12px 6px rgba(255, 255, 255, 0.2); }
+      }
+      .pulse-active {
+        animation: active-pulse 1.8s infinite ease-in-out;
+      }
+
+      @keyframes red-pulse {
+        0%, 100% { color: #f8fafc; text-shadow: 0 0 0 rgba(239, 68, 68, 0); }
+        50% { color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.6); }
+      }
+      .pulse-red-timer {
+        animation: red-pulse 1s infinite ease-in-out;
+      }
+
+      /* Floating point gains */
+      @keyframes float-xp {
+        0% { transform: translateY(0) scale(1); opacity: 0; }
+        20% { opacity: 1; }
+        80% { opacity: 1; }
+        100% { transform: translateY(-40px) scale(1.1); opacity: 0; }
+      }
+      .animate-float-xp {
+        animation: float-xp 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      }
+
+      /* Slide-up option transition */
+      .option-card {
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col relative overflow-hidden bg-app-primary">
+
+    <!-- GRID BACKGROUND PATTERN -->
+    <div class="absolute inset-0 grid-pattern pointer-events-none z-0"></div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed top-20 right-4 z-50 pointer-events-none flex flex-col gap-2"></div>
+
+    <!-- FLASH SCREEN OVERLAYS FOR CORRECT / INCORRECT -->
+    <div id="correct-flash" class="hidden fixed inset-0 z-50 flex flex-col items-center justify-center bg-emerald-950/95 transition-opacity duration-300">
+      <div class="text-center space-y-4 scale-90 animate-fade-in">
+        <div class="inline-flex p-6 rounded-full bg-emerald-500/20 border-2 border-emerald-500/40 text-emerald-400 text-6xl shadow-2xl shadow-emerald-500/20">
+          ✓
+        </div>
+        <h2 class="font-display font-black text-4xl md:text-5xl text-emerald-400 tracking-tight">✓ RÉUSSI!</h2>
+        <div class="text-2xl md:text-3xl font-display font-black text-gold animate-bounce">+50 XP</div>
+      </div>
+    </div>
+
+    <div id="incorrect-flash" class="hidden fixed inset-0 z-50 flex flex-col items-center justify-center bg-red-950/95 transition-opacity duration-300">
+      <div class="text-center space-y-4 scale-90 animate-fade-in">
+        <div class="inline-flex p-6 rounded-full bg-red-500/20 border-2 border-red-500/40 text-red-500 text-6xl shadow-2xl shadow-red-500/20">
+          ✗
+        </div>
+        <h2 class="font-display font-black text-4xl md:text-5xl text-red-500 tracking-tight">✗ INCORRECT</h2>
+        <div class="text-lg md:text-xl text-slate-300 font-medium" id="incorrect-correction-text">
+          La bonne réponse était : A
+        </div>
+      </div>
+    </div>
+
+    <!-- TOPBAR (Same structure as dashboard, always dark) -->
+    <header id="topbar-header" class="relative w-full h-16 bg-[#0a0e1a]/95 border-b border-slate-800 z-40 transition-all duration-300">
+      <div class="h-full px-4 md:px-8 flex items-center justify-between">
+        
+        <!-- Left: Logo & Badge -->
+        <div class="flex items-center gap-3">
+          <!-- Mobile Toggle for main sidebar -->
+          <button onclick="toggleMobileSidebar()" class="md:hidden p-2 hover:bg-slate-800 rounded-lg text-slate-300 transition-colors" title="Toggle Sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+          
+          <a href="/dashboard.html" class="flex items-center gap-2 group">
+            <div class="bg-[#1e3a8a] p-1.5 rounded-lg text-white group-hover:scale-105 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" x2="2" y1="8" y2="22"/><line x1="17.5" x2="9" y1="15" y2="23.5"/></svg>
+            </div>
+            <span class="font-display font-bold text-lg md:text-xl tracking-tight text-white">
+              La Plume
+            </span>
+          </a>
+          <span class="hidden md:inline-block text-[10px] uppercase tracking-wider font-extrabold font-mono bg-[#d4af37]/20 text-[#d4af37] px-2 py-0.5 rounded-md border border-[#d4af37]/30">
+            ÉLÈVE · COHORTE 1
+          </span>
+        </div>
+
+        <!-- Center: Arena Status / Title (Updates dynamically based on active state) -->
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest font-mono flex items-center gap-2">
+          <span id="topbar-status-emoji">⚡</span>
+          <span id="topbar-status-text">Arène Le Blitz</span>
+        </div>
+
+        <!-- Right: Actions & Profile -->
+        <div class="flex items-center gap-3">
+          
+          <!-- Indicator of permanent Dark mode in Arena -->
+          <span class="hidden lg:inline-flex items-center gap-1.5 bg-slate-800 text-slate-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-slate-700">
+            <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+            MODE ARÈNE ACTIF
+          </span>
+
+          <button onclick="showNotificationToast('Aucune nouvelle notification pour le moment.', '🔔')" class="p-2.5 hover:bg-slate-800 rounded-xl text-slate-300 transition-all relative group" title="Notifications">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+          </button>
+
+          <!-- User Avatar -->
+          <div class="relative">
+            <button onclick="toggleProfileDropdown()" class="flex items-center gap-2 p-1.5 hover:bg-slate-800 rounded-xl transition-all" id="profileMenuButton">
+              <div class="w-8 h-8 rounded-lg bg-[#d4af37] text-[#0f172a] font-bold flex items-center justify-center font-display text-sm tracking-tight shadow-sm shadow-[#d4af37]/30">
+                JI
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            
+            <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-56 bg-[#111625] border border-slate-800 rounded-2xl shadow-2xl z-50 py-2 text-left">
+              <div class="px-4 py-3 border-b border-slate-800">
+                <p class="text-xs text-slate-400 font-medium">Connecté en tant que</p>
+                <p class="text-sm font-bold text-white truncate">Johnfavour Igboeche</p>
+                <p class="text-[10px] font-mono text-slate-400">igboechejohn@gmail.com</p>
+              </div>
+              <a href="/dashboard.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-white hover:bg-slate-800 transition-colors">
+                <svg class="text-slate-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/></svg>
+                <span>Tableau de Bord</span>
+              </a>
+              <a href="/cours.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-white hover:bg-slate-800 transition-colors">
+                <svg class="text-slate-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
+                <span>Mes Cours</span>
+              </a>
+              <hr class="border-slate-800 my-1">
+              <a href="/login.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-500/10 transition-colors font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/></svg>
+                <span>Se déconnecter</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- CORE INTERACTION VIEWPORT -->
+    <div class="flex-grow flex relative">
+
+      <!-- LEFT SIDEBAR (fixed, dark navy) -->
+      <aside id="sidebar-container" class="fixed top-16 bottom-0 left-0 w-[240px] sidebar-bg-static border-r border-slate-800 z-30 transition-all duration-300 transform -translate-x-full md:translate-x-0 flex flex-col justify-between overflow-y-auto">
+        <div class="p-5 space-y-6">
+          
+          <!-- Student Avatar status -->
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center text-center relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-20 h-20 bg-[#d4af37]/10 rounded-full blur-xl"></div>
+            <div class="w-14 h-14 rounded-2xl bg-[#d4af37] text-slate-950 font-black text-lg flex items-center justify-center font-display mb-3 shadow-md shadow-[#d4af37]/20 relative z-10">
+              JI
+            </div>
+            <h3 class="font-display font-bold text-sm text-white tracking-tight truncate w-full">Johnfavour Igboeche</h3>
+            <p class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mb-2.5">UniPort Student 🎓</p>
+            
+            <div class="inline-flex items-center gap-1.5 bg-white/10 px-2.5 py-1 rounded-full text-xs font-semibold text-slate-200">
+              <span>Nigeria 🇳🇬</span>
+            </div>
+
+            <div class="w-full mt-4 pt-4 border-t border-white/5 text-left space-y-1.5">
+              <div class="flex justify-between text-[10px] font-bold tracking-wide uppercase text-slate-400">
+                <span>Cohorte 1</span>
+                <span>Jour 12 de 30</span>
+              </div>
+              <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-[#d4af37] rounded-full transition-all duration-500" style="width: 40%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation Links -->
+          <nav class="space-y-1">
+            <a href="/dashboard.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+              <span>Tableau de bord</span>
+            </a>
+            
+            <a href="/cours.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+              <span>Mes Cours</span>
+            </a>
+
+            <a href="/blitz.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-[#d4af37] bg-white/10 transition-all duration-200 animate-pulse">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Le Blitz</span>
+            </a>
+
+            <a href="/dashboard.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>Examens du Vendredi</span>
+            </a>
+
+            <a href="/dashboard.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5"/></svg>
+              <span>Classement</span>
+            </a>
+
+            <a href="/journey.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Parcours</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Sidebar bottom -->
+        <div class="p-5 border-t border-slate-800 space-y-4">
+          <div class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-widest font-mono">
+            <span>Built in Africa 🌍</span>
+          </div>
+          <a href="/login.html" class="flex items-center justify-center gap-2 w-full py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-xs font-bold uppercase transition-all">
+            <span>Se déconnecter</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- MOBILE SIDEBAR BACKDROP -->
+      <div id="mobile-sidebar-backdrop" onclick="toggleMobileSidebar()" class="hidden fixed inset-0 bg-black/70 z-20 md:hidden transition-all duration-300"></div>
+
+      <!-- MAIN ARENA WORKSPACE -->
+      <main class="flex-grow md:pl-[240px] p-4 md:p-8 flex flex-col justify-start relative z-10 overflow-y-auto h-[calc(100vh-4rem)]">
+        
+        <!-- ============================================= -->
+        <!-- STATE 1: PRE-BLITZ LOBBY CONTAINER (Visible by default) -->
+        <!-- ============================================= -->
+        <section id="lobby-container" class="max-w-4xl mx-auto w-full py-6 md:py-12 space-y-8 block">
+          
+          <div class="text-center space-y-2">
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 text-red-400 border border-red-500/20 rounded-full text-xs font-extrabold uppercase tracking-widest font-mono animate-pulse">
+              <span>⚡ LE BLITZ DE LA PLUME</span>
+            </div>
+            <h1 class="font-display font-black text-4xl md:text-6xl text-white tracking-tight">Le Blitz</h1>
+            <p class="text-slate-400 font-semibold text-sm md:text-base">Session Quotidienne · Défi de Rapidité et Précision de 16h00</p>
+          </div>
+
+          <!-- Countdown timer to 16:00 (Starts counting on DOM Load) -->
+          <div class="bg-[#0b0f19] border border-slate-800 rounded-3xl p-6 md:p-8 text-center space-y-4 shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-12 -left-12 w-28 h-28 bg-[#d4af37]/10 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-12 -right-12 w-28 h-28 bg-red-500/5 rounded-full blur-2xl"></div>
+            
+            <p class="text-slate-400 font-semibold text-xs md:text-sm tracking-wider uppercase font-mono">La session commence dans :</p>
+            <div class="font-display font-black text-5xl md:text-7xl tracking-widest text-white flex items-center justify-center gap-1 font-mono" id="lobby-countdown">
+              00:23:41
+            </div>
+            <p class="text-xs text-slate-500 font-medium">Les serveurs du Blitz s'activent pour tous les élèves de la cohorte simultanément.</p>
+          </div>
+
+          <!-- Grid: Session Info & Rules -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Session Info Card -->
+            <div class="bg-[#111625] border border-slate-800 rounded-2xl p-6 space-y-4">
+              <h3 class="font-display font-bold text-base text-white tracking-tight flex items-center gap-2">
+                <span>📋</span> LE BLITZ QUOTIDIEN
+              </h3>
+              <hr class="border-slate-800" />
+              
+              <div class="space-y-3.5 text-sm">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400 font-medium">📋 Questions:</span>
+                  <span class="text-white font-bold font-mono">11 questions</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400 font-medium">⏱️ Temps/question:</span>
+                  <span class="text-white font-bold font-mono">15 minutes</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400 font-medium">🏆 XP maximum:</span>
+                  <span class="text-[#d4af37] font-black font-mono">+550 XP</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400 font-medium">📊 Difficulté:</span>
+                  <span class="text-red-400 font-bold uppercase text-xs tracking-wider">WAEC Standard</span>
+                </div>
+                <div class="flex justify-between items-center font-bold">
+                  <span class="text-slate-400 font-medium">🎯 Thème du jour:</span>
+                  <span class="text-white">Grammaire & Conjugaison</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Rules Section -->
+            <div class="bg-[#111625] border border-slate-800 rounded-2xl p-6 space-y-4">
+              <h3 class="font-display font-bold text-base text-white tracking-tight flex items-center gap-2">
+                <span>📜</span> Règles du Blitz
+              </h3>
+              <hr class="border-slate-800" />
+              
+              <ul class="space-y-3 text-xs md:text-sm text-slate-300 leading-relaxed list-disc list-inside">
+                <li>Chaque question a <span class="text-[#d4af37] font-semibold">15 minutes maximum</span> pour être répondue.</li>
+                <li>Si le temps expire, la question se ferme et est comptée fausse.</li>
+                <li>Vous ne pouvez pas revenir en arrière sur une question soumise.</li>
+                <li>Le score final est immédiat et définitif.</li>
+                <li>Les résultats affectent directement le classement général.</li>
+              </ul>
+              <p class="text-xs text-gold font-bold italic">Bonne chance! Montrez ce que vous valez.</p>
+            </div>
+
+          </div>
+
+          <!-- Leaderboard Preview -->
+          <div class="bg-[#111625] border border-slate-800 rounded-2xl p-6 space-y-4">
+            <h3 class="font-display font-bold text-base text-white tracking-tight flex items-center justify-between">
+              <span class="flex items-center gap-2">🏆 Meilleurs scores — Le Blitz</span>
+              <span class="text-xs text-slate-500 uppercase tracking-widest font-mono">Temps réel</span>
+            </h3>
+            <hr class="border-slate-800" />
+            
+            <div class="space-y-3">
+              <!-- Item 1 -->
+              <div class="flex items-center justify-between p-3 bg-slate-900/40 rounded-xl border border-slate-800/60 text-sm">
+                <div class="flex items-center gap-3">
+                  <span class="font-display font-black text-[#d4af37] w-5">1.</span>
+                  <span class="font-bold text-white">Chidi Kalu 🇳🇬</span>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="font-mono text-slate-300 font-semibold">11/11 correct</span>
+                  <span class="font-bold text-[#d4af37] font-mono">+550 XP</span>
+                </div>
+              </div>
+              <!-- Item 2 -->
+              <div class="flex items-center justify-between p-3 bg-slate-900/40 rounded-xl border border-slate-800/60 text-sm">
+                <div class="flex items-center gap-3">
+                  <span class="font-display font-black text-slate-400 w-5">2.</span>
+                  <span class="font-bold text-white">Ama Afriyie 🇬🇭</span>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="font-mono text-slate-300 font-semibold">10/11 correct</span>
+                  <span class="font-bold text-[#d4af37] font-mono">+500 XP</span>
+                </div>
+              </div>
+              <!-- Item 3 -->
+              <div class="flex items-center justify-between p-3 bg-slate-900/40 rounded-xl border border-slate-800/60 text-sm">
+                <div class="flex items-center gap-3">
+                  <span class="font-display font-black text-amber-700 w-5">3.</span>
+                  <span class="font-bold text-white">Kwame Boakye 🇬🇭</span>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="font-mono text-slate-300 font-semibold">9/11 correct</span>
+                  <span class="font-bold text-[#d4af37] font-mono">+450 XP</span>
+                </div>
+              </div>
+              <!-- Your best -->
+              <div class="flex items-center justify-between p-3 bg-[#d4af37]/5 rounded-xl border border-[#d4af37]/20 text-xs md:text-sm">
+                <div class="flex items-center gap-3">
+                  <span class="text-gold font-bold">★</span>
+                  <span class="font-black text-white">Votre record personnel :</span>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="font-mono text-[#d4af37] font-bold">9/11 correct</span>
+                  <span class="font-bold text-[#d4af37] font-mono">450 XP</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action buttons for start -->
+          <div class="flex flex-col items-center gap-3 pt-4">
+            <button onclick="startActiveBlitz()" class="w-full max-w-md py-4 bg-gold hover:bg-gold-hover text-slate-950 font-display font-black text-base uppercase tracking-widest rounded-2xl transition-all duration-300 shadow-xl shadow-gold/20 active:scale-95 flex items-center justify-center gap-2">
+              <span>ENTRER LE BLITZ</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+            <a href="/dashboard.html" class="text-sm font-semibold text-slate-500 hover:text-slate-300 transition-colors uppercase tracking-wider">
+              Annuler
+            </a>
+          </div>
+
+        </section>
+
+        <!-- ============================================= -->
+        <!-- STATE 2: ACTIVE BLITZ ARENA CONTAINER (Hidden by default) -->
+        <!-- ============================================= -->
+        <section id="arena-container" class="hidden w-full max-w-5xl mx-auto py-4 flex flex-col xl:flex-row gap-8 items-start">
+          
+          <!-- LEFT CORE CONTENT (Circular Timer & Question Card) -->
+          <div class="flex-grow w-full space-y-6 flex flex-col items-center">
+            
+            <!-- Circular Hero Timer Container -->
+            <div class="relative w-full max-w-md bg-[#0a0e1a] border border-slate-800 rounded-3xl p-6 flex flex-col items-center shadow-2xl overflow-hidden">
+              <div class="absolute top-2 left-4 text-[10px] font-mono font-bold text-slate-500 uppercase tracking-widest">
+                Chronomètre de Précision
+              </div>
+              
+              <!-- SVG Arena Clock Dial with 11 Nodes -->
+              <div class="relative w-[340px] h-[340px] flex items-center justify-center mt-4">
+                
+                <svg width="340" height="340" viewBox="0 0 340 340" class="absolute">
+                  <!-- Background Dial Track -->
+                  <circle cx="170" cy="170" r="130" stroke="#111827" stroke-width="8" fill="transparent" />
+                  
+                  <!-- Depleting Arena countdown ring -->
+                  <circle cx="170" cy="170" r="130" stroke="#d4af37" stroke-width="8" fill="transparent"
+                          stroke-dasharray="816.81" stroke-dashoffset="0" stroke-linecap="round"
+                          id="blitz-timer-ring" class="progress-ring__circle" />
+                </svg>
+
+                <!-- Programmatic Questions Dot Overlay -->
+                <div id="circumference-dots-wrapper" class="absolute inset-0 pointer-events-none">
+                  <!-- Generated via script to hold 11 question dots -->
+                </div>
+
+                <!-- Center metrics readout -->
+                <div class="text-center flex flex-col items-center z-10">
+                  <span class="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-widest mb-1">Temps Restant</span>
+                  <div class="font-display font-black text-5xl tracking-widest text-white font-mono leading-none" id="arena-timer-readout">
+                    14:23
+                  </div>
+                  <span class="text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-widest font-mono">pour cette question</span>
+                </div>
+
+              </div>
+
+              <!-- Overall Quest Tracker stats -->
+              <div class="w-full mt-4 pt-4 border-t border-slate-800/80 flex justify-between items-center text-xs">
+                <div class="flex items-center gap-1 text-slate-400">
+                  <span>Question</span>
+                  <span class="font-bold text-white font-mono" id="arena-current-question-ratio">3 sur 11</span>
+                </div>
+                <div class="flex items-center gap-1.5 bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded text-[10px] font-mono font-extrabold uppercase animate-pulse">
+                  <span>Temps de Réflexion Actif</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="w-full bg-[#111625] border-t-4 border-gold rounded-b-2xl rounded-t-lg p-6 md:p-8 space-y-6 shadow-2xl relative">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono font-bold text-[#d4af37] uppercase tracking-widest" id="question-card-number">QUESTION 3 DE 11</span>
+                <span class="text-[10px] bg-red-500/10 text-red-400 font-extrabold px-2.5 py-0.5 rounded-full border border-red-500/20 uppercase tracking-wider font-mono">Difficulté : Difficile (Standard WAEC)</span>
+              </div>
+
+              <div class="space-y-4">
+                <p class="text-slate-300 font-medium text-sm md:text-base leading-relaxed" id="arena-question-text">
+                  Trouvez le mode correct du verbe souligné dans cette phrase :
+                </p>
+                <div class="p-6 bg-[#0a0e1a] border border-slate-800 rounded-2xl text-center font-display font-black text-lg md:text-xl text-white tracking-wide shadow-inner">
+                  « Bien qu'il <span class="underline decoration-gold decoration-2 underline-offset-4">soit</span> fatigué, il a fini ses examens. »
+                </div>
+              </div>
+
+              <!-- Answer Option list -->
+              <div class="grid grid-cols-1 gap-3" id="arena-options-list">
+                <!-- Programmatically populated options A, B, C, D -->
+              </div>
+
+              <!-- Actions row -->
+              <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800/60">
+                <a href="#" onclick="quitBlitz()" class="text-xs font-bold text-red-400 hover:text-red-500 transition-colors uppercase tracking-wider">
+                  ⚠️ Quitter la session
+                </a>
+                <button onclick="submitArenaAnswer()" id="arena-submit-btn" disabled
+                        class="w-full md:w-auto px-10 py-3.5 bg-slate-600 text-slate-300 font-display font-black text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md cursor-not-allowed">
+                  Soumettre la réponse
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- RIGHT PANEL STATS (Desktop only, sticky status) -->
+          <aside class="hidden xl:flex w-[265px] flex-shrink-0 bg-[#111625] border border-slate-800 rounded-2xl p-6 flex-col justify-between space-y-6">
+            <div class="space-y-5">
+              <h3 class="font-display font-black text-sm text-white uppercase tracking-wider flex items-center gap-1">
+                <span>⚡</span> Statistiques Live
+              </h3>
+              <hr class="border-slate-800" />
+
+              <div class="space-y-4">
+                <!-- Session -->
+                <div class="flex flex-col">
+                  <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider font-mono">Session</span>
+                  <span class="text-sm font-bold text-white mt-0.5">Le Blitz Quotidien #12</span>
+                </div>
+
+                <!-- Live Score -->
+                <div class="flex flex-col">
+                  <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider font-mono">Score Actuel</span>
+                  <span class="text-sm font-black text-emerald-400 mt-0.5" id="right-live-score">2 / 2 correct</span>
+                </div>
+
+                <!-- XP Accumulated -->
+                <div class="flex flex-col">
+                  <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider font-mono">XP accumulé</span>
+                  <span class="text-sm font-black text-gold font-display mt-0.5" id="right-live-xp">+100 XP</span>
+                </div>
+
+                <!-- Precision rate -->
+                <div class="flex flex-col">
+                  <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider font-mono">Précision</span>
+                  <span class="text-sm font-bold text-white mt-0.5" id="right-live-precision">100%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/80 space-y-2">
+              <span class="text-[9px] font-bold text-[#d4af37] uppercase tracking-wider font-mono block">Astuce Arène</span>
+              <p class="text-[10px] text-slate-400 leading-relaxed font-medium">
+                Si vous hésitez, ne laissez pas le temps s'écouler ! Une réponse incorrecte ne vous pénalise pas, mais l'expiration automatique ferme la question.
+              </p>
+            </div>
+          </aside>
+
+        </section>
+
+        <!-- ============================================= -->
+        <!-- STATE 4: BLITZ COMPLETE / LOADING PREVIEW -->
+        <!-- ============================================= -->
+        <section id="completion-loading-container" class="hidden max-w-md mx-auto w-full py-12 text-center space-y-6">
+          <div class="bg-[#111625] border border-slate-800 rounded-3xl p-8 space-y-6 shadow-2xl relative">
+            <div class="inline-flex text-4xl animate-spin duration-1000">⚡</div>
+            <h2 class="font-display font-black text-2xl text-white">Calcul des résultats...</h2>
+            <p class="text-slate-400 text-sm">Nous analysons votre vitesse de réponse et votre précision de la session de Blitz.</p>
+            
+            <div class="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full bg-gold rounded-full transition-all duration-[3000ms]" id="results-loader-bar" style="width: 0%"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!-- STATE 5: FINAL RESULTS DISPLAY SCREEN -->
+        <!-- ============================================= -->
+        <section id="results-final-container" class="hidden max-w-2xl mx-auto w-full py-8 space-y-8">
+          
+          <div class="bg-[#111625] border-2 border-gold rounded-3xl p-8 space-y-6 shadow-2xl text-center relative overflow-hidden">
+            <div class="absolute -top-12 -left-12 w-32 h-32 bg-[#d4af37]/10 rounded-full blur-3xl"></div>
+            
+            <div class="inline-flex p-4 rounded-full bg-gold/10 text-gold text-4xl mb-2 animate-bounce">
+              ⚡
+            </div>
+            
+            <h2 class="font-display font-black text-3xl md:text-4xl text-white tracking-tight">Le Blitz terminé !</h2>
+            <p class="text-slate-400 text-sm max-w-md mx-auto">Vous avez fait face à la pression de l'arène de La Plume avec brio. Excellent travail pour avoir complété toutes les leçons !</p>
+
+            <!-- Stats grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-6 border-y border-slate-800/80 my-4 text-left">
+              
+              <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800/50">
+                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider font-mono">Score final</span>
+                <p class="font-display font-extrabold text-lg md:text-xl text-white mt-1" id="res-score-pct">87%</p>
+              </div>
+
+              <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800/50">
+                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider font-mono">XP gagné</span>
+                <p class="font-display font-extrabold text-lg md:text-xl text-[#d4af37] mt-1" id="res-xp-won">+960 XP</p>
+              </div>
+
+              <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800/50">
+                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider font-mono">Temps total</span>
+                <p class="font-display font-extrabold text-lg md:text-xl text-white mt-1" id="res-time-spent">34 minutes</p>
+              </div>
+
+              <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800/50">
+                <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider font-mono">Correctes</span>
+                <p class="font-display font-extrabold text-lg md:text-xl text-emerald-400 mt-1" id="res-ratio">7 / 8</p>
+              </div>
+
+            </div>
+
+            <!-- Call to Actions -->
+            <div class="flex flex-col gap-3 max-w-sm mx-auto pt-4">
+              <a href="/journey.html" class="py-3.5 bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-display font-black text-xs uppercase tracking-widest rounded-xl transition-all duration-300 text-center flex items-center justify-center gap-2 shadow-lg shadow-[#1e3a8a]/20">
+                <span>VOIR MON PARCOURS</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+              
+              <button onclick="restartLobby()" class="py-3.5 bg-transparent border border-slate-700 hover:border-slate-500 text-slate-300 font-display font-black text-xs uppercase tracking-widest rounded-xl transition-all duration-300">
+                Recommencer le défi
+              </button>
+
+              <a href="/dashboard.html" class="text-xs font-semibold text-slate-500 hover:text-slate-300 transition-colors uppercase tracking-wider py-2">
+                Retour au tableau de bord
+              </a>
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
+
+    <!-- MOBILE BOTTOM NAVIGATION (Matches dashboard styles) -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[#0a0e1a] border-t border-slate-800 shadow-xl z-40 flex items-center justify-around">
+      <a href="/dashboard.html" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Accueil</span>
+      </a>
+
+      <a href="/cours.html" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Cours</span>
+      </a>
+
+      <a href="/blitz.html" class="flex flex-col items-center justify-center gap-0.5 text-[#d4af37] font-bold">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span class="text-[9px] uppercase tracking-wide font-bold">Blitz</span>
+      </a>
+
+      <a href="/journey.html" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-white font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Parcours</span>
+      </a>
+    </nav>
+
+    <!-- CORE LOGIC & SOUND SIMULATIONS -->
+    <script>
+      // Full database of 11 questions
+      const questionsData = [
+        {
+          id: 1,
+          difficulty: "Facile",
+          question: "Choisissez la conjugaison appropriée au subjonctif :",
+          prompt: "Bien qu'il _______ fatigué, il a fini ses devoirs.",
+          options: ["est", "soit", "sois", "était"],
+          correct: 1, // B ("soit")
+          explanation: "Correct ! L'expression concessive 'bien que' exige l'usage du subjonctif présent → soit."
+        },
+        {
+          id: 2,
+          difficulty: "Moyen",
+          question: "Complétez la structure hypothétique correcte :",
+          prompt: "Si tu _______ plus tôt, tu aurais vu la cérémonie.",
+          options: ["serais venu", "es venu", "étais venu", "vinsse"],
+          correct: 2, // C ("étais venu")
+          explanation: "Correct ! Le système hypothétique au passé requiert l'association de 'si' + plus-que-parfait de l'indicatif → étais venu."
+        },
+        {
+          id: 3,
+          difficulty: "Difficile (Standard WAEC)",
+          question: "Trouvez le mode correct du verbe souligné dans cette phrase :",
+          prompt: "« Bien qu'il soit fatigué, il a fini ses examens. »",
+          options: ["Subjonctif Présent", "Indicatif Présent", "Conditionnel Présent", "Subjonctif Imparfait"],
+          correct: 0, // A ("Subjonctif Présent")
+          explanation: "Correct ! 'Soit' est le verbe être au Subjonctif Présent (3e personne du singulier)."
+        },
+        {
+          id: 4,
+          difficulty: "Moyen",
+          question: "Choisissez l'accord convenable pour le participe passé avec avoir :",
+          prompt: "Les pommes que j'ai _______ sont délicieuses.",
+          options: ["mangé", "mangée", "mangés", "mangées"],
+          correct: 3, // D ("mangées")
+          explanation: "Correct ! Avec l'auxiliaire avoir, le participe s'accorde avec le COD 'que' (mis pour les pommes, féminin pluriel) placé avant le verbe → mangées."
+        },
+        {
+          id: 5,
+          difficulty: "Difficile (Standard WAEC)",
+          question: "Accordez le verbe pronominal dans la phrase suivante :",
+          prompt: "Elles se sont _______ (téléphoner) hier soir.",
+          options: ["téléphoné", "téléphonée", "téléphonés", "téléphonées"],
+          correct: 0, // A ("téléphoné")
+          explanation: "Correct ! Téléphoner à quelqu'un est transitif indirect. Le pronom réfléchi 'se' est un COI. Il n'y a pas de COD, le participe reste invariable → téléphoné."
+        },
+        {
+          id: 6,
+          difficulty: "Moyen",
+          question: "Sélectionnez le pronom démonstratif correct :",
+          prompt: "Parmi ces deux plumes, je préfère _______ de gauche.",
+          options: ["celui", "celle", "ceux", "celles"],
+          correct: 1, // B ("celle")
+          explanation: "Correct ! 'Plume' est féminin singulier, on emploie le démonstratif correspondant → celle."
+        },
+        {
+          id: 7,
+          difficulty: "Difficile (Standard WAEC)",
+          question: "Quelle est la règle d'accord adéquate pour ce cas particulier ?",
+          prompt: "Ils se sont _______ (laver) les visages.",
+          options: ["laver", "lavé", "lavés", "lavées"],
+          correct: 1, // B ("lavé")
+          explanation: "Correct ! Le COD 'les visages' est placé après le verbe. Aucun accord n'a lieu avec le sujet ou le pronom réfléchi COI → lavé."
+        },
+        {
+          id: 8,
+          difficulty: "Moyen",
+          question: "Trouvez la proposition de négation correcte :",
+          prompt: "Je n'ai _______ vu dans cette salle vide.",
+          options: ["personne", "rien", "aucun", "plus"],
+          correct: 1, // B ("rien")
+          explanation: "Correct ! Pour une chose inanimée dans un espace vide, on emploie 'ne... rien' → rien."
+        },
+        {
+          id: 9,
+          difficulty: "Facile",
+          question: "Identifiez l'auxiliaire adéquat pour la voix passive :",
+          prompt: "La lettre _______ envoyée hier par le maître.",
+          options: ["est", "a été", "fut", "était"],
+          correct: 1, // B ("a été")
+          explanation: "Correct ! Hier indique le passé composé de l'indicatif à la voix passive → a été envoyée."
+        },
+        {
+          id: 10,
+          difficulty: "Difficile (Standard WAEC)",
+          question: "Quelle forme verbale convient après la conjonction de temps ?",
+          prompt: "Dès qu'il _______ (arriver), prévenez-moi.",
+          options: ["arrivera", "arrive", "est arrivé", "soit arrivé"],
+          correct: 0, // A ("arrivera")
+          explanation: "Correct ! Après 'dès que', lorsque la principale est à l'impératif futur/présent, on utilise le futur simple → arrivera."
+        },
+        {
+          id: 11,
+          difficulty: "Moyen",
+          question: "Choisissez l'adjectif verbal correct :",
+          prompt: "Ce sont des aventures très _______.",
+          options: ["fatigant", "fatigants", "fatigantes", "fatiguantes"],
+          correct: 2, // C ("fatigantes")
+          explanation: "Correct ! L'adjectif verbal 'fatigantes' s'accorde en genre et en nombre avec le nom 'aventures' (féminin pluriel) et prend un 'g' sans 'u'."
+        }
+      ];
+
+      // Local State Engine for active Blitz
+      const blitzState = {
+        currentQuestionIndex: 2, // Starts on Q3 (Question 3 of 11) as requested by template layout
+        userScore: 2,
+        xpAccumulated: 100,
+        answered: false,
+        selectedOption: null,
+        timePerQuestion: 900, // 15 minutes = 900 seconds
+        timeRemaining: 863, // 14:23 as starter mock matching user prompt
+        timerInterval: null,
+        lobbyInterval: null
+      };
+
+      // Handle DOM Initial Load
+      document.addEventListener('DOMContentLoaded', () => {
+        startLobbyCountdown();
+        generateCircumferenceDots();
+      });
+
+      // ----------------------------------------------------
+      // STATE 1: LOBBY REALTIME COUNTDOWN
+      // ----------------------------------------------------
+      function startLobbyCountdown() {
+        const display = document.getElementById('lobby-countdown');
+        
+        function updateLobbyTime() {
+          const now = new Date();
+          const target = new Date();
+          
+          // Target is 16:00 (4:00 PM) today
+          target.setHours(16, 0, 0, 0);
+          
+          // If past 4PM today, target 4PM tomorrow
+          if (now.getTime() >= target.getTime()) {
+            target.setDate(target.getDate() + 1);
+          }
+          
+          const diff = target.getTime() - now.getTime();
+          
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const secs = Math.floor((diff % (1000 * 60)) / 1000);
+          
+          const formatted = [
+            String(hours).padStart(2, '0'),
+            String(mins).padStart(2, '0'),
+            String(secs).padStart(2, '0')
+          ].join(':');
+          
+          display.innerText = formatted;
+        }
+
+        updateLobbyTime();
+        blitzState.lobbyInterval = setInterval(updateLobbyTime, 1000);
+      }
+
+      // ----------------------------------------------------
+      // STATE 2: STARTING ACTIVE BLITZ ARENA
+      // ----------------------------------------------------
+      function startActiveBlitz() {
+        // Clear lobby tracker
+        if (blitzState.lobbyInterval) {
+          clearInterval(blitzState.lobbyInterval);
+        }
+
+        // Switch containers
+        document.getElementById('lobby-container').classList.add('hidden');
+        document.getElementById('arena-container').classList.remove('hidden');
+
+        // Update Topbar Status
+        document.getElementById('topbar-status-emoji').innerText = '🔥';
+        document.getElementById('topbar-status-text').innerText = 'Arène Active - Blitz';
+
+        // Load Question Q3
+        loadArenaQuestion(blitzState.currentQuestionIndex);
+        
+        // Start timers
+        startArenaTimer();
+
+        triggerNotification("Arène de combat du Blitz débloquée !", "⚡");
+      }
+
+      // Populate SVG Question Nodes Around Circumference
+      function generateCircumferenceDots() {
+        const dotsWrapper = document.getElementById('circumference-dots-wrapper');
+        dotsWrapper.innerHTML = '';
+
+        const totalQuestions = 11;
+        const radius = 130;
+        const centerX = 170;
+        const centerY = 170;
+
+        for (let i = 0; i < totalQuestions; i++) {
+          // Angle starts at -90 degrees (top center of clock dial)
+          const angle = (i / totalQuestions) * 2 * Math.PI - Math.PI / 2;
+          
+          // Coordinate calculation for dot node
+          const x = centerX + radius * Math.cos(angle);
+          const y = centerY + radius * Math.sin(angle);
+
+          // Coordinate calculation for floating textual label slightly outer
+          const labelRadius = radius + 22;
+          const lx = centerX + labelRadius * Math.cos(angle);
+          const ly = centerY + labelRadius * Math.sin(angle);
+
+          // Check current/previous/future state
+          let dotColorClass = 'bg-slate-700 border border-slate-600';
+          let pulseClass = '';
+          if (i < blitzState.currentQuestionIndex) {
+            // Completed questions
+            dotColorClass = 'bg-[#d4af37] shadow-lg shadow-gold/40';
+          } else if (i === blitzState.currentQuestionIndex) {
+            // Active current pulsing dot
+            dotColorClass = 'bg-white';
+            pulseClass = 'pulse-active';
+          }
+
+          const dotHtml = `
+            <div class="absolute w-4 h-4 rounded-full flex items-center justify-center z-20 ${dotColorClass} ${pulseClass}" 
+                 style="left: ${x - 8}px; top: ${y - 8}px;" id="node-dot-${i}">
+              <span class="w-1.5 h-1.5 rounded-full ${i === blitzState.currentQuestionIndex ? 'bg-slate-900' : 'transparent'}"></span>
+            </div>
+            <div class="absolute font-mono text-[9px] font-black text-slate-500 tracking-wider text-center" 
+                 style="left: ${lx - 12}px; top: ${ly - 6}px; width: 24px;" id="node-label-${i}">
+              Q${i + 1}
+            </div>
+          `;
+          dotsWrapper.insertAdjacentHTML('beforeend', dotHtml);
+        }
+      }
+
+      // Update Circ Dot colors on progression
+      function refreshCircumferenceDots() {
+        for (let i = 0; i < 11; i++) {
+          const dot = document.getElementById(`node-dot-${i}`);
+          if (!dot) continue;
+
+          dot.className = "absolute w-4 h-4 rounded-full flex items-center justify-center z-20";
+          dot.innerHTML = '';
+
+          if (i < blitzState.currentQuestionIndex) {
+            dot.classList.add('bg-[#d4af37]', 'shadow-lg', 'shadow-gold/40');
+          } else if (i === blitzState.currentQuestionIndex) {
+            dot.classList.add('bg-white', 'pulse-active');
+            dot.insertAdjacentHTML('beforeend', `<span class="w-1.5 h-1.5 rounded-full bg-slate-900"></span>`);
+          } else {
+            dot.classList.add('bg-slate-700', 'border', 'border-slate-600');
+          }
+        }
+      }
+
+      // Arena Question Loader
+      function loadArenaQuestion(index) {
+        const q = questionsData[index];
+        if (!q) return;
+
+        blitzState.selectedOption = null;
+        blitzState.answered = false;
+
+        // Reset submit button styling
+        const submitBtn = document.getElementById('arena-submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.className = "w-full md:w-auto px-10 py-3.5 bg-slate-600 text-slate-400 font-display font-black text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md cursor-not-allowed";
+
+        // Update ratios
+        document.getElementById('arena-current-question-ratio').innerText = `${index + 1} sur 11`;
+        document.getElementById('question-card-number').innerText = `QUESTION ${index + 1} DE 11`;
+        document.getElementById('arena-question-text').innerText = q.question;
+
+        // Build question text prompt
+        const promptContainer = document.querySelector('.p-6.bg-\\[\\#0a0e1a\\]');
+        if (promptContainer) {
+          promptContainer.innerText = q.prompt;
+        }
+
+        // Render Options
+        const optionsList = document.getElementById('arena-options-list');
+        optionsList.innerHTML = '';
+
+        q.options.forEach((opt, idx) => {
+          const letter = String.fromCharCode(65 + idx); // A, B, C, D
+          const btnHtml = `
+            <button onclick="selectArenaOption(${idx})" 
+                    id="arena-option-${idx}"
+                    class="option-card w-full p-4 bg-[#111625] border border-slate-800 hover:border-gold hover:bg-slate-800/40 transition-all duration-150 rounded-xl text-left flex items-center justify-between text-xs md:text-sm font-semibold text-slate-200">
+              <div class="flex items-center gap-3">
+                <span class="w-7 h-7 rounded-lg bg-slate-900 flex items-center justify-center font-bold text-slate-400 font-mono text-xs border border-slate-800" id="letter-badge-${idx}">${letter}</span>
+                <span>${opt}</span>
+              </div>
+              <div id="check-icon-${idx}" class="text-sm font-bold"></div>
+            </button>
+          `;
+          optionsList.insertAdjacentHTML('beforeend', btnHtml);
+        });
+
+        // Reset Timer count to 15:00 for new question
+        blitzState.timeRemaining = blitzState.timePerQuestion;
+        updateTimerRing();
+
+        refreshCircumferenceDots();
+      }
+
+      // Handle selecting answer
+      function selectArenaOption(idx) {
+        if (blitzState.answered) return;
+
+        // Clear previous selected borders
+        for (let i = 0; i < 4; i++) {
+          const optCard = document.getElementById(`arena-option-${i}`);
+          const badge = document.getElementById(`letter-badge-${i}`);
+          if (optCard) {
+            optCard.className = "option-card w-full p-4 bg-[#111625] border border-slate-800 hover:border-gold hover:bg-slate-800/40 transition-all duration-150 rounded-xl text-left flex items-center justify-between text-xs md:text-sm font-semibold text-slate-200";
+          }
+          if (badge) {
+            badge.className = "w-7 h-7 rounded-lg bg-slate-900 flex items-center justify-center font-bold text-slate-400 font-mono text-xs border border-slate-800";
+          }
+        }
+
+        // Style the active choice
+        blitzState.selectedOption = idx;
+        const activeCard = document.getElementById(`arena-option-${idx}`);
+        const activeBadge = document.getElementById(`letter-badge-${idx}`);
+        
+        if (activeCard) {
+          activeCard.className = "option-card w-full p-4 bg-[#d4af37]/5 border-2 border-gold rounded-xl text-left flex items-center justify-between text-xs md:text-sm font-semibold text-white";
+        }
+        if (activeBadge) {
+          activeBadge.className = "w-7 h-7 rounded-lg bg-gold text-slate-950 flex items-center justify-center font-bold font-mono text-xs border border-gold";
+        }
+
+        // Activate submit button
+        const submitBtn = document.getElementById('arena-submit-btn');
+        submitBtn.disabled = false;
+        submitBtn.className = "w-full md:w-auto px-10 py-3.5 bg-gold hover:bg-gold-hover text-slate-950 font-display font-black text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-md cursor-pointer active:scale-95";
+      }
+
+      // Submit Active Answer
+      function submitArenaAnswer() {
+        if (blitzState.selectedOption === null || blitzState.answered) return;
+
+        blitzState.answered = true;
+        const currentQ = questionsData[blitzState.currentQuestionIndex];
+        const isCorrect = blitzState.selectedOption === currentQ.correct;
+
+        if (isCorrect) {
+          blitzState.userScore++;
+          blitzState.xpAccumulated += 50;
+          
+          // Trigger correct screen flash (State 3)
+          const correctFlash = document.getElementById('correct-flash');
+          correctFlash.classList.remove('hidden');
+          correctFlash.classList.add('flex');
+          
+          setTimeout(() => {
+            correctFlash.classList.remove('flex');
+            correctFlash.classList.add('hidden');
+            advanceBlitzProgress();
+          }, 1500);
+
+        } else {
+          // Trigger incorrect screen flash
+          const incorrectFlash = document.getElementById('incorrect-flash');
+          const letterOfCorrect = String.fromCharCode(65 + currentQ.correct);
+          document.getElementById('incorrect-correction-text').innerText = `La bonne réponse était : ${letterOfCorrect} (${currentQ.options[currentQ.correct]})`;
+          
+          incorrectFlash.classList.remove('hidden');
+          incorrectFlash.classList.add('flex');
+          
+          setTimeout(() => {
+            incorrectFlash.classList.remove('flex');
+            incorrectFlash.classList.add('hidden');
+            advanceBlitzProgress();
+          }, 2400);
+        }
+
+        updateStatsReadout();
+      }
+
+      // Auto move next/complete
+      function advanceBlitzProgress() {
+        blitzState.currentQuestionIndex++;
+        
+        if (blitzState.currentQuestionIndex >= 11) {
+          // Completion sequence (State 4)
+          triggerCompletionSequence();
+        } else {
+          loadArenaQuestion(blitzState.currentQuestionIndex);
+        }
+      }
+
+      // Skip action button
+      function skipQuestion() {
+        advanceBlitzProgress();
+        triggerNotification("Question passée", "➡️");
+      }
+
+      // Run Active Timer
+      function startArenaTimer() {
+        if (blitzState.timerInterval) {
+          clearInterval(blitzState.timerInterval);
+        }
+
+        blitzState.timerInterval = setInterval(() => {
+          if (blitzState.timeRemaining > 0) {
+            blitzState.timeRemaining--;
+            updateTimerRing();
+          } else {
+            // Time expired
+            triggerNotification("Temps écoulé !", "⚠️");
+            advanceBlitzProgress();
+          }
+        }, 1000);
+      }
+
+      // SVG Circle Fill depleter & timer display update
+      function updateTimerRing() {
+        const ring = document.getElementById('blitz-timer-ring');
+        const textReadout = document.getElementById('arena-timer-readout');
+        
+        // Calculate minutes:seconds
+        const mins = Math.floor(blitzState.timeRemaining / 60);
+        const secs = blitzState.timeRemaining % 60;
+        textReadout.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+        // Red urgency alert under 3 minutes
+        if (blitzState.timeRemaining <= 180) {
+          textReadout.classList.add('text-red-500', 'pulse-red-timer');
+          ring.setAttribute('stroke', '#ef4444');
+        } else {
+          textReadout.className = "font-display font-black text-5xl tracking-widest text-white font-mono leading-none";
+          ring.setAttribute('stroke', '#d4af37');
+        }
+
+        // SVG dashoffset depleter
+        // circumference is 2 * PI * r = 2 * 3.14159 * 130 = 816.81
+        const circumference = 816.81;
+        const progressPct = blitzState.timeRemaining / blitzState.timePerQuestion;
+        const offset = circumference - (progressPct * circumference);
+        ring.style.strokeDashoffset = offset;
+      }
+
+      // Refresh Stats panel (Right and Side Panel)
+      function updateStatsReadout() {
+        const precision = blitzState.currentQuestionIndex > 0
+          ? Math.round((blitzState.userScore / blitzState.currentQuestionIndex) * 100)
+          : 100;
+
+        document.getElementById('right-live-score').innerText = `${blitzState.userScore} / ${blitzState.currentQuestionIndex} correct`;
+        document.getElementById('right-live-xp').innerText = `+${blitzState.xpAccumulated} XP`;
+        document.getElementById('right-live-precision').innerText = `${precision}%`;
+      }
+
+      // Completion Sequence Transition
+      function triggerCompletionSequence() {
+        if (blitzState.timerInterval) {
+          clearInterval(blitzState.timerInterval);
+        }
+
+        document.getElementById('arena-container').classList.add('hidden');
+        document.getElementById('completion-loading-container').classList.remove('hidden');
+
+        // Update Topbar Status
+        document.getElementById('topbar-status-emoji').innerText = '🎉';
+        document.getElementById('topbar-status-text').innerText = 'Calcul de Performance';
+
+        // Animate Loader Bar
+        const loaderBar = document.getElementById('results-loader-bar');
+        setTimeout(() => {
+          loaderBar.style.width = "100%";
+        }, 100);
+
+        // Transition to results dashboard
+        setTimeout(() => {
+          document.getElementById('completion-loading-container').classList.add('hidden');
+          document.getElementById('results-final-container').classList.remove('hidden');
+
+          // Set Final calculation readouts
+          const accuracy = Math.round((blitzState.userScore / 11) * 100);
+          document.getElementById('res-score-pct').innerText = `${accuracy}%`;
+          document.getElementById('res-xp-won').innerText = `+${blitzState.xpAccumulated} XP`;
+          document.getElementById('res-ratio').innerText = `${blitzState.userScore} / 11`;
+          document.getElementById('res-time-spent').innerText = `${Math.floor(Math.random() * 10) + 12} minutes`;
+
+          triggerNotification("Vos calculs de score sont terminés !", "🏆");
+        }, 3100);
+      }
+
+      // Restart Lobby Mode
+      function restartLobby() {
+        blitzState.currentQuestionIndex = 2;
+        blitzState.userScore = 2;
+        blitzState.xpAccumulated = 100;
+        
+        document.getElementById('results-final-container').classList.add('hidden');
+        document.getElementById('lobby-container').classList.remove('hidden');
+
+        // Reset Topbar
+        document.getElementById('topbar-status-emoji').innerText = '⚡';
+        document.getElementById('topbar-status-text').innerText = 'Arène Le Blitz';
+
+        startLobbyCountdown();
+        generateCircumferenceDots();
+      }
+
+      // Quit function
+      function quitBlitz() {
+        if (confirm("Voulez-vous vraiment quitter l'arène du Blitz ? Votre progression actuelle ne sera pas sauvegardée.")) {
+          window.location.href = '/dashboard.html';
+        }
+      }
+
+      // Helper UI Interactions
+      function toggleMobileSidebar() {
+        const sidebar = document.getElementById('sidebar-container');
+        const backdrop = document.getElementById('mobile-sidebar-backdrop');
+        
+        if (sidebar.classList.contains('-translate-x-full')) {
+          sidebar.classList.remove('-translate-x-full');
+          sidebar.classList.add('translate-x-0');
+          backdrop.classList.remove('hidden');
+        } else {
+          sidebar.classList.add('-translate-x-full');
+          sidebar.classList.remove('translate-x-0');
+          backdrop.classList.add('hidden');
+        }
+      }
+
+      function toggleProfileDropdown() {
+        const dd = document.getElementById('profileDropdown');
+        dd.classList.toggle('hidden');
+      }
+
+      // Toast Notification Engine
+      function triggerNotification(message, icon = "⚡") {
+        const container = document.getElementById('toastContainer');
+        
+        const toastId = 'toast-' + Math.random().toString(36).substr(2, 9);
+        const toastHtml = `
+          <div id="${toastId}" class="pointer-events-auto bg-[#111625] text-white text-xs font-bold uppercase tracking-wider py-3 px-4 rounded-xl shadow-2xl border border-slate-800 flex items-center gap-3 animate-slide-up">
+            <span>${icon}</span>
+            <span>${message}</span>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', toastHtml);
+
+        setTimeout(() => {
+          const toast = document.getElementById(toastId);
+          if (toast) {
+            toast.classList.add('opacity-0', 'translate-y-2', 'transition-all', 'duration-300');
+            setTimeout(() => toast.remove(), 300);
+          }
+        }, 3000);
+      }
+
+      function showNotificationToast(msg = "Aucune nouvelle notification.", icon = "🔔") {
+        triggerNotification(msg, icon);
+      }
+
+      function initTheme() {
+        // ALWAYS Dark theme in the Arena
+        document.body.classList.add('dark-mode');
+      }
+    </script>
+  </body>
+</html>

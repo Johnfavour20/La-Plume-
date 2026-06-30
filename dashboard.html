@@ -238,12 +238,12 @@
               <span>Tableau de bord</span>
             </a>
             
-            <a href="#" onclick="switchTab('cours', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+            <a href="/cours.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
               <span>Mes Cours</span>
             </a>
 
-            <a href="#" onclick="switchTab('blitz', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+            <a href="/blitz.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
               <span>Le Blitz</span>
             </a>
@@ -263,7 +263,7 @@
               <span>Ma Progression</span>
             </a>
 
-            <a href="#" onclick="switchTab('journey', this)" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+            <a href="/journey.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
               <span>Parcours</span>
             </a>
@@ -330,7 +330,7 @@
             <button onclick="toggleQuickActions()" id="hide-actions-btn" class="px-5 py-3.5 bg-app-secondary hover:bg-app-secondary/80 text-app-primary font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 border border-app">
               Masquer les actions
             </button>
-            <button onclick="scrollToMission()" class="px-6 py-3.5 bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-md shadow-[#1e3a8a]/20 flex items-center justify-center gap-2">
+            <button onclick="window.location.href='/journey.html'" class="px-6 py-3.5 bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-md shadow-[#1e3a8a]/20 flex items-center justify-center gap-2">
               <span>Continuer</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
@@ -344,7 +344,7 @@
             <button onclick="switchTab('cours')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
               📚 <span>Mes Cours</span>
             </button>
-            <button onclick="switchTab('blitz')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
+            <button onclick="window.location.href='/blitz.html'" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
               ⚡ <span>Le Blitz</span>
             </button>
             <button onclick="showFeatureToast('Calendrier')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
@@ -356,7 +356,7 @@
             <button onclick="switchTab('progress')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
               📈 <span>Progression</span>
             </button>
-            <button onclick="switchTab('journey')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
+            <button onclick="window.location.href='/journey.html'" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
               🗺 <span>Parcours</span>
             </button>
             <button onclick="showFeatureToast('Profil')" class="flex-shrink-0 px-4 py-2 bg-app-card hover:bg-app-secondary text-app-primary border border-app rounded-full text-xs font-semibold shadow-sm hover:border-[#d4af37] transition-all flex items-center gap-2">
@@ -1190,16 +1190,16 @@
       </button>
 
       <!-- Cours tab -->
-      <button onclick="switchTabMobile('cours', this)" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">
+      <a href="/cours.html" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
         <span class="text-[9px] uppercase tracking-wide">Cours</span>
-      </button>
+      </a>
 
       <!-- Blitz tab -->
-      <button onclick="switchTabMobile('blitz', this)" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">
+      <a href="/blitz.html" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         <span class="text-[9px] uppercase tracking-wide">Blitz</span>
-      </button>
+      </a>
 
       <!-- Rangs tab -->
       <button onclick="switchTabMobile('leaderboard', this)" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">

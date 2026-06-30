@@ -1,0 +1,1536 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mes Cours | La Plume - Préparation WAEC French</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 Browser Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style>
+      @theme {
+        --color-gold: #d4af37;
+        --color-gold-hover: #bfa030;
+      }
+
+      :root {
+        --bg-primary: #f8fafc;
+        --bg-secondary: #f1f5f9;
+        --bg-card: #ffffff;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --sidebar-bg: #090d16;
+        --sidebar-text: #ffffff;
+        --accent-gold: #d4af37;
+        --accent-gold-hover: #bfa030;
+        --accent-blue: #1e3a8a;
+        --accent-red: #ef4444;
+        --accent-green: #22c55e;
+        --border: #e2e8f0;
+        --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      body.dark-mode {
+        --bg-primary: #0b0f19;
+        --bg-secondary: #111827;
+        --bg-card: #1e293b;
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --sidebar-bg: #05070c; /* Left sidebar is ALWAYS dark navy */
+        --sidebar-text: #ffffff;
+        --border: #334155;
+        --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      }
+
+      .font-display {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+
+      /* Custom utility integrations with variables */
+      .bg-app-primary { background-color: var(--bg-primary); }
+      .bg-app-secondary { background-color: var(--bg-secondary); }
+      .bg-app-card { 
+        background-color: var(--bg-card); 
+      }
+      .text-app-primary { color: var(--text-primary); }
+      .text-app-secondary { color: var(--text-secondary); }
+      .border-app { border-color: var(--border); }
+
+      .bg-gold { background-color: var(--accent-gold); }
+      .text-gold { color: var(--accent-gold); }
+      .border-gold { border-color: var(--accent-gold); }
+
+      /* Sidebar & Left Panel static dark navy background */
+      .sidebar-bg-static {
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+      }
+
+      /* Grid pattern matching landing pages */
+      .grid-pattern {
+        background-size: 30px 30px;
+        background-image: 
+          linear-gradient(to right, var(--border) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+        opacity: 0.12;
+      }
+
+      /* Scrollbar removal */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* 01edu-inspired layout features */
+      .exercise-item {
+        position: relative;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .exercise-item::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background-color: var(--accent-gold);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+      .exercise-item.active::after {
+        opacity: 1;
+      }
+
+      /* Radial Progress ring transitions */
+      .progress-ring__circle {
+        transition: stroke-dashoffset 0.35s;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+      }
+
+      /* Animations */
+      @keyframes float-xp {
+        0% { transform: translateY(0) scale(1); opacity: 0; }
+        20% { opacity: 1; }
+        80% { opacity: 1; }
+        100% { transform: translateY(-40px) scale(1.1); opacity: 0; }
+      }
+      .animate-float-xp {
+        animation: float-xp 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col">
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed top-20 right-4 z-50 pointer-events-none flex flex-col gap-2"></div>
+
+    <!-- TOPBAR (fixed, full width) -->
+    <header id="topbar-header" class="fixed top-0 left-0 right-0 h-16 bg-app-card border-b border-app z-40 transition-all duration-300">
+      <div class="h-full px-4 md:px-8 flex items-center justify-between">
+        
+        <!-- Left: Logo and name -->
+        <div class="flex items-center gap-3">
+          <!-- Mobile Sidebar Toggle (for left exercise panel on cours.html / main sidebar) -->
+          <button onclick="toggleMobileSidebar()" class="md:hidden p-2 hover:bg-app-secondary rounded-lg text-app-secondary transition-colors" id="mobile-menu-btn" title="Toggle Sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+          
+          <a href="/dashboard.html" class="flex items-center gap-2 group">
+            <div class="bg-[#1e3a8a] p-1.5 rounded-lg text-white group-hover:scale-105 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" x2="2" y1="8" y2="22"/><line x1="17.5" x2="9" y1="15" y2="23.5"/></svg>
+            </div>
+            <span class="font-display font-bold text-lg md:text-xl tracking-tight text-app-primary">
+              La Plume
+            </span>
+          </a>
+          <span class="hidden md:inline-block text-[10px] uppercase tracking-wider font-extrabold font-mono bg-[#d4af37]/20 text-[#d4af37] px-2 py-0.5 rounded-md border border-[#d4af37]/30">
+            ÉLÈVE · COHORTE 1
+          </span>
+        </div>
+
+        <!-- Center: Quick Course status display -->
+        <div class="hidden lg:flex items-center gap-4 text-xs font-bold text-app-secondary uppercase tracking-widest font-mono">
+          <span>COURS DU JOUR 🎓</span>
+          <span class="text-gold">JOUR 12: ACCORD DU PARTICIPE</span>
+        </div>
+
+        <!-- Right: Actions & User Menu -->
+        <div class="flex items-center gap-3">
+          
+          <!-- Light/Dark Mode Toggle -->
+          <button onclick="toggleDarkMode()" class="p-2.5 hover:bg-app-secondary rounded-xl text-app-primary transition-all duration-300 relative group" title="Basculer le mode">
+            <!-- Sun Icon (visible in dark mode) -->
+            <svg id="sun-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            <!-- Moon Icon (visible in light mode) -->
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          </button>
+
+          <!-- Notification Bell -->
+          <button onclick="showNotificationToast()" class="p-2.5 hover:bg-app-secondary rounded-xl text-app-primary transition-all relative group" title="Notifications">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+          </button>
+
+          <!-- User Profile Dropdown Trigger -->
+          <div class="relative">
+            <button onclick="toggleProfileDropdown()" class="flex items-center gap-2 p-1.5 hover:bg-app-secondary rounded-xl transition-all" id="profileMenuButton">
+              <div class="w-8 h-8 rounded-lg bg-[#d4af37] text-[#0f172a] font-bold flex items-center justify-center font-display text-sm tracking-tight shadow-sm shadow-[#d4af37]/30">
+                JI
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-app-secondary"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            
+            <!-- Dropdown Menu -->
+            <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-56 bg-app-card border border-app rounded-2xl shadow-xl z-50 py-2">
+              <div class="px-4 py-3 border-b border-app">
+                <p class="text-xs text-app-secondary font-medium">Connecté en tant que</p>
+                <p class="text-sm font-bold text-app-primary truncate">Johnfavour Igboeche</p>
+                <p class="text-[10px] font-mono text-app-secondary">igboechejohn@gmail.com</p>
+              </div>
+              <a href="/dashboard.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-app-primary hover:bg-app-secondary transition-colors">
+                <svg class="text-app-secondary" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/></svg>
+                <span>Tableau de Bord</span>
+              </a>
+              <a href="/journey.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-app-primary hover:bg-app-secondary transition-colors">
+                <svg class="text-app-secondary" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Mon Parcours</span>
+              </a>
+              <hr class="border-app my-1">
+              <a href="/login.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-500/10 transition-colors font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/></svg>
+                <span>Se déconnecter</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CORE CONTAINER -->
+    <div class="flex-grow pt-16 flex relative overflow-hidden">
+      
+      <!-- MAIN SIDEBAR (fixed left, always dark navy) -->
+      <aside id="sidebar-container" class="fixed top-16 bottom-0 left-0 w-[240px] sidebar-bg-static border-r border-slate-800 z-30 transition-all duration-300 transform -translate-x-full md:translate-x-0 flex flex-col justify-between overflow-y-auto">
+        <div class="p-5 space-y-6">
+          
+          <!-- Student avatar card -->
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center text-center relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-20 h-20 bg-[#d4af37]/10 rounded-full blur-xl"></div>
+            <div class="w-14 h-14 rounded-2xl bg-[#d4af37] text-slate-950 font-black text-lg flex items-center justify-center font-display mb-3 shadow-md shadow-[#d4af37]/20 relative z-10">
+              JI
+            </div>
+            <h3 class="font-display font-bold text-sm text-white tracking-tight truncate w-full">Johnfavour Igboeche</h3>
+            <p class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mb-2.5">UniPort Student 🎓</p>
+            
+            <div class="inline-flex items-center gap-1.5 bg-white/10 px-2.5 py-1 rounded-full text-xs font-semibold text-slate-200">
+              <span>Nigeria 🇳🇬</span>
+            </div>
+
+            <!-- Cohort Tracker Progress -->
+            <div class="w-full mt-4 pt-4 border-t border-white/5 text-left space-y-1.5">
+              <div class="flex justify-between text-[10px] font-bold tracking-wide uppercase text-slate-400">
+                <span>Cohorte 1</span>
+                <span class="text-[#d4af37]" id="sidebar-cohort-day">Jour 12 de 30</span>
+              </div>
+              <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-[#d4af37] rounded-full transition-all duration-500" id="sidebar-cohort-progress" style="width: 40%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation items (Mes Cours highlighted active!) -->
+          <nav class="space-y-1">
+            <a href="/dashboard.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+              <span>Tableau de bord</span>
+            </a>
+            
+            <a href="/cours.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-[#d4af37] bg-white/10 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+              <span>Mes Cours</span>
+            </a>
+
+            <a href="/dashboard.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Le Blitz</span>
+            </a>
+
+            <a href="/dashboard.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>Examens du Vendredi</span>
+            </a>
+
+            <a href="/dashboard.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5"/></svg>
+              <span>Classement</span>
+            </a>
+
+            <a href="/dashboard.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+              <span>Ma Progression</span>
+            </a>
+
+            <a href="/journey.html" class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Parcours</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Sidebar bottom -->
+        <div class="p-5 border-t border-slate-800 space-y-4">
+          <div class="flex items-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-widest font-mono">
+            <span>Built in Africa 🌍</span>
+          </div>
+          <a href="/login.html" class="flex items-center justify-center gap-2 w-full py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-xs font-bold uppercase transition-all">
+            <span>Se déconnecter</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- MOBILE SIDEBAR BACKDROP -->
+      <div id="mobile-sidebar-backdrop" onclick="toggleMobileSidebar()" class="hidden fixed inset-0 bg-black/60 z-20 md:hidden transition-all duration-300"></div>
+
+      <!-- CORE THREE PANEL LAYOUT WRAPPER (Shifted left on desktop by sidebar width) -->
+      <div class="flex-grow md:pl-[240px] flex flex-col md:flex-row h-[calc(100vh-4rem)] overflow-hidden">
+        
+        <!-- LEFT PANEL (narrow, dark, exercise list) -->
+        <aside id="left-exercise-panel" class="w-full md:w-[260px] flex-shrink-0 sidebar-bg-static border-r border-slate-800 flex flex-col justify-between h-auto md:h-full z-15">
+          
+          <!-- Panel Header / Title -->
+          <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-mono tracking-widest text-gold uppercase font-bold">Bootcamp La Plume</span>
+              <h2 class="font-display font-black text-lg text-white leading-tight">— JOUR 12</h2>
+            </div>
+            <!-- Mobile indicator for items -->
+            <span class="md:hidden text-xs bg-white/10 px-2.5 py-1 rounded-full text-slate-300" id="left-panel-progress-badge">3 / 8 complétés</span>
+          </div>
+
+          <!-- Exercises Scroll Area -->
+          <div class="flex-grow overflow-y-auto p-2 space-y-1" id="exercise-list-container">
+            <!-- Dynamically populated exercises via JavaScript -->
+          </div>
+
+          <!-- Progress summary bottom of left panel -->
+          <div class="p-4 border-t border-slate-800 bg-white/2">
+            <div class="flex justify-between items-center text-xs text-slate-400 font-bold mb-2">
+              <span>Progression d'aujourd'hui</span>
+              <span class="text-[#d4af37]" id="left-panel-completed-text">3 / 8 complétés</span>
+            </div>
+            <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full bg-gold rounded-full transition-all duration-300" id="left-panel-progress-bar" style="width: 37.5%"></div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- MAIN PANEL (center, main content) -->
+        <main class="flex-grow overflow-y-auto p-4 md:p-8 space-y-6 bg-app-primary" id="main-lesson-container">
+          
+          <!-- Content loaded dynamically here via loadExercise() -->
+          <div id="lesson-content-placeholder">
+            <!-- Loading state or initial state -->
+          </div>
+
+        </main>
+
+        <!-- RIGHT PANEL (desktop only, 250px, sticky status) -->
+        <aside id="right-sticky-panel" class="hidden xl:flex w-[265px] flex-shrink-0 bg-app-card border-l border-app p-6 flex-col justify-between overflow-y-auto">
+          
+          <div class="space-y-6">
+            
+            <!-- Circular Progress Indicator -->
+            <div class="bg-app-secondary/50 rounded-2xl p-5 border border-app text-center">
+              <span class="text-[10px] font-mono font-bold uppercase text-app-secondary tracking-widest block mb-4">Progression du jour</span>
+              
+              <!-- Circular Progress Ring -->
+              <div class="relative inline-flex items-center justify-center">
+                <svg class="w-32 h-32">
+                  <circle class="text-app-secondary/20" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="64" cy="64" />
+                  <circle class="text-gold progress-ring__circle" stroke-width="8" stroke-dasharray="314.16" stroke-dashoffset="196.35" stroke-linecap="round" stroke="currentColor" fill="transparent" r="50" cx="64" cy="64" id="circle-progress" />
+                </svg>
+                <div class="absolute flex flex-col items-center">
+                  <span class="font-display font-extrabold text-2xl text-app-primary" id="right-panel-progress-ratio">3 / 8</span>
+                  <span class="text-[9px] font-semibold text-app-secondary uppercase tracking-wider">Exercices</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-app-secondary mt-4 font-medium" id="right-panel-progress-desc">Encore 5 exercices à accomplir !</p>
+            </div>
+
+            <!-- Stats Stack -->
+            <div class="space-y-3">
+              <!-- XP Today -->
+              <div class="bg-app-secondary/30 rounded-xl p-4 border border-app flex items-center justify-between">
+                <div>
+                  <span class="text-[9px] font-bold text-app-secondary uppercase tracking-wider">XP aujourd'hui</span>
+                  <div class="font-display font-extrabold text-lg text-gold flex items-center gap-1 mt-0.5" id="right-panel-xp">
+                    +360 XP
+                  </div>
+                </div>
+                <div class="text-2xl">🏆</div>
+              </div>
+
+              <!-- Streak -->
+              <div class="bg-app-secondary/30 rounded-xl p-4 border border-app flex items-center justify-between">
+                <div>
+                  <span class="text-[9px] font-bold text-app-secondary uppercase tracking-wider">Série actuelle</span>
+                  <div class="font-display font-extrabold text-lg text-app-primary mt-0.5">
+                    7 jours d'affilée 🔥
+                  </div>
+                </div>
+                <div class="text-2xl">⚡</div>
+              </div>
+
+              <!-- Level -->
+              <div class="bg-app-secondary/30 rounded-xl p-4 border border-app flex items-center justify-between">
+                <div>
+                  <span class="text-[9px] font-bold text-app-secondary uppercase tracking-wider">Niveau actuel</span>
+                  <div class="font-display font-extrabold text-lg text-app-primary mt-0.5">
+                    Niveau 3
+                  </div>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-[#1e3a8a]/20 border border-[#1e3a8a]/40 flex items-center justify-center font-display font-bold text-xs text-[#1e3a8a] dark:text-blue-400">
+                  Lvl 3
+                </div>
+              </div>
+            </div>
+
+            <!-- Next Goal Progress -->
+            <div class="bg-app-secondary/20 rounded-xl p-4 border border-app space-y-2">
+              <div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-app-secondary">
+                <span>Prochain Objectif</span>
+                <span class="text-gold" id="bonus-unlock-progress">3 / 5</span>
+              </div>
+              <p class="text-[11px] text-app-secondary leading-relaxed font-medium">
+                Terminez 5 exercices pour débloquer le quiz bonus.
+              </p>
+              <div class="h-1.5 w-full bg-app-primary border border-app rounded-full overflow-hidden">
+                <div class="h-full bg-[#d4af37] rounded-full transition-all duration-300" id="bonus-progress-bar" style="width: 60%"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Help Section -->
+          <div class="space-y-2 pt-4 border-t border-app">
+            <button onclick="triggerNotification('Canal d\'aide avec un tuteur activé !', '💬')" class="w-full py-2.5 bg-app-primary hover:bg-app-secondary text-app-primary border border-app rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+              💬 Poser une question
+            </button>
+            <button onclick="scrollToVideo()" class="w-full py-2.5 bg-app-primary hover:bg-app-secondary text-app-primary border border-app rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+              📹 Voir la vidéo
+            </button>
+          </div>
+
+        </aside>
+
+      </div>
+
+    </div>
+
+    <!-- MOBILE FLOATING STATUS SUMMARY (shown at the bottom for mobile screens) -->
+    <div class="xl:hidden fixed bottom-16 left-0 right-0 h-12 bg-app-card border-t border-app z-35 flex items-center justify-between px-4 transition-all duration-300">
+      <div class="flex items-center gap-2 text-xs">
+        <span class="text-app-secondary font-bold font-mono">XP :</span>
+        <span class="text-gold font-extrabold" id="mobile-xp-display">+360 XP</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-app-secondary font-bold font-mono">Progression :</span>
+        <span class="text-app-primary font-bold" id="mobile-progress-ratio">3 / 8</span>
+        <div class="w-20 h-2 bg-app-secondary border border-app rounded-full overflow-hidden">
+          <div class="h-full bg-gold rounded-full" id="mobile-progress-bar" style="width: 37.5%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION (mobile only, same as dashboard) -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-app-card border-t border-app shadow-xl z-40 flex items-center justify-around transition-all duration-300">
+      <a href="/dashboard.html" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Accueil</span>
+      </a>
+
+      <a href="/cours.html" class="flex flex-col items-center justify-center gap-0.5 text-[#d4af37] font-bold">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Cours</span>
+      </a>
+
+      <a href="/dashboard.html" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Blitz</span>
+      </a>
+
+      <a href="/journey.html" class="flex flex-col items-center justify-center gap-0.5 text-app-secondary hover:text-app-primary font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="text-[9px] uppercase tracking-wide">Parcours</span>
+      </a>
+    </nav>
+
+    <!-- JAVASCRIPT LOGIC SYSTEM -->
+    <script>
+      // State Management
+      const state = {
+        exercises: [
+          {
+            id: 'introduction',
+            title: 'introduction',
+            type: 'Introduction',
+            difficulty: 1,
+            xp: 50,
+            duration: '~5 min',
+            completed: true,
+            isCurrent: false,
+            badge: 'RÉUSSI ✓',
+            badgeClass: 'bg-emerald-500/20 text-emerald-500 border-emerald-500/30',
+            instructions: [
+              {
+                heading: 'Aperçu de la journée 12',
+                text: 'Bienvenue dans le douzième jour de votre préparation intensive au WAEC. Aujourd\'hui, nous passons en revue des points essentiels de grammaire qui font la différence lors de la rédaction de l\'essai et de la correction de phrases complexes.'
+              },
+              {
+                heading: 'Objectifs d\'apprentissage',
+                text: 'Comprendre et maîtriser la formation ainsi que les accords délicats liés aux temps composés de l\'indicatif. Ce module d\'introduction pose les bases méthodologiques indispensables.'
+              }
+            ],
+            question: null
+          },
+          {
+            id: 'grammaire-base',
+            title: 'grammaire-base',
+            type: 'Grammaire',
+            difficulty: 2,
+            xp: 100,
+            duration: '~10 min',
+            completed: true,
+            isCurrent: false,
+            badge: 'RÉUSSI ✓',
+            badgeClass: 'bg-emerald-500/20 text-emerald-500 border-emerald-500/30',
+            instructions: [
+              {
+                heading: 'Les structures grammaticales clés',
+                text: 'Une bonne maîtrise de l\'accord sujet-verbe est attendue par les correcteurs du WAEC. Veillez particulièrement aux sujets inversés ou aux verbes séparés par un pronom.'
+              },
+              {
+                heading: 'La ponctuation expressive',
+                text: 'L\'usage des deux-points et des points-virgules structure vos idées et démontre un niveau académique élevé dans votre copie.'
+              }
+            ],
+            question: null
+          },
+          {
+            id: 'passé-composé',
+            title: 'passé-composé',
+            type: 'Grammaire',
+            difficulty: 2,
+            xp: 120,
+            duration: '~15 min',
+            completed: true,
+            isCurrent: false,
+            badge: 'RÉUSSI ✓',
+            badgeClass: 'bg-emerald-500/20 text-emerald-500 border-emerald-500/30',
+            instructions: [
+              {
+                heading: 'La formation du Passé Composé',
+                text: 'Le passé composé exprime une action accomplie dans le passé de manière déterminée. Il est composé de l\'auxiliaire être ou avoir au présent de l\'indicatif suivi du participe passé.'
+              },
+              {
+                heading: 'L\'auxiliaire ÊTRE vs AVOIR',
+                text: 'Les verbes de mouvement ainsi que tous les verbes pronominaux forment leur passé composé exclusivement avec l\'auxiliaire être.'
+              }
+            ],
+            question: null
+          },
+          {
+            id: 'accord-participe',
+            title: 'accord-participe',
+            type: 'Grammaire',
+            difficulty: 3,
+            xp: 120,
+            duration: '~20 min',
+            completed: false,
+            isCurrent: true,
+            badge: 'EN COURS',
+            badgeClass: 'bg-blue-500/20 text-blue-500 border-blue-500/30 animate-pulse',
+            conseil: "Maîtrisez l'accord du participe passé — c'est l'une des règles les plus testées au WAEC. Portez une attention particulière aux auxiliaires être et avoir.",
+            instructions: [
+              {
+                heading: '1 — La règle de base',
+                text: 'Avec l\'auxiliaire AVOIR, le participe passé ne s\'accorde jamais avec le sujet. Il s\'accorde uniquement en genre (féminin) et en nombre (pluriel) avec le Complément d\'Objet Direct (COD) si celui-ci est placé AVANT le verbe.',
+                code: 'Avec AVOIR: le participe s\'accorde avec le COD placé AVANT le verbe.\n\nExemple:\nLes lettres qu\'il a écrites.\n→ écrites (féminin pluriel)'
+              },
+              {
+                heading: '2 — Avec l\'auxiliaire ÊTRE',
+                text: 'Avec l\'auxiliaire ÊTRE (à l\'exclusion des verbes pronominaux), le participe passé s\'accorde toujours en genre et en nombre avec le sujet.',
+                code: 'Exemple:\nElles sont arrivées de bonne heure.\n→ arrivées (féminin pluriel s\'accorde avec "Elles")'
+              },
+              {
+                heading: '3 — Les verbes pronominaux',
+                text: 'Pour les verbes pronominaux, la règle suit celle de l\'auxiliaire avoir : le participe s\'accorde avec le pronom réfléchi s\'il est COD et placé avant, sinon pas d\'accord.',
+                code: 'Exemple:\nElle s\'est lavée.\n→ "se" est COD (elle a lavé elle-même) placé avant.'
+              }
+            ],
+            question: {
+              num: 1,
+              total: 8,
+              text: 'Choisissez la bonne forme du participe:',
+              prompt: 'Elle s\'est _______ (laver) les mains.',
+              options: [
+                'lavé',
+                'lavée',
+                'lavés',
+                'lavées'
+              ],
+              correctIndex: 1, // B is 'lavée' based on User request ("Elle s'est lavée les mains" - simplified standard feedback as specified by user)
+              explanation: 'Correct! Avec les verbes pronominaux, le participe s\'accorde avec le sujet. \'Elle\' est féminin singulier → lavée ✓'
+            }
+          },
+          {
+            id: 'imparfait',
+            title: 'imparfait',
+            type: 'Grammaire',
+            difficulty: 2,
+            xp: 100,
+            duration: '~12 min',
+            completed: false,
+            isCurrent: false,
+            badge: 'VERROUILLÉ',
+            badgeClass: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
+            instructions: [
+              {
+                heading: 'Usage de l\'imparfait',
+                text: 'L\'imparfait de l\'indicatif exprime une habitude passée, une action répétitive ou sert à peindre le décor d\'une scène.'
+              },
+              {
+                heading: 'Les terminaisons universelles',
+                text: 'Tous les groupes partagent les mêmes terminaisons à l\'imparfait : -ais, -ais, -ait, -ions, -iez, -aient.',
+                code: 'Exemple:\nJe marchais longuement sur la plage.\nNous finissions nos examens.'
+              }
+            ],
+            question: {
+              num: 2,
+              total: 8,
+              text: 'Choisissez la bonne forme de l\'imparfait:',
+              prompt: 'Quand j\'_______ (être) jeune, je jouais au football.',
+              options: [
+                'étais',
+                'était',
+                'étions',
+                'étiez'
+              ],
+              correctIndex: 0,
+              explanation: 'Correct! Le pronom "je" prend la terminaison "-ais" à l\'imparfait de l\'indicatif → étais ✓'
+            }
+          },
+          {
+            id: 'conjugaison-mix',
+            title: 'conjugaison-mix',
+            type: 'Grammaire',
+            difficulty: 3,
+            xp: 120,
+            duration: '~15 min',
+            completed: false,
+            isCurrent: false,
+            badge: 'VERROUILLÉ',
+            badgeClass: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
+            instructions: [
+              {
+                heading: 'Alternance Passé Composé et Imparfait',
+                text: 'Utilisez le passé composé pour raconter des actions ponctuelles, successives et délimitées, et l\'imparfait pour décrire l\'arrière-plan de l\'histoire.',
+                code: 'Exemple:\nPendant qu\'elle révisait (imparfait), son téléphone a vibré (passé composé).'
+              }
+            ],
+            question: {
+              num: 3,
+              total: 8,
+              text: 'Choisissez le bon temps pour compléter l\'action:',
+              prompt: 'Ils _______ (finir) leurs devoirs hier soir.',
+              options: [
+                'ont fini',
+                'finissaient',
+                'ont finis',
+                'finirent'
+              ],
+              correctIndex: 0,
+              explanation: 'Correct! "Hier soir" indique un moment précis et achevé, d\'où l\'emploi du passé composé → ont fini ✓'
+            }
+          },
+          {
+            id: 'exercice-final',
+            title: 'exercice-final',
+            type: 'Grammaire',
+            difficulty: 4,
+            xp: 150,
+            duration: '~18 min',
+            completed: false,
+            isCurrent: false,
+            badge: 'VERROUILLÉ',
+            badgeClass: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
+            instructions: [
+              {
+                heading: 'Le Grand Synthèse des Accords',
+                text: 'Mobilisez l\'ensemble des acquis du jour : l\'accord du participe passé avec être, avoir et les verbes pronominaux.'
+              }
+            ],
+            question: {
+              num: 7, // Fits into today's 8 questions path
+              total: 8,
+              text: 'Sélectionnez l\'accord approprié du participe passé:',
+              prompt: 'Les fleurs qu\'elle a _______ (cueillir) hier.',
+              options: [
+                'cueillies',
+                'cueilli',
+                'cueillic',
+                'cueillie'
+              ],
+              correctIndex: 0,
+              explanation: 'Correct! Avec l\'auxiliaire avoir, le participe s\'accorde avec le COD "qu\'" (mis pour "les fleurs", féminin pluriel) placé avant → cueillies ✓'
+            }
+          },
+          {
+            id: 'quiz-du-jour',
+            title: 'quiz-du-jour',
+            type: 'Quiz',
+            difficulty: 4,
+            xp: 150,
+            duration: '~10 min',
+            completed: false,
+            isCurrent: false,
+            badge: 'VERROUILLÉ',
+            badgeClass: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
+            instructions: [
+              {
+                heading: 'Quiz du jour 12',
+                text: 'Dernière étape pour sceller votre maîtrise et gagner le bonus de la journée ! Ce quiz récapitule les subtilités du WAEC.'
+              }
+            ],
+            question: {
+              num: 8,
+              total: 8,
+              text: 'Choisissez la bonne option de participe passé:',
+              prompt: 'Elles se sont _______ (téléphoner) après les cours.',
+              options: [
+                'téléphoné',
+                'téléphonées',
+                'téléphonés',
+                'téléphonée'
+              ],
+              correctIndex: 0, // Invariable, phone TO each other (COI)
+              explanation: 'Correct ! Le verbe "téléphoner" se construit de façon transitive indirecte (téléphoner À quelqu\'un). "se" est COI. Il n\'y a aucun COD placé avant, donc l\'accord n\'a pas lieu → téléphoné ✓'
+            }
+          }
+        ],
+        activeId: 'accord-participe',
+        userXp: 360,
+        selectedOptionIndex: null,
+        answered: false,
+        totalQuestionsAnswered: 0,
+        correctAnswersCount: 0
+      };
+
+      // Initialization on DOM Load
+      document.addEventListener('DOMContentLoaded', () => {
+        initTheme();
+        renderExerciseList();
+        loadExercise(state.activeId);
+        updateProgress();
+      });
+
+      // Render Left Panel Exercises
+      function renderExerciseList() {
+        const container = document.getElementById('exercise-list-container');
+        container.innerHTML = '';
+
+        state.exercises.forEach(ex => {
+          const isActive = ex.id === state.activeId;
+          const statusDotColor = ex.completed 
+            ? 'bg-emerald-500 shadow-sm shadow-emerald-500/30' 
+            : (isActive ? 'bg-blue-500 animate-pulse' : 'bg-slate-600');
+
+          const activeBg = isActive 
+            ? 'bg-white/10 text-white' 
+            : 'text-slate-400 hover:text-white hover:bg-white/5';
+
+          const itemHtml = `
+            <button onclick="selectExercise('${ex.id}')" 
+                    id="exercise-nav-${ex.id}"
+                    class="exercise-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-left text-xs font-bold uppercase tracking-wider transition-all duration-200 ${isActive ? 'active' : ''} ${activeBg}">
+              <div class="flex items-center gap-3">
+                <span class="w-2.5 h-2.5 rounded-full ${statusDotColor}"></span>
+                <span class="truncate max-w-[130px]">${ex.title}</span>
+              </div>
+              <span class="text-[9px] font-mono font-semibold opacity-70">${ex.completed ? 'RÉUSSI' : ''}</span>
+            </button>
+          `;
+          container.insertAdjacentHTML('beforeend', itemHtml);
+        });
+      }
+
+      // Handle Exercise Switching
+      function selectExercise(id) {
+        state.activeId = id;
+        state.selectedOptionIndex = null;
+        state.answered = false;
+        
+        // Render updated left list
+        renderExerciseList();
+        
+        // Load content of selected exercise
+        loadExercise(id);
+        
+        // Close mobile drawer if open
+        const sidebar = document.getElementById('sidebar-container');
+        const leftPanel = document.getElementById('left-exercise-panel');
+        if (leftPanel.classList.contains('translate-y-0')) {
+          leftPanel.classList.add('hidden');
+        }
+        
+        triggerNotification(`Exercice "${id}" chargé`, '📚');
+      }
+
+      // Load specific exercise content to main panel
+      function loadExercise(id) {
+        const ex = state.exercises.find(e => e.id === id);
+        if (!ex) return;
+
+        // Reset state
+        state.selectedOptionIndex = null;
+        state.answered = false;
+
+        const mainContainer = document.getElementById('main-lesson-container');
+
+        // Dynamic breadcrumb, status badges, difficulty and stats block
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          if (i <= ex.difficulty) {
+            starsHtml += '★ ';
+          } else {
+            starsHtml += '☆ ';
+          }
+        }
+
+        // Orange banner template (shown only for active exercises where relevant)
+        let warningBannerHtml = '';
+        if (ex.conseil) {
+          warningBannerHtml = `
+            <!-- ORANGE WARNING BANNER -->
+            <div id="orange-warning-banner" class="bg-amber-500/10 border-l-4 border-amber-500 p-4 rounded-r-xl my-4 text-sm animate-fade-in">
+              <div class="flex gap-2">
+                <span class="text-lg">ℹ️</span>
+                <div>
+                  <p class="font-bold text-amber-600 dark:text-amber-400">Conseil du jour</p>
+                  <p class="text-app-secondary mt-0.5">${ex.conseil}</p>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // Instructions templates
+        let instructionsHtml = '';
+        ex.instructions.forEach(ins => {
+          let codeBlockHtml = '';
+          if (ins.code) {
+            codeBlockHtml = `
+              <!-- Code block styling inspired by 01edu -->
+              <div class="my-4 bg-slate-900 text-slate-100 font-mono text-xs p-4 rounded-xl border border-slate-800 leading-relaxed shadow-inner overflow-x-auto">
+                <pre>${ins.code}</pre>
+              </div>
+            `;
+          }
+
+          instructionsHtml += `
+            <div class="space-y-2">
+              <h4 class="font-display font-bold text-sm text-app-primary mt-4">${ins.heading}</h4>
+              <p class="text-xs md:text-sm text-app-secondary leading-relaxed">${ins.text}</p>
+              ${codeBlockHtml}
+            </div>
+          `;
+        });
+
+        // Interactive question templates
+        let questionHtml = '';
+        if (ex.question) {
+          const q = ex.question;
+          const percentage = (q.num / q.total) * 100;
+
+          // Build option buttons
+          let optionsButtonsHtml = '';
+          q.options.forEach((opt, idx) => {
+            const letter = String.fromCharCode(65 + idx); // A, B, C, D
+            optionsButtonsHtml += `
+              <button onclick="selectOption(${idx})" 
+                      id="option-${idx}"
+                      class="option-card w-full p-4 bg-app-card border border-app hover:border-gold hover:bg-app-secondary/40 transition-all duration-150 rounded-xl text-left flex items-center justify-between text-xs md:text-sm font-semibold text-app-primary">
+                <div class="flex items-center gap-3">
+                  <span class="w-7 h-7 rounded-lg bg-app-secondary flex items-center justify-center font-bold text-app-secondary font-mono text-xs border border-app group-hover:bg-[#d4af37]/20" id="option-letter-${idx}">${letter}</span>
+                  <span id="option-text-${idx}">${opt}</span>
+                </div>
+                <div id="option-status-icon-${idx}" class="text-lg"></div>
+              </button>
+            `;
+          });
+
+          questionHtml = `
+            <!-- QUESTION SECTION -->
+            <div id="question-interactive-section" class="mt-8 pt-8 border-t border-app space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-app-secondary uppercase tracking-widest font-mono">Question ${q.num} sur ${q.total}</span>
+                <span class="text-xs text-gold font-bold">+${ex.xp} XP</span>
+              </div>
+              
+              <!-- Progress bar -->
+              <div class="h-1.5 w-full bg-app-secondary border border-app rounded-full overflow-hidden">
+                <div class="h-full bg-[#d4af37] transition-all duration-300" style="width: ${percentage}%"></div>
+              </div>
+
+              <div class="space-y-4">
+                <p class="text-xs md:text-sm font-semibold text-app-primary">${q.text}</p>
+                <div class="p-6 bg-app-secondary/50 border border-app rounded-2xl text-center font-display font-extrabold text-base md:text-lg text-app-primary tracking-wide shadow-inner">
+                  ${q.prompt}
+                </div>
+              </div>
+
+              <!-- Grid options -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4" id="options-grid">
+                ${optionsButtonsHtml}
+              </div>
+
+              <!-- Action buttons -->
+              <div class="flex items-center justify-between gap-4 mt-6">
+                <button onclick="skipQuestion()" class="text-xs md:text-sm font-bold text-app-secondary hover:text-app-primary transition-colors py-3">
+                  Passer cette question →
+                </button>
+                <button onclick="submitAnswer()" id="submit-answer-btn" disabled 
+                        class="px-6 py-3.5 bg-slate-400 dark:bg-slate-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 cursor-not-allowed">
+                  Soumettre la réponse
+                </button>
+              </div>
+
+              <!-- Dynamic Feedbacks shown here -->
+              <div id="answer-feedback-box" class="hidden animate-fade-in p-5 rounded-2xl border">
+                <!-- Content set dynamically in submitAnswer() -->
+              </div>
+
+            </div>
+          `;
+        } else {
+          // Introduction / Theory check (just a complete / check button)
+          questionHtml = `
+            <!-- COMPLETE THEORY BUTTON -->
+            <div class="mt-8 pt-6 border-t border-app flex justify-end">
+              <button onclick="completeTheorySection('${ex.id}', ${ex.xp})" 
+                      id="theory-complete-btn" 
+                      class="px-6 py-3.5 bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all">
+                Marquer comme complété (+${ex.xp} XP)
+              </button>
+            </div>
+          `;
+        }
+
+        // YouTube placeholder widget
+        let videoWidgetHtml = '';
+        if (id === 'accord-participe') {
+          videoWidgetHtml = `
+            <!-- VIDEO RESOURCES -->
+            <div id="video-section-container" class="mt-10 pt-8 border-t border-app space-y-4">
+              <h3 class="font-display font-black text-lg text-app-primary">📹 Ressources vidéo</h3>
+              
+              <!-- Video Placeholder Card -->
+              <div class="relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg group">
+                <div class="aspect-video flex flex-col items-center justify-center p-8 text-center text-white relative z-10">
+                  <div class="w-16 h-16 rounded-full bg-gold/90 text-slate-950 flex items-center justify-center text-xl shadow-md shadow-gold/20 group-hover:scale-110 transition-transform duration-300 cursor-pointer" onclick="triggerNotification('Lecture de la vidéo explicative (Simulation)', '📹')">
+                    ▶
+                  </div>
+                  <h4 class="font-display font-bold text-sm md:text-base text-white mt-4 tracking-tight">L'accord du participe passé</h4>
+                  <p class="text-xs text-slate-400 mt-1">expliqué par La Plume • Durée: 8:45</p>
+                  <button onclick="triggerNotification('Ouverture de la vidéo Youtube La Plume', '📺')" class="mt-4 px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-wider transition-colors">
+                    [▶ REGARDER]
+                  </button>
+                </div>
+                <!-- Dark gradient overlay -->
+                <div class="absolute inset-0 bg-slate-950/80 pointer-events-none"></div>
+              </div>
+              <p class="text-xs text-app-secondary leading-relaxed">
+                Cette vidéo explique la règle en détail. Regardez-la si vous rencontrez des difficultés sur les cas d'accord spéciaux.
+              </p>
+            </div>
+          `;
+        }
+
+        // Resources links
+        const resourcesWidgetHtml = `
+          <!-- ADDITIONAL RESOURCES -->
+          <div class="mt-8 pt-8 border-t border-app space-y-3">
+            <h4 class="font-display font-bold text-xs text-app-secondary uppercase tracking-widest font-mono">Ressources supplémentaires</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <a href="#" onclick="showFeatureToast('Règles du Participe')" class="flex items-center gap-2 p-3 bg-app-secondary/40 hover:bg-app-secondary rounded-xl text-xs font-semibold text-app-primary border border-app transition-colors">
+                <span>📚</span> • Accord du participe passé — Règles
+              </a>
+              <a href="#" onclick="showFeatureToast('Auxiliaires')" class="flex items-center gap-2 p-3 bg-app-secondary/40 hover:bg-app-secondary rounded-xl text-xs font-semibold text-app-primary border border-app transition-colors">
+                <span>⚡</span> • Les auxiliaires être et avoir
+              </a>
+              <a href="#" onclick="showFeatureToast('Exercices WAEC')" class="flex items-center gap-2 p-3 bg-app-secondary/40 hover:bg-app-secondary rounded-xl text-xs font-semibold text-app-primary border border-app transition-colors col-span-1 md:col-span-2">
+                <span>📝</span> • Exercices supplémentaires WAEC
+              </a>
+            </div>
+          </div>
+        `;
+
+        // Render everything inside the main container
+        mainContainer.innerHTML = `
+          <!-- BREADCRUMBS AND BADGE ROW -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-app-secondary/20 p-4 rounded-2xl border border-app">
+            <div class="text-[11px] font-bold text-app-secondary font-mono uppercase tracking-wider">
+              Jour 12 &gt; ${ex.type} &gt; <span class="text-app-primary">${ex.title}</span>
+            </div>
+            <div>
+              <span class="text-[10px] uppercase font-bold px-3 py-1.5 rounded-full border ${ex.badgeClass}">
+                ${ex.badge}
+              </span>
+            </div>
+          </div>
+
+          <!-- LESSON INFO CARD -->
+          <div class="bg-app-secondary/50 border border-app rounded-2xl p-5 md:p-6 grid grid-cols-2 sm:grid-cols-4 gap-4 items-center">
+            <div class="col-span-2 space-y-1">
+              <div class="flex items-center gap-2 text-[10px] font-bold text-app-secondary uppercase tracking-widest font-mono">
+                <span>Niveau 2</span>
+                <span class="text-gold">•</span>
+                <span class="text-amber-500 font-bold">REQUIS</span>
+              </div>
+              <div class="text-gold font-semibold text-sm tracking-widest">${starsHtml}</div>
+            </div>
+            <div class="border-l border-app pl-4">
+              <p class="text-[10px] font-mono font-bold text-app-secondary uppercase tracking-wider">Récompense</p>
+              <p class="font-display font-extrabold text-sm text-gold">+${ex.xp} XP</p>
+            </div>
+            <div class="border-l border-app pl-4">
+              <p class="text-[10px] font-mono font-bold text-app-secondary uppercase tracking-wider">Format</p>
+              <p class="font-display font-extrabold text-sm text-app-primary">${ex.duration}</p>
+            </div>
+          </div>
+
+          <!-- LESSON TITLE AND EXPLANATION -->
+          <div class="space-y-4">
+            <h1 class="font-display font-black text-3xl md:text-4xl text-app-primary tracking-tight">
+              ${ex.title}
+            </h1>
+            
+            ${warningBannerHtml}
+
+            <!-- INSTRUCTIONS HEADER -->
+            <div class="pt-4 space-y-3">
+              <h3 class="font-display font-extrabold text-lg text-app-primary">Instructions</h3>
+              <div class="h-0.5 w-12 bg-gold rounded-full"></div>
+            </div>
+
+            <!-- INSTRUCTIONS TEXTS -->
+            <div class="space-y-4">
+              ${instructionsHtml}
+            </div>
+
+            <!-- INTERACTIVE INTERFACE -->
+            ${questionHtml}
+
+            <!-- VIDEO PLATFORM -->
+            ${videoWidgetHtml}
+
+            <!-- AUXILIARY LINKS -->
+            ${resourcesWidgetHtml}
+
+          </div>
+        `;
+      }
+
+      // Option Selector Click
+      function selectOption(index) {
+        if (state.answered) return;
+
+        state.selectedOptionIndex = index;
+
+        // Reset all option styles
+        const optionCards = document.querySelectorAll('.option-card');
+        optionCards.forEach((card, idx) => {
+          card.className = "option-card w-full p-4 bg-app-card border border-app hover:border-gold hover:bg-app-secondary/40 transition-all duration-150 rounded-xl text-left flex items-center justify-between text-xs md:text-sm font-semibold text-app-primary";
+          const letterBox = document.getElementById(`option-letter-${idx}`);
+          if (letterBox) {
+            letterBox.className = "w-7 h-7 rounded-lg bg-app-secondary flex items-center justify-center font-bold text-app-secondary font-mono text-xs border border-app";
+          }
+        });
+
+        // Highlight selected option
+        const selectedCard = document.getElementById(`option-${index}`);
+        selectedCard.className = "option-card w-full p-4 bg-app-card border-2 border-gold ring-1 ring-gold rounded-xl text-left flex items-center justify-between text-xs md:text-sm font-semibold text-app-primary shadow-sm shadow-gold/10";
+        
+        const selectedLetterBox = document.getElementById(`option-letter-${index}`);
+        if (selectedLetterBox) {
+          selectedLetterBox.className = "w-7 h-7 rounded-lg bg-[#d4af37] text-slate-950 flex items-center justify-center font-bold font-mono text-xs";
+        }
+
+        // Enable Submit button
+        const submitBtn = document.getElementById('submit-answer-btn');
+        submitBtn.disabled = false;
+        submitBtn.className = "px-6 py-3.5 bg-gold hover:bg-gold-hover text-slate-950 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-200 shadow-md shadow-gold/10";
+      }
+
+      // Answer Submission Logic
+      function submitAnswer() {
+        if (state.answered || state.selectedOptionIndex === null) return;
+
+        state.answered = true;
+
+        const currentEx = state.exercises.find(e => e.id === state.activeId);
+        const q = currentEx.question;
+        const correct = state.selectedOptionIndex === q.correctIndex;
+
+        // Update overall stats
+        state.totalQuestionsAnswered += 1;
+        if (correct) {
+          state.correctAnswersCount += 1;
+        }
+
+        // UI elements
+        const feedbackBox = document.getElementById('answer-feedback-box');
+        const submitBtn = document.getElementById('submit-answer-btn');
+
+        // Disable options
+        const optionCards = document.querySelectorAll('.option-card');
+        optionCards.forEach(card => card.removeAttribute('onclick'));
+
+        // Highlight right / wrong answers
+        const correctCard = document.getElementById(`option-${q.correctIndex}`);
+        const statusIconCorrect = document.getElementById(`option-status-icon-${q.correctIndex}`);
+
+        if (correct) {
+          // Highlight correct green
+          correctCard.className = "option-card w-full p-4 bg-emerald-500/10 border-2 border-emerald-500 text-emerald-900 dark:text-emerald-300 rounded-xl text-left flex items-center justify-between text-xs md:text-sm font-bold";
+          statusIconCorrect.innerText = "✓";
+          statusIconCorrect.className = "text-emerald-500 font-extrabold";
+
+          // Play Gold XP fly out
+          triggerXpAnimation();
+          triggerNotification(`Félicitations ! +${currentEx.xp} XP acquis !`, '🏆');
+          state.userXp += currentEx.xp;
+
+          // Render Success feedback box
+          feedbackBox.className = "animate-fade-in p-5 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 space-y-2 mt-4 text-app-primary";
+          feedbackBox.innerHTML = `
+            <div class="flex items-center gap-2 text-emerald-500 font-bold text-sm md:text-base">
+              <span>🌟</span> RÉUSSI ! ✓ <span class="text-gold font-extrabold ml-auto text-sm animate-pulse">+${currentEx.xp} XP !</span>
+            </div>
+            <p class="text-xs md:text-sm text-app-secondary leading-relaxed font-medium">
+              ${q.explanation}
+            </p>
+            <div class="pt-2">
+              <button onclick="advanceNext()" class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md">
+                Question suivante →
+              </button>
+            </div>
+          `;
+        } else {
+          // Highlight wrong red
+          const wrongCard = document.getElementById(`option-${state.selectedOptionIndex}`);
+          const statusIconWrong = document.getElementById(`option-status-icon-${state.selectedOptionIndex}`);
+
+          wrongCard.className = "option-card w-full p-4 bg-red-500/10 border-2 border-red-500 text-red-900 dark:text-red-300 rounded-xl text-left flex items-center justify-between text-xs md:text-sm font-bold";
+          statusIconWrong.innerText = "✗";
+          statusIconWrong.className = "text-red-500 font-extrabold";
+
+          // Show correct option in green
+          correctCard.className = "option-card w-full p-4 bg-emerald-500/10 border-2 border-emerald-500 text-emerald-900 dark:text-emerald-300 rounded-xl text-left flex items-center justify-between text-xs md:text-sm font-bold";
+          statusIconCorrect.innerText = "✓";
+          statusIconCorrect.className = "text-emerald-500 font-extrabold";
+
+          triggerNotification("Pas tout à fait correct... continuez pour apprendre", '📝');
+
+          // Render Fail feedback box
+          feedbackBox.className = "animate-fade-in p-5 rounded-2xl border border-red-500/30 bg-red-500/10 space-y-2 mt-4 text-app-primary";
+          feedbackBox.innerHTML = `
+            <div class="flex items-center gap-2 text-red-500 font-bold text-sm md:text-base">
+              <span>⚠️</span> Pas tout à fait...
+            </div>
+            <p class="text-xs md:text-sm text-app-secondary leading-relaxed font-medium">
+              ${q.explanation}
+            </p>
+            <div class="pt-2">
+              <button onclick="advanceNext()" class="px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md">
+                Continuer →
+              </button>
+            </div>
+          `;
+        }
+
+        feedbackBox.classList.remove('hidden');
+        submitBtn.className = "hidden"; // Hide main submit button once clicked
+      }
+
+      // Mark theory / introduction sections completed
+      function completeTheorySection(id, xpValue) {
+        state.userXp += xpValue;
+        triggerNotification(`Section lue ! +${xpValue} XP acquis`, '🌟');
+        triggerXpAnimation();
+        
+        // Mark as completed
+        const ex = state.exercises.find(e => e.id === id);
+        if (ex) {
+          ex.completed = true;
+          ex.badge = 'RÉUSSI ✓';
+          ex.badgeClass = 'bg-emerald-500/20 text-emerald-500 border-emerald-500/30';
+        }
+
+        advanceNext();
+      }
+
+      // Skip action
+      function skipQuestion() {
+        triggerNotification("Question passée", '👁️');
+        advanceNext();
+      }
+
+      // Proceed to Next Unfinished/Next Exercise
+      function advanceNext() {
+        // Mark current completed
+        const currentEx = state.exercises.find(e => e.id === state.activeId);
+        currentEx.completed = true;
+        currentEx.badge = 'RÉUSSI ✓';
+        currentEx.badgeClass = 'bg-emerald-500/20 text-emerald-500 border-emerald-500/30';
+
+        // Find next exercise
+        const currentIndex = state.exercises.findIndex(e => e.id === state.activeId);
+        
+        // Unlock next if possible
+        if (currentIndex + 1 < state.exercises.length) {
+          const nextEx = state.exercises[currentIndex + 1];
+          if (!nextEx.completed) {
+            nextEx.badge = 'EN COURS';
+            nextEx.badgeClass = 'bg-blue-500/20 text-blue-500 border-blue-500/30 animate-pulse';
+          }
+          
+          // Move to next automatically
+          state.activeId = nextEx.id;
+          loadExercise(nextEx.id);
+        } else {
+          // Completed ALL exercises! Show beautiful full screen Celebration card
+          showCelebrationScreen();
+        }
+
+        updateProgress();
+        renderExerciseList();
+      }
+
+      // Calculate state stats and update circles/bars
+      function updateProgress() {
+        const total = state.exercises.length;
+        const completedCount = state.exercises.filter(e => e.completed).length;
+        const ratio = `${completedCount} / ${total}`;
+        const pct = (completedCount / total) * 100;
+
+        // Update left panel indicators
+        const leftProgText = document.getElementById('left-panel-completed-text');
+        const leftBar = document.getElementById('left-panel-progress-bar');
+        const leftBadge = document.getElementById('left-panel-progress-badge');
+
+        if (leftProgText) leftProgText.innerText = `${ratio} complétés`;
+        if (leftBar) leftBar.style.width = `${pct}%`;
+        if (leftBadge) leftBadge.innerText = `${ratio} complétés`;
+
+        // Update right panel indicators
+        const rightRatio = document.getElementById('right-panel-progress-ratio');
+        const rightDesc = document.getElementById('right-panel-progress-desc');
+        const rightXp = document.getElementById('right-panel-xp');
+        
+        if (rightRatio) rightRatio.innerText = ratio;
+        if (rightDesc) {
+          const remaining = total - completedCount;
+          rightDesc.innerText = remaining > 0 
+            ? `Encore ${remaining} exercices à accomplir !` 
+            : "Félicitations ! Vous avez tout fini ! 🎉";
+        }
+        if (rightXp) rightXp.innerText = `+${state.userXp} XP`;
+
+        // Update Mobile indicators
+        const mobXp = document.getElementById('mobile-xp-display');
+        const mobRatio = document.getElementById('mobile-progress-ratio');
+        const mobBar = document.getElementById('mobile-progress-bar');
+
+        if (mobXp) mobXp.innerText = `+${state.userXp} XP`;
+        if (mobRatio) mobRatio.innerText = ratio;
+        if (mobBar) mobBar.style.width = `${pct}%`;
+
+        // Update Circle Ring Progress
+        const circle = document.getElementById('circle-progress');
+        if (circle) {
+          const radius = circle.r.baseVal.value;
+          const circumference = radius * 2 * Math.PI;
+          const offset = circumference - (completedCount / total) * circumference;
+          circle.style.strokeDashoffset = offset;
+        }
+
+        // Sidebar cohort day update
+        const cohortProg = document.getElementById('sidebar-cohort-progress');
+        if (cohortProg) {
+          cohortProg.style.width = `${40 + (completedCount * 1.5)}%`; // Grow customly based on day progression
+        }
+
+        // Bonus progress goal
+        const bonusUnlockProgress = document.getElementById('bonus-unlock-progress');
+        const bonusProgressBar = document.getElementById('bonus-progress-bar');
+        if (bonusUnlockProgress && bonusProgressBar) {
+          const bonusCount = Math.min(completedCount, 5);
+          bonusUnlockProgress.innerText = `${bonusCount} / 5`;
+          bonusProgressBar.style.width = `${(bonusCount / 5) * 100}%`;
+        }
+      }
+
+      // Show Full Width Celebration State
+      function showCelebrationScreen() {
+        const mainContainer = document.getElementById('main-lesson-container');
+        
+        // Calculate success percentages
+        const accuracyPct = state.totalQuestionsAnswered > 0 
+          ? Math.round((state.correctAnswersCount / state.totalQuestionsAnswered) * 100) 
+          : 87; // default fallback if clicked through
+
+        mainContainer.innerHTML = `
+          <!-- CELEBRATION COMPONENT WRAPPER -->
+          <div class="bg-app-card border border-app rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden flex flex-col items-center justify-center text-center space-y-8 animate-fade-in transition-all">
+            
+            <!-- Confetti & Grid Patterns -->
+            <div class="absolute inset-0 grid-pattern pointer-events-none"></div>
+            <div class="absolute top-10 left-10 w-24 h-24 bg-gold/10 rounded-full blur-2xl"></div>
+            <div class="absolute bottom-10 right-10 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl"></div>
+
+            <div class="space-y-3 relative z-10">
+              <span class="text-4xl md:text-5xl animate-bounce inline-block">🎉</span>
+              <h1 class="font-display font-black text-3xl md:text-4xl text-app-primary tracking-tight">
+                Jour 12 complété !
+              </h1>
+              <p class="text-xs md:text-sm text-app-secondary max-w-md mx-auto leading-relaxed">
+                Vous avez terminé toutes les leçons et les exercices du jour de La Plume avec brio. Excellent travail dans votre préparation pour le WAEC !
+              </p>
+            </div>
+
+            <!-- Stats grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-2xl relative z-10">
+              
+              <!-- Stat 1 -->
+              <div class="bg-app-secondary/40 border border-app rounded-2xl p-4 text-center">
+                <p class="text-[10px] font-mono font-bold text-app-secondary uppercase tracking-wider">Score final</p>
+                <p class="font-display font-black text-xl md:text-2xl text-gold mt-1">${accuracyPct}%</p>
+              </div>
+
+              <!-- Stat 2 -->
+              <div class="bg-app-secondary/40 border border-app rounded-2xl p-4 text-center">
+                <p class="text-[10px] font-mono font-bold text-app-secondary uppercase tracking-wider">XP gagné</p>
+                <p class="font-display font-black text-xl md:text-2xl text-emerald-500 mt-1">+960 XP</p>
+              </div>
+
+              <!-- Stat 3 -->
+              <div class="bg-app-secondary/40 border border-app rounded-2xl p-4 text-center">
+                <p class="text-[10px] font-mono font-bold text-app-secondary uppercase tracking-wider">Temps passé</p>
+                <p class="font-display font-black text-xl md:text-2xl text-app-primary mt-1">34 minutes</p>
+              </div>
+
+              <!-- Stat 4 -->
+              <div class="bg-app-secondary/40 border border-app rounded-2xl p-4 text-center">
+                <p class="text-[10px] font-mono font-bold text-app-secondary uppercase tracking-wider">Réponses</p>
+                <p class="font-display font-black text-xl md:text-2xl text-blue-500 mt-1">${state.correctAnswersCount || 7} / 8 correct</p>
+              </div>
+
+            </div>
+
+            <!-- Interactive Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md relative z-10">
+              <a href="/journey.html" class="w-full sm:w-auto px-8 py-3.5 bg-[#1e3a8a] hover:bg-[#1e40af] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-md shadow-[#1e3a8a]/20 text-center">
+                VOIR MON PARCOURS →
+              </a>
+              <button onclick="resetBootcampLesson()" class="w-full sm:w-auto px-6 py-3.5 border border-app bg-app-card hover:bg-app-secondary text-app-primary text-xs font-bold uppercase tracking-wider rounded-xl transition-all">
+                Revoir les erreurs
+              </button>
+            </div>
+
+            <div class="pt-4 relative z-10">
+              <a href="/dashboard.html" class="text-xs text-app-secondary hover:text-gold font-bold uppercase tracking-wider transition-colors">
+                Retour au tableau de bord
+              </a>
+            </div>
+
+          </div>
+        `;
+
+        triggerNotification("🎉 Félicitations ! Journée terminée !", "🏆");
+      }
+
+      // Reset today's lesson state to let user retry
+      function resetBootcampLesson() {
+        state.exercises.forEach((ex, idx) => {
+          if (idx >= 3) {
+            ex.completed = false;
+            ex.badge = idx === 3 ? 'EN COURS' : 'VERROUILLÉ';
+            ex.badgeClass = idx === 3 ? 'bg-blue-500/20 text-blue-500 border-blue-500/30 animate-pulse' : 'bg-slate-500/20 text-slate-400 border-slate-500/30';
+          }
+        });
+        state.activeId = 'accord-participe';
+        state.selectedOptionIndex = null;
+        state.answered = false;
+        state.totalQuestionsAnswered = 0;
+        state.correctAnswersCount = 0;
+        state.userXp = 360;
+
+        renderExerciseList();
+        loadExercise(state.activeId);
+        updateProgress();
+
+        triggerNotification("Session réinitialisée. Bon travail !", "🔄");
+      }
+
+      // floating animation for correct XP answer
+      function triggerXpAnimation() {
+        // Create float XP indicator
+        const container = document.getElementById('main-lesson-container');
+        const xpDiv = document.createElement('div');
+        xpDiv.className = "fixed pointer-events-none text-2xl font-black font-display text-gold z-50 animate-float-xp";
+        xpDiv.style.left = "50%";
+        xpDiv.style.top = "60%";
+        xpDiv.innerText = "+30 XP ! 🌟";
+        document.body.appendChild(xpDiv);
+
+        setTimeout(() => {
+          xpDiv.remove();
+        }, 1800);
+      }
+
+      // Scroll helpers
+      function scrollToVideo() {
+        const vidSec = document.getElementById('video-section-container');
+        if (vidSec) {
+          vidSec.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          triggerNotification("Ressources vidéos déjà chargées ci-dessous !", "📹");
+        }
+      }
+
+      // Notification logic
+      function triggerNotification(message, emoji = '🪶') {
+        const container = document.getElementById('toastContainer');
+        const id = 'toast-' + Date.now();
+        const toastHtml = `
+          <div id="${id}" class="bg-slate-900 border border-slate-800 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 max-w-sm pointer-events-auto transition-all duration-300 transform translate-x-10 opacity-0 font-medium text-xs">
+            <span class="text-base">${emoji}</span>
+            <p>${message}</p>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', toastHtml);
+        const element = document.getElementById(id);
+        
+        // Anim entrance
+        setTimeout(() => {
+          element.classList.remove('translate-x-10', 'opacity-0');
+        }, 10);
+
+        // Auto remove
+        setTimeout(() => {
+          element.classList.add('translate-x-10', 'opacity-0');
+          setTimeout(() => {
+            element.remove();
+          }, 300);
+        }, 3500);
+      }
+
+      // Dark Mode System
+      function initTheme() {
+        const body = document.body;
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        
+        const isDark = localStorage.getItem('laplume-darkmode') === 'true';
+        if (isDark) {
+          body.classList.add('dark-mode');
+          if (sunIcon) sunIcon.classList.remove('hidden');
+          if (moonIcon) moonIcon.classList.add('hidden');
+        } else {
+          body.classList.remove('dark-mode');
+          if (sunIcon) sunIcon.classList.add('hidden');
+          if (moonIcon) moonIcon.classList.remove('hidden');
+        }
+      }
+
+      function toggleDarkMode() {
+        const body = document.body;
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        const isDark = body.classList.toggle('dark-mode');
+        
+        localStorage.setItem('laplume-darkmode', isDark);
+        
+        if (isDark) {
+          if (sunIcon) sunIcon.classList.remove('hidden');
+          if (moonIcon) moonIcon.classList.add('hidden');
+          triggerNotification('🌙 Mode sombre activé !', '✨');
+        } else {
+          if (sunIcon) sunIcon.classList.add('hidden');
+          if (moonIcon) moonIcon.classList.remove('hidden');
+          triggerNotification('☀️ Mode clair activé !', '✨');
+        }
+      }
+
+      // Profile dropdown utilities
+      const profileDropdown = document.getElementById('profileDropdown');
+      function toggleProfileDropdown() {
+        profileDropdown.classList.toggle('hidden');
+      }
+
+      window.addEventListener('click', (e) => {
+        const trigger = document.getElementById('profileMenuButton');
+        if (trigger && !trigger.contains(e.target) && !profileDropdown.contains(e.target)) {
+          profileDropdown.classList.add('hidden');
+        }
+      });
+
+      function showNotificationToast() {
+        triggerNotification('Vous avez 2 notifications en attente', '🔔');
+      }
+
+      function showFeatureToast(featureName) {
+        triggerNotification(`Fiche "${featureName}" bientôt disponible !`, '🚀');
+      }
+
+      // Collapsible mobile views
+      function toggleMobileSidebar() {
+        const sidebar = document.getElementById('sidebar-container');
+        const leftPanel = document.getElementById('left-exercise-panel');
+        const backdrop = document.getElementById('mobile-sidebar-backdrop');
+        
+        // On mobile, the hamburger menu toggles the MAIN left navigation sidebar
+        const isOpen = sidebar.classList.contains('translate-x-0');
+        if (isOpen) {
+          sidebar.classList.remove('translate-x-0');
+          sidebar.classList.add('-translate-x-full');
+          backdrop.classList.add('hidden');
+        } else {
+          sidebar.classList.remove('-translate-x-full');
+          sidebar.classList.add('translate-x-0');
+          backdrop.classList.remove('hidden');
+        }
+      }
+    </script>
+  </body>
+</html>
